@@ -1,10 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './Public/pages/Login';
-import Signup from './Public/pages/Signup';
+// import Login from './Public/pages/Login';
+import SignUp from './Public/pages/NewSignup';
 import Sidebar from './Public/components/Sidebar';
+<<<<<<< HEAD
 import ContentHome from './Public/pages/ContentHome';
 
+=======
+import Appbar from './Public/components/Appbar';
+import ContentHome from './Public/pages/ContentHome'
+import SignInSide from './Public/pages/NewSignin'
+import Dashboard from './Public/pages/Dashboard'
+import ViewUser from './Public/pages/ViewUser'
+import AddNewUser from './Public/pages/AddNewUser'
+>>>>>>> fa4205a8df571dd0799a5737ea707d6380823c01
 
 function App() {
   return (
@@ -12,10 +21,15 @@ function App() {
       <Router>
         <Switch>
           {/* <Route path='/' exact component={Home} /> */}
-          <Route path='/login' component={Login} />
-          <Route path='/signup' component={Signup} />
+          {/* <Route path='/login' component={Login} /> */}
+          {/* <Route path='/signup' component={Signup} /> */}
           <Route path='/sidebar' component={Sidebar} />
           <Route path='/contenthome' component={ContentHome} />
+          <Route path='/login' component={SignInSide} />
+          <Route path='/signup' component={SignUp} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Route path='/view-user' component={ViewUser} />
+          <Route path='/add-user' component={AddNewUser} />
         </Switch>
         {/* <Footer /> */}
       </Router>
