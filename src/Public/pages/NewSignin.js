@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import ResetPasswordForm from '../components/ResetPassword';
 
 function Copyright() {
     return (
@@ -79,7 +80,7 @@ export default function SignInSide() {
                             required
                             fullWidth
                             id="email"
-                            label="Email Address"
+                            label="Email"
                             name="email"
                             autoComplete="email"
                             autoFocus
@@ -95,11 +96,12 @@ export default function SignInSide() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
-                        />
+                        /> */}
                         <Button
+                            style={{ background: '#2E3B55', color: '#ffffff' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -110,14 +112,15 @@ export default function SignInSide() {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+                                <ResetPasswordForm />
                             </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
+                            <Grid item xs>
+                                <Button color="primary" href="/signup">
+                                    Don't have an account?
+                                </Button>
+                                {/* <Link href="/signup" variant="body2">
                                     {"Don't have an account? Sign Up"}
-                                </Link>
+                                </Link> */}
                             </Grid>
                         </Grid>
                         <Box mt={5}>
