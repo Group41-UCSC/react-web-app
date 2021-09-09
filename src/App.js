@@ -3,12 +3,17 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import Login from './Public/pages/Login';
 import SignUp from './Public/pages/NewSignup';
 import Sidebar from './Public/components/Sidebar';
+<<<<<<< HEAD
+import ContentHome from './Public/pages/ContentHome';
+
+=======
 import Appbar from './Public/components/Appbar';
 import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/NewSignin'
 import Dashboard from './Public/pages/Dashboard'
 import ViewUser from './Public/pages/ViewUser'
 import AddNewUser from './Public/pages/AddNewUser'
+>>>>>>> fa4205a8df571dd0799a5737ea707d6380823c01
 
 function App() {
   return (
@@ -19,7 +24,6 @@ function App() {
           {/* <Route path='/login' component={Login} /> */}
           {/* <Route path='/signup' component={Signup} /> */}
           <Route path='/sidebar' component={Sidebar} />
-          <Route path='/appbar' component={Appbar} />
           <Route path='/contenthome' component={ContentHome} />
           <Route path='/login' component={SignInSide} />
           <Route path='/signup' component={SignUp} />
