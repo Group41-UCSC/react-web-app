@@ -6,7 +6,9 @@ import Sidebar from './Public/components/Sidebar';
 import Appbar from './Public/components/Appbar';
 import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/NewSignin'
-import Dashboard from './Public/components/Dashboard'
+import Dashboard from './Public/pages/Dashboard'
+import ViewUser from './Public/pages/ViewUser'
+import AddNewUser from './Public/pages/AddNewUser'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='/signin' component={SignInSide} />
           <Route path='/signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
+          <Route path='/view-user' component={ViewUser} />
+          <Route path='/add-user' component={AddNewUser} />
         </Switch>
         {/* <Footer /> */}
       </Router>
