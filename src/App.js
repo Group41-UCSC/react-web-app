@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './Public/pages/Login';
 import Signup from './Public/pages/Signup';
 import Sidebar from './Public/components/Sidebar';
-import Appbar from './Public/components/Appbar';
-import ContentHome from './Public/pages/ContentHome'
+import ContentHome from './Public/pages/ContentHome';
+
 
 function App() {
   return (
@@ -15,7 +15,6 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />
           <Route path='/sidebar' component={Sidebar} />
-          <Route path='/appbar' component={Appbar} />
           <Route path='/contenthome' component={ContentHome} />
         </Switch>
         {/* <Footer /> */}

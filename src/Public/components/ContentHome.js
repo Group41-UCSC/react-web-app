@@ -1,13 +1,10 @@
-import React from 'react'
-import Appbar from '../components/Appbar'
-import Sidebar from '../components/Sidebar'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Sidebar from './Sidebar'
 import Paper from '@material-ui/core/Paper';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
-
-
 
 const drawerWidth = 240;
 
@@ -41,14 +38,10 @@ const useStyles = makeStyles((theme) => ({
 
   }
 }));
-
-function ContentHome() {
-    const classes = useStyles();
-    return (
-        <div>
-            <Appbar/>
-            <Sidebar/>
-            <div>
+export default function ContentHome() {
+  const classes = useStyles();
+  return (
+    <div>
         <Sidebar/>
         <div style={{marginTop:'40px'}}>
         <Grid container  className={classes.root} spacing={2}>
@@ -124,8 +117,5 @@ function ContentHome() {
         </div>
 
     </div>
-        </div>
-    )
+  );
 }
-
-export default ContentHome
