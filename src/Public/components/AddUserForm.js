@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import RoleSelector from './RoleSelector';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -85,12 +86,28 @@ export default function AddUser() {
                                 autoComplete="current-password"
                             />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                autoComplete="membership"
+                                name="membershipNumber"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="membershipNumber"
+                                label="Membership Number"
+                                autoFocus
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <RoleSelector />
+                        </Grid>
                     </Grid>
                     <Button
+                        style={{ background: '#2E3B55', color: '#ffffff' }}
                         type="submit"
                         fullWidth
                         variant="contained"
-                        color="primary"
+                        // color="primary"
                         className={classes.submit}
                     >
                         Add User
