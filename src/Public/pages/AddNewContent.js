@@ -1,4 +1,6 @@
 import React from 'react'
+import NewContent from '../components/NewContent'
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -18,7 +20,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Container from '@material-ui/core/Container';
-import ContentDash from '../components/ContentDash'
 import Box from '@material-ui/core/Box';
 
 function Copyright() {
@@ -115,8 +116,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-function ContentHome() {
+function AddNewContent() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -140,7 +140,7 @@ function ContentHome() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Content Management
+                        Add New Post
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -173,7 +173,7 @@ function ContentHome() {
                         <Grid item xs={12}>
                             {/* <BackButton /> */}
                             <Paper className={classes.paper}>
-                                <ContentDash/>
+                                <NewContent/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -186,4 +186,4 @@ function ContentHome() {
     )
 }
 
-export default ContentHome
+export default AddNewContent
