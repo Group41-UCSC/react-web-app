@@ -19,7 +19,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Button from '@material-ui/core/Button';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import { green } from '@material-ui/core/colors';
 
 function createData(name, address, contact, nic, role) {
     return { name, address, contact, nic, role };
@@ -73,6 +77,7 @@ const headCells = [
     { id: 'contact', numeric: true, disablePadding: false, label: 'Contact' },
     { id: 'nic', numeric: true, disablePadding: false, label: 'NIC' },
     { id: 'role', numeric: true, disablePadding: false, label: 'Role' },
+    { id: 'action', numeric: true, disablePadding: false, label: 'Action', colSpan: '2' },
 ];
 
 function EnhancedTableHead(props) {
@@ -164,7 +169,7 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Nutrition
+                    Users
                 </Typography>
             )}
 
@@ -317,13 +322,34 @@ export default function UserTable() {
                                                     inputProps={{ 'aria-labelledby': labelId }}
                                                 />
                                             </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.contact}</TableCell>
-                                            <TableCell align="right">{row.nic}</TableCell>
-                                            <TableCell align="right">{row.role}</TableCell>
+                                            <TableCell align="center">{row.address}</TableCell>
+                                            <TableCell align="center">{row.contact}</TableCell>
+                                            <TableCell align="center">{row.nic}</TableCell>
+                                            <TableCell align="center">{row.role}</TableCell>
+                                            <TableCell align="center">{row.id}
+                                                <Button m={1}
+                                                    href="update-user/${row.id}"
+                                                    color="primary"
+                                                    variant="contained"
+                                                    className={classes.button}
+                                                    startIcon={<EditIcon />}>
+                                                    Edit
+                                                </Button>
+                                            </TableCell>
+                                            <TableCell align="center">{row.id}
+                                                <Button m={1}
+                                                    href="view-user/${row.id}"
+                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                                                    variant="contained"
+                                                    className={classes.button}
+                                                    startIcon={<VisibilityIcon />}
+                                                >
+                                                    View
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
