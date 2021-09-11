@@ -18,8 +18,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import UserTable from '../components/UserTable';
-import FloatingAddUser from '../components/FloatingAdd';
+import UserDetails from '../components/UserDetails';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
 
@@ -117,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ViewUser() {
+export default function ViewOneUser() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -143,7 +142,7 @@ export default function ViewUser() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        ViewUser
+                        View User
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -175,11 +174,10 @@ export default function ViewUser() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <FloatingAddUser />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <UserTable />
+                                <UserDetails />
                             </Paper>
                         </Grid>
                     </Grid>
