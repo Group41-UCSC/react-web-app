@@ -49,7 +49,6 @@ function NewContent() {
                     <textarea placeHolder="Add your content here" type="text" className="writeInput writeText"></textarea>
                     <button className="writeSubmit">Publish</button>
                 </div>
-                <label>Please note that content will be uploaded after approved by a leader </label>
             </form>
         </div>
         </div>
