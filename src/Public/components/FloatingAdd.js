@@ -1,16 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
             margin: theme.spacing(1),
         },
-    },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
     },
 }));
 
@@ -19,10 +16,9 @@ export default function FloatingAddUser() {
 
     return (
         <div className={classes.root}>
-            <Fab color="primary" variant="extended" size="small" aria-label="add" href="add-user">
-                <AddIcon />
+            <Button variant="contained" color="primary" href="/add-user" startIcon={<PersonAddIcon />}>
                 New User
-            </Fab>
+            </Button>
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -340,15 +341,16 @@ export default function UserTable() {
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="view-user/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
+                                                <Link to={'/view-user-todo'}>
+                                                    <Button m={1}
+                                                        style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                                                        variant="contained"
+                                                        className={classes.button}
+                                                        startIcon={<VisibilityIcon />}
+                                                    >
+                                                        View
+                                                    </Button>
+                                                </Link>
                                             </TableCell>
                                         </TableRow>
                                     );

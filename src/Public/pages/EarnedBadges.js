@@ -18,13 +18,10 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
+import BadgeButtonGroup from '../components/BadgeButtonGroup';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
-import BadgeRequest from '../components/BadgeRequest';
-import SiteAnnouncementCreator from '../components/SiteAnnouncementCreator';
-
+import EarnBadge from '../components/EarnedBadgeTable';
 
 function Copyright() {
     return (
@@ -120,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard() {
+export default function ViewAvailableBadges() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -146,7 +143,7 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        Earned Badges
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -178,68 +175,16 @@ export default function Dashboard() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <BadgeButtonGroup />
                     <Grid container spacing={3}>
-                        {/* Heading */}
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <Typography >
-                                    <h1 style={{ color: "#3f51b5" }}> 42nd Colombo Royal College Scout Group - Gold Troop </h1>
-                                </Typography>
+                                <EarnBadge />
                             </Paper>
                         </Grid>
-
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <h2 align="center">Troop Members</h2>
-                                <h1 align="center">4,623</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Scouts Leaders</h2>
-                                <h1 align="center">156</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Senior Scouts</h2>
-                                <h1 align="center">444</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Junior Scouts</h2>
-                                <h1 align="center">4023</h1>
-                            </Paper>
-                        </Grid>
-                        {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={fixedHeightPaper}>
-                                <BadgeRequest />
-                            </Paper>
-                        </Grid>
-
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Upcoming Events</h2>
-                                <h5 align="center">Scout's Day</h5>
-                                <h5 align="center">Royal Scout's Day</h5>
-                            </Paper>
-                        </Grid>
-
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={classes.paper}>
-                                <SiteAnnouncementCreator />
-                            </Paper>
-                        </Grid>
-
-
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders />
+                                <EarnBadge />
                             </Paper>
                         </Grid>
                     </Grid>

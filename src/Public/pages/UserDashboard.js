@@ -18,12 +18,10 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
-import BadgeRequest from '../components/BadgeRequest';
-import SiteAnnouncementCreator from '../components/SiteAnnouncementCreator';
+import Announcement from '../components/Announcement';
+import UpcomingEvent from '../components/UpcomingEvents';
 
 
 function Copyright() {
@@ -120,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard() {
+export default function UserDashboard() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -188,58 +186,27 @@ export default function Dashboard() {
                             </Paper>
                         </Grid>
 
+                        {/* Upcoming Events */}
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={classes.paper}>
-                                <h2 align="center">Troop Members</h2>
-                                <h1 align="center">4,623</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Scouts Leaders</h2>
-                                <h1 align="center">156</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Senior Scouts</h2>
-                                <h1 align="center">444</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Junior Scouts</h2>
-                                <h1 align="center">4023</h1>
-                            </Paper>
-                        </Grid>
-                        {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={fixedHeightPaper}>
-                                <BadgeRequest />
+                                <Grid item xs={12}>
+                                    <Typography >
+                                        <h3 style={{ color: "#3f51b5" }}> Upcoming Events </h3>
+                                    </Typography>
+                                    <UpcomingEvent />
+                                </Grid>
                             </Paper>
                         </Grid>
 
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Upcoming Events</h2>
-                                <h5 align="center">Scout's Day</h5>
-                                <h5 align="center">Royal Scout's Day</h5>
-                            </Paper>
-                        </Grid>
-
-                        {/* Recent Deposits */}
+                        {/* View Site Announcement */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={classes.paper}>
-                                <SiteAnnouncementCreator />
-                            </Paper>
-                        </Grid>
-
-
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders />
+                                <Grid item xs={12}>
+                                    <Typography >
+                                        <h3 style={{ color: "#3f51b5" }}> Site Announcement </h3>
+                                    </Typography>
+                                    <Announcement />
+                                </Grid>
                             </Paper>
                         </Grid>
                     </Grid>
