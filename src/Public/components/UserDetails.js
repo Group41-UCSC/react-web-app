@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddUser() {
+export default function UserDetails() {
     const classes = useStyles();
 
     return (
@@ -37,7 +37,7 @@ export default function AddUser() {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Add New User
+                    User Details
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -69,10 +69,88 @@ export default function AddUser() {
                                 variant="outlined"
                                 required
                                 fullWidth
+                                id="full_name"
+                                label="Full Name"
+                                name="full_name"
+                                autoComplete="full_name"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                autoComplete="dob"
+                                name="date_of_birth"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="dob"
+                                label="Date of birth"
+                                autoFocus
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="bloodGroop"
+                                label="Blood Group"
+                                name="blood_group"
+                                autoComplete="bgroup"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
                                 id="email"
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="bloodGroop"
+                                label="Contact Number"
+                                name="blood_group"
+                                autoComplete="bgroup"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="bloodGroop"
+                                label="Emergency Contact"
+                                name="blood_group"
+                                autoComplete="bgroup"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="bloodGroop"
+                                label="Date of Join"
+                                name="blood_group"
+                                autoComplete="bgroup"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="bloodGroop"
+                                label="Membership Number"
+                                name="blood_group"
+                                autoComplete="bgroup"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -111,7 +189,7 @@ export default function AddUser() {
                         // color="primary"
                         className={classes.submit}
                     >
-                        Add User
+                        update
                     </Button>
                 </form>
             </div>

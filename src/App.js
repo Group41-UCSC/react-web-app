@@ -5,11 +5,17 @@ import SignUp from './Public/pages/NewSignup';
 import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/NewSignin'
 import Dashboard from './Public/pages/Dashboard'
+import UserDashboard from './Public/pages/UserDashboard'
 import ViewUser from './Public/pages/ViewUser'
 import AddNewUser from './Public/pages/AddNewUser'
 import AddNewContent from './Public/pages/AddNewContent'
 import AddNewImgGal from './Public/pages/AddNewImgGal'
 import AddMultipleImg from './Public/components/AddMultipleImg';
+import ViewOneUser from './Public/pages/ViewOneUser';
+import ViewAvailableBadges from './Public/pages/ViewAvailableBadges'
+import ViewEarnedBadges from './Public/pages/EarnedBadges';
+import BadgeProgress from './Public/pages/Progress';
+import ProfilePage from './Public/components/ProfilePage';
 
 
 function App() {
@@ -17,9 +23,6 @@ function App() {
     <div>
       <Router>
         <Switch>
-          {/* <Route path='/' exact component={Home} /> */}
-          {/* <Route path='/login' component={Login} /> */}
-          {/* <Route path='/signup' component={Signup} /> */}
           <Route path='/test1' component={AddMultipleImg} />
           <Route path='/contenthome' component={ContentHome} />
           <Route path='/login' component={SignInSide} />
@@ -28,7 +31,12 @@ function App() {
           <Route path='/view-user' component={ViewUser} />
           <Route path='/add-user' component={AddNewUser} />
           <Route path='/test' component={AddNewImgGal} />
-          
+          <Route path='/view-user-todo' component={ViewOneUser} />
+          <Route path='/user-dashboard' component={UserDashboard} />
+          <Route path='/available-badge' component={ViewAvailableBadges} />
+          <Route path='/earned-badge' component={ViewEarnedBadges} />
+          <Route path='/badge-progress' component={BadgeProgress} />
+          <Route path='/profile' component={ProfilePage} />
         </Switch>
         {/* <Footer /> */}
       </Router>
