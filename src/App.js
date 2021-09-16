@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import Login from './Public/pages/Login';
+import Login from './Public/pages/Login';
 import SignUp from './Public/pages/NewSignup';
 import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/NewSignin'
@@ -16,6 +16,9 @@ import ViewAvailableBadges from './Public/pages/ViewAvailableBadges'
 import ViewEarnedBadges from './Public/pages/EarnedBadges';
 import BadgeProgress from './Public/pages/Progress';
 import ProfilePage from './Public/components/ProfilePage';
+import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
+import ScheduleEvent from './Public/components/ScheduleEvent';
+
 
 
 function App() {
@@ -23,8 +26,9 @@ function App() {
     <div>
       <Router>
         <Switch>
-          <Route path='/test1' component={AddMultipleImg} />
           <Route path='/contenthome' component={ContentHome} />
+          <Route path='/newcontent' component={AddNewContent} />
+          <Route path='/newimggal' component={AddNewImgGal} />
           <Route path='/login' component={SignInSide} />
           <Route path='/signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
@@ -37,6 +41,7 @@ function App() {
           <Route path='/earned-badge' component={ViewEarnedBadges} />
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
+
         </Switch>
         {/* <Footer /> */}
       </Router>
