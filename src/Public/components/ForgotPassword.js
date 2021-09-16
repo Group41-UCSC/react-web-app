@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function ResetPasswordForm() {
+export default function ForgotPasswordForm() {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -24,25 +24,17 @@ export default function ResetPasswordForm() {
                 Forgot Password?
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Reset Password</DialogTitle>
+                <DialogTitle id="form-dialog-title">Forgot Password</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        To reset your password to this website, please enter your new password here.
+                        To reset your password to this website, please enter your email address here. We will send the password reset to your email.
                     </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="new-password"
-                        label="New Password"
-                        type="password"
-                        fullWidth
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="new-password-confirm"
-                        label="Confirm New Password"
-                        type="password"
+                        id="name"
+                        label="Email Address"
+                        type="email"
                         fullWidth
                     />
                 </DialogContent>

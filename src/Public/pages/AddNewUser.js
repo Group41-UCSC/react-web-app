@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
+import BackButton from '../components/BackButton';
 import AddUser from '../components/AddUserForm';
 
 function Copyright() {
@@ -141,7 +142,7 @@ export default function AddNewUser() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        AddUser
+                        Add New User
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -172,6 +173,7 @@ export default function AddNewUser() {
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
+                            <BackButton />
                             <Paper className={classes.paper}>
                                 <AddUser />
                             </Paper>

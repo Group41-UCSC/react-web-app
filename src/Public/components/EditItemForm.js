@@ -7,9 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import RoleSelector from './RoleSelector';
+
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -27,29 +28,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddUser() {
+export default function EditItemForm() {
     const classes = useStyles();
 
     return (
-
         <Container component="main" maxWidth="xs">
-
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
-                    Add New User
+                    Edit Item
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                autoComplete="fname"
-                                name="firstName"
+                                autoComplete="Iid"
+                                name="itemID"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                id="itemID"
+                                label="Item ID"
                                 autoFocus
                             />
                         </Grid>
@@ -58,10 +57,10 @@ export default function AddUser() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
+                                id="storageID"
+                                label="Storage ID"
+                                name="storageID"
+                                autoComplete="Sid"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -69,39 +68,50 @@ export default function AddUser() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="itemName"
+                                label="Item Name"
+                                name="itemName"
+                                autoComplete="Iname"
                             />
                         </Grid>
+                        
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                name="quantity"
+                                label="Quantity"
+                               
+                                id="quantity"
+                                autoComplete="quantity"
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
-                                autoComplete="membership"
-                                name="membershipNumber"
+                                autoComplete="status"
+                                name="status"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="membershipNumber"
-                                label="Membership Number"
+                                id="status"
+                                label="Status"
                                 autoFocus
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <RoleSelector />
+                        <Grid item xs={12}>
+                            <TextField
+                                autoComplete="description"
+                                name="description"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="description"
+                                label="Description"
+                                autoFocus
+                            />
                         </Grid>
+                        
                     </Grid>
                     <Button
                         style={{ background: '#2E3B55', color: '#ffffff' }}
@@ -111,7 +121,7 @@ export default function AddUser() {
                         // color="primary"
                         className={classes.submit}
                     >
-                        Add User
+                        Submit
                     </Button>
                 </form>
             </div>
