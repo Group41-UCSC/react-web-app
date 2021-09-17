@@ -14,7 +14,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -90,14 +89,6 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
-                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -317,12 +308,6 @@ export default function UserTable() {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
                                             <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
@@ -332,7 +317,7 @@ export default function UserTable() {
                                             <TableCell align="center">{row.role}</TableCell>
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
-                                                    href="update-user/${row.id}"
+                                                    href="/update-user"
                                                     color="primary"
                                                     variant="contained"
                                                     className={classes.button}
@@ -341,16 +326,15 @@ export default function UserTable() {
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="center">{row.id}
-                                                <Link to={'/view-user-todo'}>
-                                                    <Button m={1}
-                                                        style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                        variant="contained"
-                                                        className={classes.button}
-                                                        startIcon={<VisibilityIcon />}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                </Link>
+                                                <Button m={1}
+                                                    href="/view-user"
+                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                                                    variant="contained"
+                                                    className={classes.button}
+                                                    startIcon={<VisibilityIcon />}
+                                                >
+                                                    View
+                                                </Button>
                                             </TableCell>
                                         </TableRow>
                                     );

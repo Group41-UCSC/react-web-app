@@ -17,12 +17,11 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import BadgeButtonGroup from '../components/BadgeButtonGroup';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import PieChart from '../components/PieChart';
-import BadgeCard from '../components/ProgressBar';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import UserTable from './UserTable';
+import FloatingAddUser from './FloatingAdd';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
 
 function Copyright() {
     return (
@@ -118,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function BadgeProgress() {
+export default function ViewUser() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -144,7 +143,7 @@ export default function BadgeProgress() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Badge Progress
+                        View Users
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -176,26 +175,11 @@ export default function BadgeProgress() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <BadgeButtonGroup />
+                    <FloatingAddUser />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <PieChart />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
+                                <UserTable />
                             </Paper>
                         </Grid>
                     </Grid>
