@@ -17,7 +17,7 @@ import ViewEarnedBadges from './Public/pages/EarnedBadges';
 import BadgeProgress from './Public/pages/Progress';
 import ProfilePage from './Public/components/ProfilePage';
 import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
-import ScheduleEvent from './Public/components/ScheduleEvent';
+import AddNewEvent from './Public/pages/AddNewEvent';
 
 
 
@@ -41,6 +41,8 @@ function App() {
           <Route path='/earned-badge' component={ViewEarnedBadges} />
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
+          <Route path='/newevent' component={AddNewEvent} />
+
 
         </Switch>
         {/* <Footer /> */}
