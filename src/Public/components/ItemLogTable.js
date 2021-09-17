@@ -23,27 +23,27 @@ import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green, red } from '@material-ui/core/colors';
+import { green, red, yellow } from '@material-ui/core/colors';
 
-function createData(name,quantity ,availableQ,status) {
-    return {name, quantity ,availableQ, status};
+function createData( name,quantity ,requestedBy,issuedDate,receivedDate ,description) {
+    return { name,quantity ,requestedBy,issuedDate,receivedDate ,description};
 }
 
 
 const rows = [
-    createData('Rope', 7, 67, 'Good'),
-    createData('Rope',  5,452, 'Good'),
-    createData('Rope', 6, 262, 'Good'),
-    createData('Rope', 8, 159, 'Good'),
-    createData('Rope', 4, 356, 'Good' ),
-    createData('Rope',  5,408, 'Good'),
-    createData('Rope', 6, 237, 'Good'),
-    createData('Rope', 8, 375,'Good'),
-    createData('Rope', 9, 518,'Good'),
-    createData('Rope', 5, 392, 'Good' ),
-    createData('Rope', 9, 318, 'Good'),
-    createData('Rope', 88, 360, 'Good'),
-    createData('Rope', 77, 437, 'Good'),
+    createData( 'Rope', 7, 'Juzly' ,6,5,  'Good'),
+    createData('Rope',  5,'Juzly' ,4,5,   'None'),
+    createData( 'Rope', 6, 'Juzly' ,26,2,  'None'),
+    createData('Rope', 8, 'Juzly' ,15,9,  'None'),
+    createData('Rope', 4, 'Juzly' ,3,6, 'None'),
+    createData('Rope',  5,'Juzly' ,4 ,8, 'None'),
+    createData( 'Rope', 6, 'Juzly' ,23 ,7,  'None'),
+    createData('Rope', 8, 'Juzly' ,30 ,5, 'None'),
+    createData('Rope', 9, 'Juzly' ,5 ,8, 'None'),
+    createData('Rope', 5, 'Juzly' ,3 ,2, 'None'),
+    createData('Rope', 9, 'Juzly' ,3, 18,  'None'),
+    createData('Rope', 8,'Juzly' , 3, 20,  'None'),
+    createData('Rope', 7,'Juzly' , 4 ,7,  'None'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -73,13 +73,14 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-   
+    
     { id: 'name', numeric: false, disablePadding: false, label: 'Item Name' },
-    { id: 'quantity', numeric: true, disablePadding: false, label: 'Quantity' },
-    { id: 'availableQ', numeric: true, disablePadding: false, label: 'Available Quantity' },
-    { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+    { id: 'quantity', numeric: true, disablePadding: false, label: 'Qantity' },
+    { id: 'requestedBY', numeric: false, disablePadding: false, label: 'Requested By' },
+    { id: 'issuedDate', numeric: true, disablePadding: false, label: 'Issued Date' },
+    { id: 'receivedDate', numeric: false, disablePadding: false, label: 'Received Date' },
+    { id: 'description', numeric: false, disablePadding: false, label: 'Description' },
 
-    { id: 'action', numeric: false, disablePadding: false, label: 'Action', colSpan: '2' },
 ];
 
 function EnhancedTableHead(props) {
@@ -92,7 +93,6 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 
-                    
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -165,7 +165,7 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} color="primary" variant="h6" id="tableTitle" component="div">
-                    Item List
+                    Item Log Page
                 </Typography>
             )}
 
@@ -202,7 +202,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ItemListTable() {
+export default function ItemLogTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
@@ -291,39 +291,18 @@ export default function ItemListTable() {
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
-                                        <TableRow
-                                            
-                                        >
+                                        <TableRow>
                                             <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
-                                            
-                                            
+                                           
                                             <TableCell align="center">{row.quantity}</TableCell>
-                                            <TableCell align="center">{row.availableQ}</TableCell>
-                                            <TableCell align="center">{row.status}</TableCell>
-                                            
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="delete-item/${row.id}"
-                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<DeleteIcon />}>
-                                                    Delete
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="edit-item-form/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
-                                            </TableCell>
+                                            <TableCell align="center">{row.requestedBy}</TableCell>
+                                            <TableCell align="center">{row.issuedDate}</TableCell>
+                                            <TableCell align="center">{row.receivedDate}</TableCell>
+                                            <TableCell align="center">{row.description}</TableCell>
+                                                                                      
+                                        
                                         </TableRow>
                                     );
                                 })}

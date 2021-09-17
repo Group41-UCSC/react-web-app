@@ -24,26 +24,35 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+import ResetPasswordForm from '../components/ResetPassword';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-function createData(itemID, name,  issuedDate,returnDate ,requestedBy) {
-    return { itemID, name,  issuedDate,returnDate ,requestedBy };
+
+
+function createData( name,  issuedDate,returnDate ,requestedBy) {
+    return { name,  issuedDate,returnDate ,requestedBy };
 }
 
 
 const rows = [
-    createData(1, 'Rope', 7, 67, 'Good'),
-    createData(1, 'Rope',  5,452, 'Good'),
-    createData(1, 'Rope', 6, 262, 'Good'),
-    createData(1, 'Rope', 8, 159, 'Good'),
-    createData(1, 'Rope', 4, 356, 'Good'),
-    createData(1, 'Rope',  5,408, 'Good'),
-    createData(1, 'Rope', 6, 237, 'Good'),
-    createData(1, 'Rope', 8, 375,'Good'),
-    createData(1, 'Rope', 9, 518,'Good'),
-    createData(1, 'Rope', 5, 392, 'Good'),
-    createData(1, 'Rope', 9, 318, 'Good'),
-    createData(1, 'Rope', 88, 360, 'Good'),
-    createData(1, 'Rope', 77, 437, 'Good'),
+    createData( 'Rope', 7, 67, 'juzly'),
+    createData( 'Rope',  5,452, 'Good'),
+    createData( 'Rope', 6, 262, 'Good'),
+    createData( 'Rope', 8, 159, 'Good'),
+    createData('Rope', 4, 356, 'Good'),
+    createData('Rope',  5,408, 'Good'),
+    createData( 'Rope', 6, 237, 'Good'),
+    createData('Rope', 8, 375,'Good'),
+    createData('Rope', 9, 518,'Good'),
+    createData('Rope', 5, 392, 'Good'),
+    createData('Rope', 9, 318, 'Good'),
+    createData('Rope', 88, 360, 'Good'),
+    createData('Rope', 77, 437, 'Good'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -73,7 +82,6 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'itemaID', numeric: true, disablePadding: false, label: 'Item ID' },
     { id: 'name', numeric: false, disablePadding: false, label: 'Item Name' },
     { id: 'issuedDate', numeric: true, disablePadding: false, label: 'Issued Date' },
     { id: 'returnDate', numeric: true, disablePadding: false, label: 'Return Date' },
@@ -162,24 +170,12 @@ const EnhancedTableToolbar = (props) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                <Typography className={classes.title} color="primary" variant="h6" id="tableTitle" component="div">
                     Item Issued
                 </Typography>
             )}
 
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            
         </Toolbar>
     );
 };
@@ -273,6 +269,18 @@ export default function ItemIssuedTable() {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -302,60 +310,67 @@ export default function ItemIssuedTable() {
 
                                     return (
                                         <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                            
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
+                                            
                                             <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
-                                                {row.itemID}
+                                                {row.name}
                                             </TableCell>
             
-                                            <TableCell align="center">{row.name}</TableCell>
+                        
                                             <TableCell align="center">{row.issuedDate}</TableCell>
                                             <TableCell align="center">{row.returnDate}</TableCell>
                                             <TableCell align="center">{row.requestedBy}</TableCell>
                             
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
-                                                    href="receivde-item/${row.id}"
-                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    >
-                                                    Received
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="delete-issued-item/${row.id}"
+                                                onClick={handleClickOpen}
+                                               
+                                        
+                                                    
                                                     color="primary"
                                                     variant="contained"
                                                     className={classes.button}
-                                                    startIcon={<DeleteIcon />}>
-                                                    Delete
+                                                    >
+                                                         
+                                                    Received
                                                 </Button>
+                                                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Description</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Provide the status of the inventory and it's descriptions as received . If there is any damages or Quantity missing provide it as well.
+                    </DialogContentText>
+                    
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        
+                        type="date"
+                        fullWidth
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Description"
+                        type="email"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
                                             </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="edit-issued-form/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
-                                            </TableCell>
+                                            
+                                            
                                         </TableRow>
                                     );
                                 })}

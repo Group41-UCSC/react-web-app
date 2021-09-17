@@ -22,6 +22,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import ItemIssuedTable from '../components/ItemIssuedTable';
 import FloatingInventory from '../components/FloatingInventory';
+import ProfileDropDown from '../components/ProfileDropDown';
+import NotificationDropDown from '../components/NotificationDropDown';
 
 
 function Copyright() {
@@ -148,13 +150,11 @@ export default function ItemIssued() {
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
+                            <NotificationDropDown />
                         </Badge>
                     </IconButton>
                     <IconButton color="inherit">
-                        
-                        <PersonIcon />
-                       
+                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>

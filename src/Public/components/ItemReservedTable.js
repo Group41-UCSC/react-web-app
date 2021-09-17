@@ -25,25 +25,25 @@ import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red, yellow } from '@material-ui/core/colors';
 
-function createData(itemID, name,quantity ,requestedBy,requestedDate,event) {
-    return { itemID, name,quantity ,requestedBy,requestedDate,event};
+function createData( name,quantity ,requestedBy,requestedDate,event) {
+    return { name,quantity ,requestedBy,requestedDate,event};
 }
 
 
 const rows = [
-    createData(1, 'Rope', 7, 'Juzly' ,67,  'None'),
-    createData(1, 'Rope',  5,'Juzly' ,452,  'None'),
-    createData(1, 'Rope', 6, 'Juzly' ,262,  'None'),
-    createData(1, 'Rope', 8, 'Juzly' ,159,  'None'),
-    createData(1, 'Rope', 4, 'Juzly' ,356, 'None'),
-    createData(1, 'Rope',  5,'Juzly' ,408, 'None'),
-    createData(1, 'Rope', 6, 'Juzly' ,237,  'None'),
-    createData(1, 'Rope', 8, 'Juzly' ,375, 'None'),
-    createData(1, 'Rope', 9, 'Juzly' ,518, 'None'),
-    createData(1, 'Rope', 5, 'Juzly' ,392, 'None'),
-    createData(1, 'Rope', 9, 'Juzly' ,318,  'None'),
-    createData(1, 'Rope', 88,'Juzly' , 360,  'None'),
-    createData(1, 'Rope', 77,'Juzly' , 437,  'None'),
+    createData( 'Rope', 7, 'Juzly' ,67,  'None'),
+    createData('Rope',  5,'Juzly' ,452,  'None'),
+    createData( 'Rope', 6, 'Juzly' ,262,  'None'),
+    createData('Rope', 8, 'Juzly' ,159,  'None'),
+    createData('Rope', 4, 'Juzly' ,356, 'None'),
+    createData('Rope',  5,'Juzly' ,408, 'None'),
+    createData( 'Rope', 6, 'Juzly' ,237,  'None'),
+    createData('Rope', 8, 'Juzly' ,375, 'None'),
+    createData('Rope', 9, 'Juzly' ,518, 'None'),
+    createData('Rope', 5, 'Juzly' ,392, 'None'),
+    createData('Rope', 9, 'Juzly' ,318,  'None'),
+    createData('Rope', 88,'Juzly' , 360,  'None'),
+    createData('Rope', 77,'Juzly' , 437,  'None'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -73,7 +73,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'itemaID', numeric: true, disablePadding: false, label: 'Item ID' },
+    
     { id: 'name', numeric: false, disablePadding: false, label: 'Item Name' },
     { id: 'quantity', numeric: true, disablePadding: false, label: 'Qantity' },
     { id: 'requestedBY', numeric: false, disablePadding: false, label: 'Requested By' },
@@ -91,14 +91,7 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
-                </TableCell>
+                
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -170,24 +163,12 @@ const EnhancedTableToolbar = (props) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                <Typography className={classes.title} color="primary" variant="h6" id="tableTitle" component="div">
                     Item Reserved
                 </Typography>
             )}
 
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            
         </Toolbar>
     );
 };
@@ -310,24 +291,13 @@ export default function ItemReservedTable() {
 
                                     return (
                                         <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                            
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
+                                            
                                             <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
-                                                {row.itemID}
+                                                {row.name}
                                             </TableCell>
-                                            <TableCell align="center">{row.name}</TableCell>
+                                           
                                             <TableCell align="center">{row.quantity}</TableCell>
                                             <TableCell align="center">{row.requestedBy}</TableCell>
                                             <TableCell align="center">{row.requestedDate}</TableCell>
@@ -335,34 +305,16 @@ export default function ItemReservedTable() {
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
                                                     href="issue-item/${row.id}"
-                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                                                   
+                                                    color="primary"
                                                     variant="contained"
                                                     className={classes.button}
                                                     >
                                                     Issue
                                                 </Button>
                                             </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="delete-reserve-item/${row.id}"
-                                                    color="primary"
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<DeleteIcon />}>
-                                                    Delete
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="edit-reserved-form/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
-                                            </TableCell>
+                                            
+                                        
                                         </TableRow>
                                     );
                                 })}

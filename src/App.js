@@ -20,6 +20,15 @@ import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import ScheduleEvent from './Public/components/ScheduleEvent';
 
 
+import Inventory from './Public/pages/Inventory';
+import ItemList from './Public/pages/ItemList';
+import ItemRequest from './Public/pages/ItemRequest';
+import ItemReserved from './Public/pages/ItemReserved';
+import ItemIssued from './Public/pages/ItemIssued';
+import EditItemPage from './Public/pages/EditItemPage';
+import AddNewItem from './Public/pages/AddNewItem';
+import ItemLog from './Public/pages/ItemLog';
+
 
 function App() {
   return (
@@ -42,6 +51,15 @@ function App() {
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
 
+
+          <Route path='/inventory' component={Inventory} />
+          <Route path='/item-list' component={ItemList} />
+          <Route path='/item-request' component={ItemRequest} />
+          <Route path='/item-reserved' component={ItemReserved} />
+          <Route path='/item-issued' component={ItemIssued} />
+          <Route path='/edit-item-form' component={EditItemPage} />
+          <Route path='/add-item' component={AddNewItem} />
+          <Route path='/item-log' component={ItemLog} />
         </Switch>
         {/* <Footer /> */}
       </Router>

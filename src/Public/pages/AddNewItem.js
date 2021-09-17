@@ -21,6 +21,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import AddItemForm from '../components/AddItemForm';
+import ProfileDropDown from '../components/ProfileDropDown';
+import NotificationDropDown from '../components/NotificationDropDown';
+import BackButton from '../components/BackButton';
 
 function Copyright() {
     return (
@@ -146,13 +149,11 @@ export default function AddNewItem() {
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                        <NotificationsIcon />
+                            <NotificationDropDown />
                         </Badge>
                     </IconButton>
                     <IconButton color="inherit">
-                        
-                        <PersonIcon />
-                       
+                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -178,6 +179,7 @@ export default function AddNewItem() {
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
+                        <BackButton />
                             <Paper className={classes.paper}>
                                 <AddItemForm />
                             </Paper>
