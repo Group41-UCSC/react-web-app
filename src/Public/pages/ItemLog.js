@@ -1,3 +1,4 @@
+
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +21,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import EditReservedForm from '../components/EditReservedForm';
+import ItemLogTable from '../components/ItemLogTable';
+import FloatingInventory from '../components/FloatingInventory';
+import ProfileDropDown from '../components/ProfileDropDown';
+import NotificationDropDown from '../components/NotificationDropDown';
+
 
 function Copyright() {
     return (
@@ -116,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EditReservedPage() {
+export default function ItemLog() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -142,17 +147,15 @@ export default function EditReservedPage() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Inventory Management 
+                        Inventory Management
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                        <NotificationsIcon />
+                            <NotificationDropDown />
                         </Badge>
                     </IconButton>
                     <IconButton color="inherit">
-                        
-                        <PersonIcon />
-                       
+                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -176,10 +179,12 @@ export default function EditReservedPage() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <FloatingInventory />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
+                        
                             <Paper className={classes.paper}>
-                                <EditReservedForm />
+                                <ItemLogTable />
                             </Paper>
                         </Grid>
                     </Grid>

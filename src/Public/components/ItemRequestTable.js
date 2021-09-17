@@ -24,26 +24,32 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red, yellow } from '@material-ui/core/colors';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
-function createData(itemID, name, event, requestedBy ,requestedDate,quantity) {
-    return {itemID, name, event, requestedBy ,requestedDate,quantity };
+function createData( name, event, requestedBy ,requestedDate,quantity) {
+    return { name, event, requestedBy ,requestedDate,quantity };
 }
 
 
 const rows = [
-    createData(1, 'Rope','Camping', 'Juzly', 5, 7, 67),
-    createData(1, 'Rope', 'Camping', 'Juzly',5, 5,452, ),
-    createData(1, 'Rope','Camping', 'Juzly', 5,6, 262,),
-    createData(1, 'Rope','Camping', 'Juzly', 5,8, 159,),
-    createData(1, 'Rope','Camping', 'Juzly',5, 4, 356,),
-    createData(1, 'Rope','Camping', 'Juzly',5,  5,408, ),
-    createData(1, 'Rope','Camping', 'Juzly',5, 6, 237, ),
-    createData(1, 'Rope','Camping', 'Juzly', 5,8, 375,),
-    createData(1, 'Rope','Camping', 'Juzly', 5,9, 518,),
-    createData(1, 'Rope','Camping', 'Juzly',5, 5, 392, ),
-    createData(1, 'Rope','Camping', 'Juzly',5, 9, 318,),
-    createData(1, 'Rope','Camping', 'Juzly',5, 88, 360,),
-    createData(1, 'Rope','Camping', 'Juzly',5, 77, 437,),
+    createData( 'Rope','Camping', 'Juzly', 5, 7, 67),
+    createData( 'Rope', 'Camping', 'Juzly',5, 5,452, ),
+    createData('Rope','Camping', 'Juzly', 5,6, 262,),
+    createData('Rope','Camping', 'Juzly', 5,8, 159,),
+    createData( 'Rope','Camping', 'Juzly',5, 4, 356,),
+    createData('Rope','Camping', 'Juzly',5,  5,408, ),
+    createData('Rope','Camping', 'Juzly',5, 6, 237, ),
+    createData( 'Rope','Camping', 'Juzly', 5,8, 375,),
+    createData( 'Rope','Camping', 'Juzly', 5,9, 518,),
+    createData('Rope','Camping', 'Juzly',5, 5, 392, ),
+    createData('Rope','Camping', 'Juzly',5, 9, 318,),
+    createData('Rope','Camping', 'Juzly',5, 88, 360,),
+    createData('Rope','Camping', 'Juzly',5, 77, 437,),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -73,7 +79,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'itemaID', numeric: true, disablePadding: false, label: 'Item ID' },
+   
     { id: 'name', numeric: false, disablePadding: false, label: 'Item Name' },
     { id: 'event', numeric: true, disablePadding: false, label: 'Event' },
     { id: 'requestedBy', numeric: true, disablePadding: false, label: 'Requested By' },
@@ -91,14 +97,7 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
-                </TableCell>
+                
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -170,24 +169,12 @@ const EnhancedTableToolbar = (props) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                <Typography className={classes.title} color="primary" variant="h6" id="tableTitle" component="div">
                     Item Requsted
                 </Typography>
             )}
 
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            
         </Toolbar>
     );
 };
@@ -281,6 +268,15 @@ export default function ItemRequestTable() {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -310,24 +306,13 @@ export default function ItemRequestTable() {
 
                                     return (
                                         <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                            
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
+                                            
                                             <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
-                                                {row.itemID}
+                                                {row.name}
                                             </TableCell>
-                                            <TableCell align="center">{row.name}</TableCell>
+                                            
                                             <TableCell align="center">{row.event}</TableCell>
                                             <TableCell align="center">{row.requestedBy}</TableCell>
                                             <TableCell align="center">{row.requestedDate}</TableCell>
@@ -335,7 +320,7 @@ export default function ItemRequestTable() {
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
                                                     href="reserve-item/${row.id}"
-                                                    style={{ backgroundColor: yellow[500], color: '#FFFFFF' }}
+                                                   color="primary"
                                                     variant="contained"
                                                     className={classes.button}
                                                     >
@@ -344,35 +329,40 @@ export default function ItemRequestTable() {
                                             </TableCell>
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
-                                                    href="reject-item/${row.id}"
+                                                    onClick={handleClickOpen}
                                                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                                                     variant="contained"
                                                     className={classes.button}
                                                     >
                                                     Reject
                                                 </Button>
+                                                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">        Requested Item Rejected. Provide a valid reason for rejection       </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Reason For rejection
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Reason"
+                        type="email"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
                                             </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="delete-request-item/${row.id}"
-                                                    color="primary"
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<DeleteIcon />}>
-                                                    Delete
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="edit-request-form/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
-                                            </TableCell>
+                                            
+                                            
                                         </TableRow>
                                     );
                                 })}

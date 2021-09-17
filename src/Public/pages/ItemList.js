@@ -22,6 +22,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import ItemListTable from '../components/ItemListTable';
 import FloatingInventory from '../components/FloatingInventory';
+import ProfileDropDown from '../components/ProfileDropDown';
+import NotificationDropDown from '../components/NotificationDropDown';
 
 
 function Copyright() {
@@ -148,13 +150,11 @@ export default function ItemList() {
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
+                            <NotificationDropDown />
                         </Badge>
                     </IconButton>
                     <IconButton color="inherit">
-                        
-                        <PersonIcon />
-                       
+                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -181,6 +181,7 @@ export default function ItemList() {
                     <FloatingInventory />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
+                     
                             <Paper className={classes.paper}>
                                 <ItemListTable />
                             </Paper>

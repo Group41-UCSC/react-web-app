@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import RoleSelector from './RoleSelector';
+import StatusSelector from './StatusSelector';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,76 +40,64 @@ export default function EditItemForm() {
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                autoComplete="Iid"
-                                name="itemID"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="itemID"
-                                label="Item ID"
-                                autoFocus
-                            />
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="itemID"
+                        label="Item ID"
+                        name="itemID"
+                        fullWidth
+                        required
+                    />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="storageID"
-                                label="Storage ID"
-                                name="storageID"
-                                autoComplete="Sid"
-                            />
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="storageID"
+                        label="Storage ID"
+                        name="storageID"
+                        fullWidth
+                        required
+                    />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="itemName"
-                                label="Item Name"
-                                name="itemName"
-                                autoComplete="Iname"
-                            />
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="itenName"
+                        label="Item Name"
+                        name="itemName"
+                        fullWidth
+                        required
+                    />
                         </Grid>
                         
                         <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="quantity"
-                                label="Quantity"
-                               
-                                id="quantity"
-                                autoComplete="quantity"
-                            />
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="quantity"
+                        label="Quantity"
+                        name="quantity"
+                        fullWidth
+                        required
+                    />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <StatusSelector />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
-                                autoComplete="status"
-                                name="status"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="status"
-                                label="Status"
-                                autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="description"
-                                name="description"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="description"
-                                label="Description"
-                                autoFocus
-                            />
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="description"
+                        label="Description"
+                        name="description"
+                        fullWidth
+                        required
+                    />
                         </Grid>
                         
                     </Grid>
