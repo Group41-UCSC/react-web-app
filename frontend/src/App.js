@@ -1,23 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './Public/pages/Login';
-import SignUp from './Public/pages/NewSignup';
+import SignUp from './Public/pages/Authentication/NewSignup';
 import ContentHome from './Public/pages/ContentHome'
-import SignInSide from './Public/pages/NewSignin'
+import SignInSide from './Public/pages/Authentication/NewSignin'
 import Dashboard from './Public/pages/Dashboard'
 import UserDashboard from './Public/pages/UserDashboard'
-import ViewUser from './Public/pages/ViewUser'
-import AddNewUser from './Public/pages/AddNewUser'
+import ViewUser from './Public/pages/ManageUsers/ViewUser'
+import AddNewUser from './Public/pages/ManageUsers/AddNewUser'
 import AddNewContent from './Public/pages/AddNewContent'
 import AddNewImgGal from './Public/pages/AddNewImgGal'
 import AddMultipleImg from './Public/components/AddMultipleImg';
-import ViewOneUser from './Public/pages/ViewOneUser';
-import ViewAvailableBadges from './Public/pages/ViewAvailableBadges'
-import ViewEarnedBadges from './Public/pages/EarnedBadges';
-import BadgeProgress from './Public/pages/Progress';
+import ViewUsers from './Public/pages/ManageUsers/ViewUsers';
+import AvailableBadges from './Public/pages/BadgeWork/AvailableBadges'
+import AvailableBadge from './Public/pages/BadgeWork/AvailableBadge'
+import ViewEarnedBadges from './Public/pages/BadgeWork/EarnedBadges';
+import BadgeProgress from './Public/pages/BadgeWork/Progress';
 import ProfilePage from './Public/components/ProfilePage';
 import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import AddNewEvent from './Public/pages/AddNewEvent';
+import NewTest from './Public/components/NewTest';
 
 
 import Inventory from './Public/pages/Inventory';
@@ -41,16 +42,18 @@ function App() {
           <Route path='/login' component={SignInSide} />
           <Route path='/signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
-          <Route path='/view-user' component={ViewUser} />
+          <Route path='/view-users' component={ViewUsers} />
           <Route path='/add-user' component={AddNewUser} />
           <Route path='/test' component={AddNewImgGal} />
-          <Route path='/view-user-todo' component={ViewOneUser} />
+          <Route path='/view-user' component={ViewUser} />
           <Route path='/user-dashboard' component={UserDashboard} />
-          <Route path='/available-badge' component={ViewAvailableBadges} />
+          <Route path='/available-badge' component={AvailableBadge} />
+          <Route path='/available-badges' component={AvailableBadges} />
           <Route path='/earned-badge' component={ViewEarnedBadges} />
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/newevent' component={AddNewEvent} />
+          <Route path='/hehe' component={NewTest} />
 
 
 
