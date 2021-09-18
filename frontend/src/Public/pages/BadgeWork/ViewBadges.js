@@ -1,85 +1,122 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import TextField from '@material-ui/core/TextField';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
 import { green, red } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
     },
-    paper: {
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxWidth: 1000,
-    },
-    image: {
-        width: 128,
-        height: 128,
-    },
-    img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    },
-}));
+  },
+}))(TableRow);
+
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
 
 export default function ViewBadges() {
-    const classes = useStyles();
+  const classes = useStyles();
+  const [product, setProduct] = useState([]);
+  const [search, setSearch] = useState("");
 
-    return (
-        <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <Grid container direction="row" spacing={2}>
-                    <Grid item xs={4}>
-                        <ButtonBase className={classes.image}>
-                            <img className={classes.img} alt="complex" src="../../../public/images/Athletics.PNG" />
-                        </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid container spacing={3}>
-                            <Grid item>
-                                <Typography gutterBottom variant="subtitle1">
-                                    Batch Name
-                                </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                    Task Name
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                </Typography>
-                            </Grid>
-                            <Grid item xs>
-                                <Button m={1}
-                                    size="small"
-                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                    variant="contained"
-                                    className={classes.button}
-                                >
-                                    Edit Badge
-                                </Button>
-                            </Grid>
-                            <Grid item xs>
-                                <Button m={1}
-                                    size="small"
-                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                                    variant="contained"
-                                    className={classes.button}
-                                >
-                                    Remove Badge
-                                </Button>
-                            </Grid>
-                        </Grid>
-                        {/* <Grid item>
-                            <Typography variant="subtitle1">$19.00</Typography>
-                        </Grid> */}
-                    </Grid>
-                </Grid>
-            </Paper>
-        </div >
-    );
-}
+  const getItemList = async () => {
+      try{
+          const data = await axios.get("http://localhost:8080/items");
+          console.log(data.data);
+          setProduct(data.data);
+      } catch (e){
+          console.log(e);
+      }
+  };
+
+
+  useEffect(() => {
+      getItemList();
+  }, []);
+
+  return (
+    <TableContainer component={Paper}>
+    {/* <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+    onChange={(e)=>{
+        setSearch(e.target.value);}}/> */}
+
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell align="left">Batch Name</StyledTableCell>
+            <StyledTableCell align="left">Task Name</StyledTableCell>
+            <StyledTableCell align="left">Description</StyledTableCell>
+            {/* <StyledTableCell align="left">Status</StyledTableCell> */}
+            <StyledTableCell align="right">Action</StyledTableCell>
+            <StyledTableCell align="left"></StyledTableCell>
+          </TableRow> 
+        </TableHead>
+        <TableBody>
+              {product.filter((item) => {
+            if(search == ""){
+                return item;
+            }
+            else if (item.itemName.toLowerCase().includes(search.toLowerCase())){
+                return item;
+            }}).
+            map((item) => {
+                return (
+              <StyledTableRow key={item.itemId}>
+              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
+              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
+              <StyledTableCell align="left">{item.itemDescription}</StyledTableCell>
+              {/* <StyledTableCell align="left">{item.itemStatus}</StyledTableCell> */}
+              <StyledTableCell align="center"> 
+              <Button m={1}
+                href="/edit-item-form"
+                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                variant="contained"
+                className={classes.button}
+                startIcon={<EditIcon />}
+                >
+                Edit
+              </Button></StyledTableCell>
+              <StyledTableCell align="center">
+                <Button m={1}
+                    href="delete-item"
+                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                    variant="contained"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}>
+                    Delete
+                    </Button>
+              </StyledTableCell>
+              </StyledTableRow>
+                );
+            })
+        }
+        </TableBody>
+      </Table>
+    </TableContainer>
+ );
+};
