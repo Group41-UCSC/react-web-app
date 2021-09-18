@@ -24,6 +24,8 @@ import ItemListTable from '../components/ItemListTable';
 import FloatingInventory from '../components/FloatingInventory';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
+import ItemView from '../components/ItemView';
+import NewTest from '../components/NewTest';
 
 
 function Copyright() {
@@ -183,7 +185,7 @@ export default function ItemList() {
                         <Grid item xs={12}>
                      
                             <Paper className={classes.paper}>
-                                <ItemListTable />
+                                <ItemView/>
                             </Paper>
                         </Grid>
                     </Grid>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -29,7 +31,90 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AddItemForm() {
+
+
     const classes = useStyles();
+    const [itemQuantity, setitemQuantity] = useState("");
+    const [itemName, setitemName] = useState("");
+    const [inventoryId, setinventoryId] = useState("");
+    const [itemDescription, setitemDescription] = useState("");
+
+    const addItem = () => {
+
+        const data = {
+            itemName: itemName,
+            inventoryId: inventoryId,
+            itemQuantity: itemQuantity,
+            itemDescription: itemDescription
+
+        };
+   
+        setitemQuantity("");
+        setitemName("");
+        setinventoryId("");
+        setitemDescription("");
+
+        if(validateForm()){
+            const postLog = data => {
+                axios
+                .post("http://localhost:8080/add-item", data)
+                .then((d) =>{
+                    if(d.data != null){
+                        console.log(d);
+                        alert("Item saved successfully");
+                        window.location.reload();
+                    }
+                })
+            };
+
+            postLog(data);
+        }
+ 
+        else{
+
+    // console.log(errors);
+  }
+}
+
+const validateForm=()=>{
+    let errors=[];
+    let isValid = true;
+
+
+
+   // if (!dateValue) {
+    //    isValid = false;
+     //   errors["date"] = "Please select a date.";
+    //  }
+
+  if (!itemDescription) {
+    isValid = false;
+    errors["description"] = "Please enter a description.";
+  }
+
+
+  if (!itemName) {
+    isValid = false;
+    errors["name"] = "Please enter the amount.";
+  }
+
+  if (!itemQuantity) {
+    isValid = false;
+    errors["quatity"] = "Please enter the amount.";
+  }
+
+  if (!inventoryId) {
+    isValid = false;
+    errors["inventoryid"] = "Please enter the amount.";
+  }
+
+
+//  setErros(errors);
+
+  return isValid;
+
+}
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -44,20 +129,11 @@ export default function AddItemForm() {
                         <TextField
                         autoFocus
                         margin="dense"
-                        id="itemID"
-                        label="Item ID"
-                        name="itemID"
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        id="storageID"
-                        label="Storage ID"
-                        name="storageID"
+                        value={inventoryId}
+                        onChange={(e) => { setinventoryId(e.target.value) }}
+                        label="Inventory ID"
+                        name="inventory"
+                        // helperText={errors['inventory']}
                         fullWidth
                         required
                     />
@@ -66,21 +142,26 @@ export default function AddItemForm() {
                         <TextField
                         autoFocus
                         margin="dense"
-                        id="itenName"
+                        value={itemName}
+                        onChange={(e) => { setitemName(e.target.value) }}
                         label="Item Name"
-                        name="itemName"
+                        name="name"
+                        // helperText={errors['name']}
                         fullWidth
                         required
                     />
                         </Grid>
                         
                         <Grid item xs={12}>
+                            
                         <TextField
                         autoFocus
                         margin="dense"
-                        id="quantity"
+                        value={itemQuantity}
+                        onChange={(e) => { setitemQuantity(e.target.value) }}
                         label="Quantity"
                         name="quantity"
+                        // helperText={errors['quantity']}
                         fullWidth
                         required
                     />
@@ -90,9 +171,11 @@ export default function AddItemForm() {
                         <TextField
                         autoFocus
                         margin="dense"
-                        id="description"
+                        value={itemDescription}
+                        onChange={(e) => { setitemDescription(e.target.value) }}
                         label="Description"
                         name="description"
+                        // helperText={errors['description']}
                         fullWidth
                         required
                     />
@@ -104,6 +187,7 @@ export default function AddItemForm() {
                         type="submit"
                         fullWidth
                         variant="contained"
+                         onClick={(e) => addItem(e)}
                         // color="primary"
                         className={classes.submit}
                     >

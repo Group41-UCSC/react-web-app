@@ -17,10 +17,14 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import Profile from './Profile';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import BadgeButtonGroup from './BadgeButtonGroup';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
+import ViewBadge from './ViewBadgeTable';
+import AutoGrid from '../../components/Container';
+import MediaCard from '../../components/Card';
+import ViewBadges from './ViewBadges';
 
 function Copyright() {
     return (
@@ -116,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ProfilePage() {
+export default function AvailableBadges() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -142,7 +146,7 @@ export default function ProfilePage() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Profile
+                        Available Badges
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -174,10 +178,16 @@ export default function ProfilePage() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <BadgeButtonGroup />
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <Profile />
+                                <ViewBadges />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Paper className={classes.paper}>
+                                <ViewBadges />
                             </Paper>
                         </Grid>
                     </Grid>

@@ -17,10 +17,10 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import Profile from './Profile';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import BackButton from '../../components/BackButton';
+import AddUser from './AddUserForm';
 
 function Copyright() {
     return (
@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ProfilePage() {
+export default function AddNewUser() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -142,15 +142,12 @@ export default function ProfilePage() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Profile
+                        Add New User
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                            <NotificationDropDown />
+                            <NotificationsIcon />
                         </Badge>
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -176,8 +173,9 @@ export default function ProfilePage() {
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
+                            <BackButton />
                             <Paper className={classes.paper}>
-                                <Profile />
+                                <AddUser />
                             </Paper>
                         </Grid>
                     </Grid>

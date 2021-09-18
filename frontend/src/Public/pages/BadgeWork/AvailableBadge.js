@@ -17,11 +17,11 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import BadgeButtonGroup from '../components/BadgeButtonGroup';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import EarnBadge from '../components/EarnedBadgeTable';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import BadgeButtonGroup from './BadgeButtonGroup';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
+import ViewBadge from './ViewBadgeTable';
 
 function Copyright() {
     return (
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ViewAvailableBadges() {
+export default function AvailableBadge() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -143,7 +143,7 @@ export default function ViewAvailableBadges() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Earned Badges
+                        Available Badges
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -179,12 +179,12 @@ export default function ViewAvailableBadges() {
                     <Grid container spacing={3}>
                         <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <EarnBadge />
+                                <ViewBadge />
                             </Paper>
                         </Grid>
                         <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <EarnBadge />
+                                <ViewBadge />
                             </Paper>
                         </Grid>
                     </Grid>
