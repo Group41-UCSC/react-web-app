@@ -1,8 +1,8 @@
-package lk.goldtroop.authentication.email;
+package lk.goldtroop.Authentication.Email;
 
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+
 @Service
 @AllArgsConstructor
 public class EmailService implements EmailSender{
@@ -18,6 +19,7 @@ public class EmailService implements EmailSender{
             .getLogger(EmailService.class);
 
     private final JavaMailSender mailSender;
+
 
     @Override
     @Async
@@ -28,8 +30,26 @@ public class EmailService implements EmailSender{
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Confirm your email");
-            helper.setFrom("hello@amigoscode.com");
+            helper.setSubject("Confirm your BuilderMate Account.");
+            helper.setFrom("contact.buildermate@gmail.com");
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            LOGGER.error("failed to send email", e);
+            throw new IllegalStateException("failed to send email");
+        }
+    }
+
+    @Override
+    @Async
+    public void sendInvitation(String to, String email) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper =
+                    new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(email, true);
+            helper.setTo(to);
+            helper.setSubject("Invitation to join BuilderMate");
+            helper.setFrom("contact.buildermate@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
@@ -37,4 +57,3 @@ public class EmailService implements EmailSender{
         }
     }
 }
-

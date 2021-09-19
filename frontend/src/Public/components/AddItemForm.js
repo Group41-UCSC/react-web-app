@@ -46,7 +46,6 @@ export default function AddItemForm() {
             inventoryId: inventoryId,
             itemQuantity: itemQuantity,
             itemDescription: itemDescription
-
         };
    
         setitemQuantity("");
@@ -105,7 +104,7 @@ const validateForm=()=>{
 
   if (!inventoryId) {
     isValid = false;
-    errors["inventoryid"] = "Please enter the amount.";
+    errors["inventoryid"] = "Please enter the inventory ID.";
   }
 
 

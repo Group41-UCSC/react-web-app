@@ -61,9 +61,9 @@ export default function ItemView() {
 
   return (
     <TableContainer component={Paper}>
-    {/* <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
-        setSearch(e.target.value);}}/> */}
+        setSearch(e.target.value);}}/>
 
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
@@ -73,11 +73,11 @@ export default function ItemView() {
             <StyledTableCell align="left">Avail.Qty</StyledTableCell>
             <StyledTableCell align="left">Status</StyledTableCell>
             <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell>
+            <StyledTableCell align="left"></StyledTableCell> 
           </TableRow> 
-        </TableHead>
+        </TableHead> 
         <TableBody>
-              {product.filter((item) => {
+            {product.filter((item) => {
             if(search == ""){
                 return item;
             }
