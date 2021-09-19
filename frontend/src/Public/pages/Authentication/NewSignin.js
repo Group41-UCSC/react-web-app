@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ForgotPassword from './ForgotPassword';
+import axios from "axios";
+// import Alert from "@material-ui/lab/Alert";
+import { Redirect } from "react-router";
 
 function Copyright() {
     return (
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(images/img.jfif)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -59,6 +62,71 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
     const classes = useStyles();
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [redirect, setRedirect] = useState(false);
+    const [errorCode, setErrorCode] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage2, setErrorMessage2] = useState("");
+    const [activated, setActivated] = useState();
+    const [token, setToken] = useState();
+
+
+    useEffect(() => {}, [activated]);
+
+    const submit = async (e) => {
+    e.preventDefault();
+
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+    });
+
+    axios
+      .post("authenticate", data, {
+        headers: { "Content-Type": "application/json", Authorization: "" },
+      })
+      .then((response) => {
+        // localStorage.setItem("token", response.data);
+        setToken(response.data);
+        checkActivated();
+      })
+      .catch((error) => {
+        setErrorCode(error.response.data.message);
+        console.log(errorCode);
+        setErrorMessage(
+        //   <Alert variant="filled" severity="error">
+        //     Invalid Username or Password
+        //   </Alert>
+        );
+      }); 
+  };
+
+   const checkActivated = () => {
+    axios
+      .get("currentUser", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        setActivated(data.activated);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  if (activated == "1") {
+    localStorage.setItem("token", token);
+    
+    return <Redirect to="/dashboard" />;
+  }
+  if (activated == "0") {
+     return <Redirect to="/confirm" />;
+  }
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -68,6 +136,7 @@ export default function SignInSide() {
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
+                    {errorMessage}
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
@@ -82,6 +151,7 @@ export default function SignInSide() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             variant="outlined"
@@ -93,6 +163,7 @@ export default function SignInSide() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}

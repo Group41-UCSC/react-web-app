@@ -53,7 +53,6 @@ function App() {
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/newevent' component={AddNewEvent} />
-          <Route path='/hehe' component={NewTest} />
 
 
 
