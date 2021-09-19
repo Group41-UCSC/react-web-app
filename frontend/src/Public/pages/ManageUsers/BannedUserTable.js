@@ -20,11 +20,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 
 function createData(name, address, contact, nic, role) {
     return { name, address, contact, nic, role };
@@ -219,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserTable() {
+export default function BannedUserTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('address');
@@ -332,25 +331,13 @@ export default function UserTable() {
                                             <TableCell align="center">{row.role}</TableCell>
                                             <TableCell align="center">{row.id}
                                                 <Button m={1}
-                                                    href="update-user/${row.id}"
-                                                    color="primary"
+                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                                                     variant="contained"
                                                     className={classes.button}
-                                                    startIcon={<EditIcon />}>
-                                                    Edit
+                                                    startIcon={<VisibilityIcon />}
+                                                >
+                                                    Remove Ban
                                                 </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Link to={'/view-user-todo'}>
-                                                    <Button m={1}
-                                                        style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                        variant="contained"
-                                                        className={classes.button}
-                                                        startIcon={<VisibilityIcon />}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                </Link>
                                             </TableCell>
                                         </TableRow>
                                     );

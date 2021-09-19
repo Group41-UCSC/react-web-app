@@ -9,38 +9,45 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
     <div>
-        <ListItem button>
+        <ListItem button component={Link} to="/dashboard">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Dashboard" href="/dashboard"/>
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/view-users">
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Users" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="/newevent">
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="#">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Tasks" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link} to="inventory">
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
             <ListItemText primary="Inventory" />
+        </ListItem>
+        <ListItem button component={Link} to="/available-badge">
+            <ListItemIcon>
+                <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="BatchWork" />
         </ListItem>
     </div>
 );
@@ -48,23 +55,23 @@ export const mainListItems = (
 export const secondaryListItems = (
     <div>
         {/* <ListSubheader inset>Saved reports</ListSubheader> */}
-        <ListItem button>
+        {/* <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="No Value" />
-        </ListItem>
-        <ListItem button>
+        </ListItem> */}
+        {/* <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="No Value" />
-        </ListItem>
-        <ListItem button>
+        </ListItem> */}
+        {/* <ListItem button>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary="No Value" />
-        </ListItem>
+        </ListItem> */}
     </div>
 );

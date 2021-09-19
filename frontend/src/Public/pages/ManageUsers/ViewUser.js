@@ -17,10 +17,10 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import UserDetails from '../components/UserDetails';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import UserDetails from './UserDetails';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
 
 function Copyright() {
     return (

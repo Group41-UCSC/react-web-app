@@ -17,10 +17,12 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import BackButton from '../components/BackButton';
-import AddUser from '../components/AddUserForm';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import BadgeButtonGroup from './BadgeButtonGroup';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
+import PieChart from './PieChart';
+import BadgeCard from './ProgressBar';
 
 function Copyright() {
     return (
@@ -116,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddNewUser() {
+export default function BadgeProgress() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -142,12 +144,15 @@ export default function AddNewUser() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Add New User
+                        Badge Progress
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
+                            <NotificationDropDown />
                         </Badge>
+                    </IconButton>
+                    <IconButton color="inherit">
+                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -171,11 +176,26 @@ export default function AddNewUser() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <BadgeButtonGroup />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <BackButton />
                             <Paper className={classes.paper}>
-                                <AddUser />
+                                <PieChart />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Paper className={classes.paper}>
+                                <BadgeCard />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Paper className={classes.paper}>
+                                <BadgeCard />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Paper className={classes.paper}>
+                                <BadgeCard />
                             </Paper>
                         </Grid>
                     </Grid>

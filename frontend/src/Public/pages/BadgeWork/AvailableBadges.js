@@ -17,12 +17,14 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import BadgeButtonGroup from '../components/BadgeButtonGroup';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import PieChart from '../components/PieChart';
-import BadgeCard from '../components/ProgressBar';
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import BadgeButtonGroup from './BadgeButtonGroup';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
+import ViewBadge from './ViewBadgeTable';
+import AutoGrid from '../../components/Container';
+import MediaCard from '../../components/Card';
+import ViewBadges from './ViewBadges';
 
 function Copyright() {
     return (
@@ -118,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function BadgeProgress() {
+export default function AvailableBadges() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -144,7 +146,7 @@ export default function BadgeProgress() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Badge Progress
+                        Available Badges
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -180,22 +182,7 @@ export default function BadgeProgress() {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <PieChart />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.paper}>
-                                <BadgeCard />
+                                <ViewBadges />
                             </Paper>
                         </Grid>
                     </Grid>
