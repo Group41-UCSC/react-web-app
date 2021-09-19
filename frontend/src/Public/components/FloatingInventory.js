@@ -1,33 +1,33 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
-import { Button } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import React from "react";
+import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import BackButton from '../components/BackButton';
+import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from '@material-ui/icons/Add';
+
+import { red } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
     root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        "& > *": {
+            margin: theme.spacing(1)
+        }
+    }
 }));
 
-export default function FloatingInventory() {
+export default function BadgeButtonGroup() {
     const classes = useStyles();
 
     return (
-        <center>
         <div className={classes.root}>
-        <ButtonGroup
+            <ButtonGroup
                 align="center"
                 variant="contained"
                 color="primary"
                 aria-label="contained primary button group"
             >
-              <BackButton />
-                <Button  href="add-item">
+                 <Button  href="add-item">
                 <AddIcon />
                 Add Item</Button>
 
@@ -37,8 +37,6 @@ export default function FloatingInventory() {
                 <Button href="item-issued">Issued Item</Button>
                 <Button style={{ backgroundColor: red[500], color: '#FFFFFF' }} href="item-log">Log</Button>
             </ButtonGroup>
-            
         </div>
-        </center>
     );
 }
