@@ -13,16 +13,20 @@ public class Content {
     private String contentTitle;
     private String contentDescription;
     private String media;
+    private String status;
+    private String postedDate;
 
     public Content() {
     }
 
-    public Content(Integer contentId, Integer scoutId, String contentTitle, String contentDescription, String media) {
+    public Content(Integer contentId, Integer scoutId, String contentTitle, String contentDescription, String media, String status, String postedDate) {
         this.contentId = contentId;
         this.scoutId = scoutId;
         this.contentTitle = contentTitle;
         this.contentDescription = contentDescription;
         this.media = media;
+        this.status = status;
+        this.postedDate = postedDate;
     }
 
     @Id
@@ -65,5 +69,21 @@ public class Content {
 
     public void setMedia(String media) {
         this.media = media;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPostedDate() {
+        return postedDate;
+    }
+
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
     }
 }

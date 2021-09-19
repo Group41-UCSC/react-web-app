@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -24,9 +24,10 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green } from '@material-ui/core/colors';
+import axios from 'axios';
 
-function createData(postId,title, postData, postedBy,postedDate, status) {
-    return {postId,title, postData, postedBy,postedDate, status };
+function createData(contentId,contentTitle, contentDescription, scoutId,postedDate, status,media) {
+    return {contentId,contentTitle, contentDescription, scoutId,postedDate, status,media };
 }
 
 const rows = [
@@ -72,12 +73,13 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'postId', numeric: true, disablePadding: false, label: 'PostId' },
-    { id: 'title', numeric: false, disablePadding: false, label: 'title' },
-    { id: 'postData', numeric: false, disablePadding: false, label: 'postData' },
-    { id: 'postedBy', numeric: false, disablePadding: false, label: 'postedBy' },
-    { id: 'postedDate', numeric: false, disablePadding: false, label: 'postedDate' },
-    { id: 'status', numeric: true, disablePadding: false, label: 'status'},
+    { id: 'contentId', numeric: true, disablePadding: false, label: 'Post Id' },
+    { id: 'contentTitle', numeric: false, disablePadding: false, label: 'Title' },
+    { id: 'contentDescription', numeric: false, disablePadding: false, label: 'Post Data' },
+    { id: 'postedBy', numeric: true, disablePadding: false, label: 'posted By' },
+    { id: 'postedDate', numeric: false, disablePadding: false, label: 'posted Date' },
+    { id: 'status', numeric: true, disablePadding: false, label: 'Status'},
+    { id: 'media', numeric: true, disablePadding: false, label: 'Media'},
     { id: 'action', numeric: true, disablePadding: false, label: 'Action'},
 ];
 
@@ -219,7 +221,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserTable() {
+export default function CmsViewAllPost() {
+    const [posts,setPosts]= useState([])
+    useEffect(() =>{
+    axios.get('http://localhost:8080/contents')
+        .then(res =>{
+            console.log(res,'hello')
+        })
+        .catch(err =>{
+            console.log(err,'heelo')
+        })
+    })
+
+
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('address');
