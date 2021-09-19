@@ -13,6 +13,7 @@ public class Item {
     private String itemSource;
     private Integer inventoryId;
     private Integer itemQuantity;
+    private Integer itemAvailableQuantity;
     private Float itemLifespan;
     private Float itemPrice;
     private String itemBuild;
@@ -22,12 +23,13 @@ public class Item {
     public Item() {
     }
 
-    public Item(Integer itemId, String itemName, String itemSource, Integer inventoryId, Integer itemQuantity, Float itemLifespan, Float itemPrice, String itemBuild, String itemStatus, String itemDescription) {
+    public Item(Integer itemId, String itemName, String itemSource, Integer inventoryId, Integer itemQuantity, Integer itemAvailableQuantity, Float itemLifespan, Float itemPrice, String itemBuild, String itemStatus, String itemDescription) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemSource = itemSource;
         this.inventoryId = inventoryId;
         this.itemQuantity = itemQuantity;
+        this.itemAvailableQuantity = itemAvailableQuantity;
         this.itemLifespan = itemLifespan;
         this.itemPrice = itemPrice;
         this.itemBuild = itemBuild;
@@ -115,5 +117,13 @@ public class Item {
 
     public void setItemDescription(String itemDescription) {
         this.itemDescription = itemDescription;
+    }
+
+    public Integer getItemAvailableQuantity() {
+        return itemAvailableQuantity;
+    }
+
+    public void setItemAvailableQuantity(Integer itemAvailableQuantity) {
+        this.itemAvailableQuantity = itemAvailableQuantity;
     }
 }

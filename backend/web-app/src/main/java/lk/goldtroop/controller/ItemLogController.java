@@ -46,6 +46,7 @@ public class ItemLogController {
             existItemLog.setItemlogStatus(itemlog.getItemlogStatus());
             existItemLog.setItemlogPurpose(itemlog.getItemlogPurpose());
             existItemLog.setItemlogRemarks(itemlog.getItemlogRemarks());
+            existItemLog.setItemLogActualReceivedDate(itemlog.getItemLogActualReceivedDate());
             service.save(existItemLog);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e){
