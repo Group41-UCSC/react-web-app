@@ -15,11 +15,14 @@ public class ItemLog {
     private String itemlogStatus;
     private String itemlogPurpose;
     private String itemlogRemarks;
+    private String itemLogIssueDate;
+    private String itemLogReceiveDate;
+    private String itemLogActualReceivedDate;
 
     public ItemLog() {
     }
 
-    public ItemLog(Integer itemlogId, Integer itemId, String itemlogIssuedto, Integer itemlogQuantity, String itemlogStatus, String itemlogPurpose, String itemlogRemarks) {
+    public ItemLog(Integer itemlogId, Integer itemId, String itemlogIssuedto, Integer itemlogQuantity, String itemlogStatus, String itemlogPurpose, String itemlogRemarks, String itemLogIssueDate, String itemLogReceiveDate, String itemLogActualReceivedDate) {
         this.itemlogId = itemlogId;
         this.itemId = itemId;
         this.itemlogIssuedto = itemlogIssuedto;
@@ -27,6 +30,9 @@ public class ItemLog {
         this.itemlogStatus = itemlogStatus;
         this.itemlogPurpose = itemlogPurpose;
         this.itemlogRemarks = itemlogRemarks;
+        this.itemLogIssueDate = itemLogIssueDate;
+        this.itemLogReceiveDate = itemLogReceiveDate;
+        this.itemLogActualReceivedDate = itemLogActualReceivedDate;
     }
 
     @Id
@@ -85,5 +91,29 @@ public class ItemLog {
 
     public void setItemlogRemarks(String itemlogRemarks) {
         this.itemlogRemarks = itemlogRemarks;
+    }
+
+    public String getItemLogIssueDate() {
+        return itemLogIssueDate;
+    }
+
+    public void setItemLogIssueDate(String itemLogIssueDate) {
+        this.itemLogIssueDate = itemLogIssueDate;
+    }
+
+    public String getItemLogReceiveDate() {
+        return itemLogReceiveDate;
+    }
+
+    public void setItemLogReceiveDate(String itemLogReceiveDate) {
+        this.itemLogReceiveDate = itemLogReceiveDate;
+    }
+
+    public String getItemLogActualReceivedDate() {
+        return itemLogActualReceivedDate;
+    }
+
+    public void setItemLogActualReceivedDate(String itemLogActualReceiveDate) {
+        this.itemLogActualReceivedDate = itemLogActualReceivedDate;
     }
 }
