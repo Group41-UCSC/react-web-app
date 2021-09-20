@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ForgotPassword from './ForgotPassword';
 import axios from "axios";
 // import Alert from "@material-ui/lab/Alert";
-import { Redirect } from "react-router";
+// import { Redirect } from "react-router";
 
 function Copyright() {
     return (
@@ -59,73 +59,42 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 export default function SignInSide() {
     const classes = useStyles();
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [redirect, setRedirect] = useState(false);
-    const [errorCode, setErrorCode] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [errorMessage2, setErrorMessage2] = useState("");
-    const [activated, setActivated] = useState();
-    const [token, setToken] = useState();
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+  
 
 
-    useEffect(() => {}, [activated]);
+    const Login = () => {
 
-    const submit = async (e) => {
-    e.preventDefault();
+        console.log("login function");
+    
+    axios.get('http://localhost:17152/login', {
+      params: {
+        email: email,
+        password: password,
+      }
+    }).then((response) => {
+         if (response.data.message2){
+          alert("Invalid Username Or Password!");
+        }
+      else if (response.data[0].userid) {
+        console.log(response.data[0]);
+        window.location.replace("/dashboard");
+        //  alert("Login Successful");
+      }
 
-    const data = JSON.stringify({
-      email: email,
-      password: password,
     });
 
-    axios
-      .post("authenticate", data, {
-        headers: { "Content-Type": "application/json", Authorization: "" },
-      })
-      .then((response) => {
-        // localStorage.setItem("token", response.data);
-        setToken(response.data);
-        checkActivated();
-      })
-      .catch((error) => {
-        setErrorCode(error.response.data.message);
-        console.log(errorCode);
-        setErrorMessage(
-        //   <Alert variant="filled" severity="error">
-        //     Invalid Username or Password
-        //   </Alert>
-        );
-      }); 
-  };
+}
 
-   const checkActivated = () => {
-    axios
-      .get("currentUser", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        setActivated(data.activated);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  if (activated == "1") {
-    localStorage.setItem("token", token);
-    
-    return <Redirect to="/dashboard" />;
-  }
-  if (activated == "0") {
-     return <Redirect to="/confirm" />;
-  }
+
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -136,7 +105,6 @@ export default function SignInSide() {
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    {errorMessage}
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
@@ -151,6 +119,7 @@ export default function SignInSide() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
@@ -163,6 +132,7 @@ export default function SignInSide() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         {/* <FormControlLabel
@@ -171,11 +141,12 @@ export default function SignInSide() {
                         /> */}
                         <Button
                             style={{ background: '#2E3B55', color: '#ffffff' }}
-                            type="submit"
+                            // type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            onClick={Login}
                         >
                             Sign In
                         </Button>

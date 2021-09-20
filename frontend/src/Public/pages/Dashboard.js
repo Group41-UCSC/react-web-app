@@ -24,6 +24,8 @@ import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
 import BadgeRequest from '../components/BadgeRequest';
 import SiteAnnouncementCreator from '../components/SiteAnnouncementCreator';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 
 function Copyright() {
@@ -122,6 +124,50 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
+    
+    // Troop Count
+    const [troopCount,settroopCount]=useState([])
+    useEffect(()=>{
+    axios.get("http://localhost:17152/troopCount").then((response)=>{
+      settroopCount(response.data)
+    })
+  },[])
+
+  const troop=troopCount.map(record=>record.troop);
+  console.log(troop);
+
+  // Junior Scout Count
+  const [juniorCount,setjuniorCount]=useState([])
+    useEffect(()=>{
+    axios.get("http://localhost:17152/juniorCount").then((response)=>{
+      setjuniorCount(response.data)
+    })
+  },[])
+
+  const junior=juniorCount.map(record=>record.junior);
+
+  // Senior Scout Count
+  const [seniorCount,setseniorCount]=useState([])
+    useEffect(()=>{
+    axios.get("http://localhost:17152/seniorCount").then((response)=>{
+      setseniorCount(response.data)
+    })
+  },[])
+
+  const senior=seniorCount.map(record=>record.senior);
+
+  // Senior Scout Count
+  const [leaderCount,setleaderCount]=useState([])
+    useEffect(()=>{
+    axios.get("http://localhost:17152/leaderCount").then((response)=>{
+      setleaderCount(response.data)
+    })
+  },[])
+
+  const leader=leaderCount.map(record=>record.leader);
+
+
+
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -191,29 +237,34 @@ export default function Dashboard() {
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={classes.paper}>
                                 <h2 align="center">Troop Members</h2>
-                                <h1 align="center">4,623</h1>
+                                {/* {expensecount.map((record)=>{
+                                return( */}
+                                <h1 align="center">{troop}</h1>
+                                {/* )
+                                })} */}
+                                
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={classes.paper}>
                                 <h2 align="center">Scouts Leaders</h2>
-                                <h1 align="center">156</h1>
+                                <h1 align="center">{leader}</h1>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={classes.paper}>
                                 <h2 align="center">Senior Scouts</h2>
-                                <h1 align="center">444</h1>
+                                <h1 align="center">{senior}</h1>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={classes.paper}>
                                 <h2 align="center">Junior Scouts</h2>
-                                <h1 align="center">4023</h1>
+                                <h1 align="center">{junior}</h1>
                             </Paper>
                         </Grid>
                         {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
+                        <Grid item xs={12}>
                             <Paper className={fixedHeightPaper}>
                                 <BadgeRequest />
                             </Paper>
