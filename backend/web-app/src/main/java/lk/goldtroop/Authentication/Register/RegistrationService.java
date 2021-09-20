@@ -35,7 +35,7 @@ public class RegistrationService {
                 new User(request.getFirstName(), request.getLastName(), request.getEmail(), request.getContact(), request.getAddress(), request.getNic(), request.getPassword(), UserRole.USER,null,0)
         );
 
-        String link = "https://buildermate.azurewebsites.net/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:3000/api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "https://buildermatefrontend.azurewebsites.net"})
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = {"http://localhost:3000", "https://buildermatefrontend.azurewebsites.net"})
 public class ForgotPasswordController {
 
     @Autowired

@@ -33,18 +33,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/forgotPassword/**").permitAll()
-                .antMatchers("/resetPassword/**").permitAll()
+                .antMatchers("/**").permitAll()
+//                .antMatchers("/forgotPassword/**").permitAll()
+//                .antMatchers("/resetPassword/**").permitAll()
                 .antMatchers("/api/v*/registration/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()
+//                .formLogin();
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).cors();
-
-
+//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).cors();
     }
 
     @Override

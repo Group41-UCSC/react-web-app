@@ -19,6 +19,7 @@ import ProfilePage from './Public/components/ProfilePage';
 import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import AddNewEvent from './Public/pages/AddNewEvent';
 import NewTest from './Public/components/NewTest';
+import Auth from './Public/pages/Authentication/Auth';
 
 
 import Inventory from './Public/pages/Inventory';
@@ -44,7 +45,7 @@ function App() {
           <Route path='/newcontent' component={AddNewContent} />
           <Route path='/newimggal' component={AddNewImgGal} />
           <Route path='/login' component={SignInSide} />
-          <Route path='/signup' component={SignUp} />
+          <Route path='/api/v1/registration' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/view-users' component={ViewUsers} />
           <Route path='/add-user' component={AddNewUser} />
