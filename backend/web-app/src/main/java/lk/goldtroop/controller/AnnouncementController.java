@@ -51,7 +51,7 @@ public class AnnouncementController {
         }
     }
 
-    @DeleteMapping("/delete-inventory/{id}")
+    @DeleteMapping("/delete-announcement/{id}")
     public void delete(@PathVariable Integer id){
         service.delete(id);
     }
