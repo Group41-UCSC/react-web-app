@@ -30,6 +30,10 @@ import ItemIssued from './Public/pages/ItemIssued';
 import EditItemPage from './Public/pages/EditItemPage';
 import AddNewItem from './Public/pages/AddNewItem';
 import ItemLog from './Public/pages/ItemLog';
+import InventoryRequest from './Public/pages/InventoryUserRequest';
+import ViewInventory from './Public/pages/ViewInventory';
+import Event from './Public/pages/Event';
+import EventUpcoming from './Public/pages/EventUpcoming';
 
 
 function App() {
@@ -65,6 +69,10 @@ function App() {
           <Route path='/edit-item-form' component={EditItemPage} />
           <Route path='/add-item' component={AddNewItem} />
           <Route path='/item-log' component={ItemLog} />
+          <Route path='/view-inventory' component={ViewInventory} />
+          <Route path='/request-inventory' component={InventoryRequest} />
+          <Route path='/event' component={Event} />
+          <Route path='/event-upcoming' component={EventUpcoming} />
         </Switch>
         {/* <Footer /> */}
       </Router>
