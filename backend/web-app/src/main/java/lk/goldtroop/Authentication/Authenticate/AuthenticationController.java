@@ -33,9 +33,5 @@ public class AuthenticationController {
         return jwtUtil.generateToken(authRequest.getEmail());
     }
 
-
-
-
-
 }
 

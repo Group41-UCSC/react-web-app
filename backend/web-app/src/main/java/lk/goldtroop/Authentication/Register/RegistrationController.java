@@ -8,6 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @AllArgsConstructor
 
 
+//@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "api/v1/registration",produces = "application/json")
 public class RegistrationController {
     private final RegistrationService registrationService;
