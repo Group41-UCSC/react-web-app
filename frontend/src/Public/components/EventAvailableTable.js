@@ -45,9 +45,9 @@ export default function EventAvailable() {
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemList = async () => {
+  const getEventList = async () => {
       try{
-          const data = await axios.get("http://localhost:8080/items");
+          const data = await axios.get("http://localhost:8080/events");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -57,7 +57,7 @@ export default function EventAvailable() {
 
 
   useEffect(() => {
-      getItemList();
+      getEventList();
   }, []);
 
   return (
@@ -69,33 +69,35 @@ export default function EventAvailable() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Event Name</StyledTableCell>
-            <StyledTableCell align="left">Event Date</StyledTableCell>
-            <StyledTableCell align="left">Participation</StyledTableCell>
-            <StyledTableCell align="left">Status</StyledTableCell>
+            <StyledTableCell align="left">Event Title</StyledTableCell>
+            <StyledTableCell align="left">Event Description</StyledTableCell>
+            <StyledTableCell align="left">Event Category</StyledTableCell>
+           
+            <StyledTableCell align="left">Event Status</StyledTableCell>
             <StyledTableCell align="right">Action</StyledTableCell>
             <StyledTableCell align="left"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
-            {product.filter((item) => {
+            {product.filter((event) => {
             if(search == ""){
-                return item;
+                return event;
             }
-            else if (item.itemName.toLowerCase().includes(search.toLowerCase())){
-                return item;
+            else if (event.eventTitle.toLowerCase().includes(search.toLowerCase())){
+                return event;
             }}).
-            map((item) => {
+            map((event) => {
                 return (
-              <StyledTableRow key={item.itemId}>
-              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemDescription}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
+              <StyledTableRow key={event.eventId}>
+              <StyledTableCell align="left" component="th" scope="row">{event.eventTitle}</StyledTableCell>
+
+              <StyledTableCell align="left">{event.eventDescription}</StyledTableCell>
+              <StyledTableCell align="left">{event.eventCategory}</StyledTableCell>
+              <StyledTableCell align="left">{event.eventStatus}</StyledTableCell>
               
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
+                    href="delete-event"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
