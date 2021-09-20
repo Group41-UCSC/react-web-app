@@ -44,9 +44,9 @@ export default function UserTable() {
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemList = async () => {
+  const getUsersList = async () => {
       try{
-          const data = await axios.get("http://localhost:8080/items");
+          const data = await axios.get("http://localhost:17152/view-users");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -56,7 +56,7 @@ export default function UserTable() {
 
 
   useEffect(() => {
-      getItemList();
+      getUsersList();
   }, []);
 
   return (
@@ -68,7 +68,8 @@ export default function UserTable() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Username</StyledTableCell>
+            <StyledTableCell align="left">First name</StyledTableCell>
+            <StyledTableCell align="left">Last Name</StyledTableCell>
             <StyledTableCell align="left">Address</StyledTableCell>
             <StyledTableCell align="left">Contact Num</StyledTableCell>
             <StyledTableCell align="left">User Role</StyledTableCell>
@@ -86,11 +87,12 @@ export default function UserTable() {
             }}).
             map((item) => {
                 return (
-              <StyledTableRow key={item.itemId}>
-              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemDescription}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
+              <StyledTableRow key={item.userid}>
+              <StyledTableCell align="left" component="th" scope="row">{item.first_name}</StyledTableCell>
+              <StyledTableCell align="left">{item.last_name}</StyledTableCell>
+              <StyledTableCell align="left">{item.address}</StyledTableCell>
+              <StyledTableCell align="left">{item.contact}</StyledTableCell>
+              <StyledTableCell align="left">{item.user_role}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
                 href="/edit-item-form"
