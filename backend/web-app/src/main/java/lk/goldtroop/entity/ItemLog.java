@@ -15,14 +15,14 @@ public class ItemLog {
     private String itemlogStatus;
     private String itemlogPurpose;
     private String itemlogRemarks;
-    private String itemLogIssueDate;
-    private String itemLogReceiveDate;
-    private String itemLogActualReceivedDate;
+    private String itemlogIssueDate;
+    private String itemlogReceiveDate;
+    private String itemlogActualReceivedDate;
 
     public ItemLog() {
     }
 
-    public ItemLog(Integer itemlogId, Integer itemId, String itemlogIssuedto, Integer itemlogQuantity, String itemlogStatus, String itemlogPurpose, String itemlogRemarks, String itemLogIssueDate, String itemLogReceiveDate, String itemLogActualReceivedDate) {
+    public ItemLog(Integer itemlogId, Integer itemId, String itemlogIssuedto, Integer itemlogQuantity, String itemlogStatus, String itemlogPurpose, String itemlogRemarks, String itemlogIssueDate, String itemlogReceiveDate, String itemlogActualReceivedDate) {
         this.itemlogId = itemlogId;
         this.itemId = itemId;
         this.itemlogIssuedto = itemlogIssuedto;
@@ -30,9 +30,9 @@ public class ItemLog {
         this.itemlogStatus = itemlogStatus;
         this.itemlogPurpose = itemlogPurpose;
         this.itemlogRemarks = itemlogRemarks;
-        this.itemLogIssueDate = itemLogIssueDate;
-        this.itemLogReceiveDate = itemLogReceiveDate;
-        this.itemLogActualReceivedDate = itemLogActualReceivedDate;
+        this.itemlogIssueDate = itemlogIssueDate;
+        this.itemlogReceiveDate = itemlogReceiveDate;
+        this.itemlogActualReceivedDate = itemlogActualReceivedDate;
     }
 
     @Id
@@ -93,27 +93,27 @@ public class ItemLog {
         this.itemlogRemarks = itemlogRemarks;
     }
 
-    public String getItemLogIssueDate() {
-        return itemLogIssueDate;
+    public String getItemlogIssueDate() {
+        return itemlogIssueDate;
     }
 
-    public void setItemLogIssueDate(String itemLogIssueDate) {
-        this.itemLogIssueDate = itemLogIssueDate;
+    public void setItemlogIssueDate(String itemlogIssueDate) {
+        this.itemlogIssueDate = itemlogIssueDate;
     }
 
-    public String getItemLogReceiveDate() {
-        return itemLogReceiveDate;
+    public String getItemlogReceiveDate() {
+        return itemlogReceiveDate;
     }
 
-    public void setItemLogReceiveDate(String itemLogReceiveDate) {
-        this.itemLogReceiveDate = itemLogReceiveDate;
+    public void setItemlogReceiveDate(String itemlogReceiveDate) {
+        this.itemlogReceiveDate = itemlogReceiveDate;
     }
 
-    public String getItemLogActualReceivedDate() {
-        return itemLogActualReceivedDate;
+    public String getItemlogActualReceivedDate() {
+        return itemlogActualReceivedDate;
     }
 
-    public void setItemLogActualReceivedDate(String itemLogActualReceiveDate) {
-        this.itemLogActualReceivedDate = itemLogActualReceivedDate;
+    public void setItemlogActualReceivedDate(String itemlogActualReceiveDate) {
+        this.itemlogActualReceivedDate = itemlogActualReceivedDate;
     }
 }

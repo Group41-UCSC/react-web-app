@@ -19,6 +19,7 @@ import ProfilePage from './Public/components/ProfilePage';
 import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import AddNewEvent from './Public/pages/AddNewEvent';
 import NewTest from './Public/components/NewTest';
+import ContentDash from './Public/components/ContentDash';
 
 
 import Inventory from './Public/pages/Inventory';
@@ -53,6 +54,7 @@ function App() {
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/newevent' component={AddNewEvent} />
+          <Route path='/contentdash' component={ContentDash} />
 
 
 
