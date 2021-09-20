@@ -18,15 +18,13 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
+
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
-import BadgeRequest from '../components/BadgeRequest';
-import SiteAnnouncementCreator from '../components/SiteAnnouncementCreator';
-import { useState, useEffect } from 'react';
-import axios from "axios";
-
+import Button from '@material-ui/core/Button';
+import InventoryUserForm from '../components/InventoryUserForm';
+import InventoryStatusTable from '../components/InventoryStatusTable';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 function Copyright() {
     return (
@@ -122,52 +120,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard() {
+export default function InventoryRequest() {
     const classes = useStyles();
-    
-    // Troop Count
-    const [troopCount,settroopCount]=useState([])
-    useEffect(()=>{
-    axios.get("http://localhost:17152/troopCount").then((response)=>{
-      settroopCount(response.data)
-    })
-  },[])
-
-  const troop=troopCount.map(record=>record.troop);
-  console.log(troop);
-
-  // Junior Scout Count
-  const [juniorCount,setjuniorCount]=useState([])
-    useEffect(()=>{
-    axios.get("http://localhost:17152/juniorCount").then((response)=>{
-      setjuniorCount(response.data)
-    })
-  },[])
-
-  const junior=juniorCount.map(record=>record.junior);
-
-  // Senior Scout Count
-  const [seniorCount,setseniorCount]=useState([])
-    useEffect(()=>{
-    axios.get("http://localhost:17152/seniorCount").then((response)=>{
-      setseniorCount(response.data)
-    })
-  },[])
-
-  const senior=seniorCount.map(record=>record.senior);
-
-  // Senior Scout Count
-  const [leaderCount,setleaderCount]=useState([])
-    useEffect(()=>{
-    axios.get("http://localhost:17152/leaderCount").then((response)=>{
-      setleaderCount(response.data)
-    })
-  },[])
-
-  const leader=leaderCount.map(record=>record.leader);
-
-
-
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -192,7 +146,7 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        Request Inventory
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -224,73 +178,24 @@ export default function Dashboard() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <Button
+                        style={{ background: '#2E3B55', color: '#ffffff' }}
+                        href="view-inventory"
+                        variant="contained"
+                       
+                    >
+                        <VisibilityIcon />
+                        View Item
+                    </Button>
                     <Grid container spacing={3}>
-                        {/* Heading */}
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <Typography >
-                                    <h1 style={{ color: "#3f51b5" }}> 42nd Colombo Royal College Scout Group - Gold Troop </h1>
-                                </Typography>
+                                <InventoryUserForm />
                             </Paper>
                         </Grid>
-
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={6}>
                             <Paper className={classes.paper}>
-                                <h2 align="center">Troop Members</h2>
-                                {/* {expensecount.map((record)=>{
-                                return( */}
-                                <h1 align="center">{troop}</h1>
-                                {/* )
-                                })} */}
-                                
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Scouts Leaders</h2>
-                                <h1 align="center">{leader}</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Senior Scouts</h2>
-                                <h1 align="center">{senior}</h1>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Junior Scouts</h2>
-                                <h1 align="center">{junior}</h1>
-                            </Paper>
-                        </Grid>
-                        {/* Chart */}
-                        <Grid item xs={12}>
-                            <Paper className={fixedHeightPaper}>
-                                <BadgeRequest />
-                            </Paper>
-                        </Grid>
-
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <h2 align="center">Upcoming Events</h2>
-                                <h5 align="center">Scout's Day</h5>
-                                <h5 align="center">Royal Scout's Day</h5>
-                            </Paper>
-                        </Grid>
-
-                        {/* Recent Deposits */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={classes.paper}>
-                                <SiteAnnouncementCreator />
-                            </Paper>
-                        </Grid>
-
-
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders />
+                                <InventoryStatusTable />
                             </Paper>
                         </Grid>
                     </Grid>

@@ -75,7 +75,7 @@ const SignUp = () => {
 
     if (validateForm()) {
       await axios
-        .post("api/v1/registration", data, {
+        .post("http://localhost:8080/api/v1/registration", data, {
           headers: { "Content-Type": "application/json", Authorization: "" },
         })
         .then((response) => {
@@ -170,7 +170,7 @@ const SignUp = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={submit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -212,7 +212,7 @@ const SignUp = () => {
                                 helperText={errors["email"]}
                             />
                         </Grid>
-                      <Grid> 
+                      <Grid item xs={12} sm={6}> 
                           <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -227,39 +227,39 @@ const SignUp = () => {
                                 // value={this.state.contact}
                                 // onChange={this.handleChange}
                         />
-                          </Grid>  
-                        <Grid> 
+                          </Grid>    
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="nic"
+                            label="National Identity Card Number"
+                            name="nic"
+                            color="secondary"
+                            onChange={(e) => setNic(e.target.value)}
+                            helperText={errors["nic"]}
+                            //   value={this.state.dob}
+                            //   onChange={this.handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}> 
                           <TextField
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="contact"
-                                label="Contact Number"
-                                name="contact"
+                                id="address"
+                                label="Address"
+                                name="address"
                                 color="secondary"
                                 onChange={(e) => setAddress(e.target.value)}
                                 helperText={errors["address"]}
                                 // value={this.state.contact}
                                 // onChange={this.handleChange}
                         />
-                          </Grid>  
-                        <Grid item xs={12}>
-                            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="nic"
-              label="National Identity Card Number"
-              name="nic"
-              color="secondary"
-              onChange={(e) => setNic(e.target.value)}
-              helperText={errors["nic"]}
-              //   value={this.state.dob}
-              //   onChange={this.handleChange}
-            />
-                        </Grid>
+                          </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -277,16 +277,16 @@ const SignUp = () => {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              id="confirmPassword"
-              color="secondary"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              helperText={errors["confirm_password"]}
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type="password"
+                                id="confirmPassword"
+                                color="secondary"
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                helperText={errors["confirm_password"]}
                             />
                         </Grid>
                     </Grid>

@@ -20,6 +20,7 @@ import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import AddNewEvent from './Public/pages/AddNewEvent';
 import NewTest from './Public/components/NewTest';
 import ContentDash from './Public/components/ContentDash';
+import Auth from './Public/pages/Authentication/Auth';
 
 
 import Inventory from './Public/pages/Inventory';
@@ -30,6 +31,10 @@ import ItemIssued from './Public/pages/ItemIssued';
 import EditItemPage from './Public/pages/EditItemPage';
 import AddNewItem from './Public/pages/AddNewItem';
 import ItemLog from './Public/pages/ItemLog';
+import InventoryRequest from './Public/pages/InventoryUserRequest';
+import ViewInventory from './Public/pages/ViewInventory';
+import Event from './Public/pages/Event';
+import EventUpcoming from './Public/pages/EventUpcoming';
 
 
 function App() {
@@ -41,7 +46,7 @@ function App() {
           <Route path='/newcontent' component={AddNewContent} />
           <Route path='/newimggal' component={AddNewImgGal} />
           <Route path='/login' component={SignInSide} />
-          <Route path='/signup' component={SignUp} />
+          <Route path='/api/v1/registration' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/view-users' component={ViewUsers} />
           <Route path='/add-user' component={AddNewUser} />
@@ -66,6 +71,10 @@ function App() {
           <Route path='/edit-item-form' component={EditItemPage} />
           <Route path='/add-item' component={AddNewItem} />
           <Route path='/item-log' component={ItemLog} />
+          <Route path='/view-inventory' component={ViewInventory} />
+          <Route path='/request-inventory' component={InventoryRequest} />
+          <Route path='/event' component={Event} />
+          <Route path='/event-upcoming' component={EventUpcoming} />
         </Switch>
         {/* <Footer /> */}
       </Router>
