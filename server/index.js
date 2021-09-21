@@ -4,11 +4,45 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 const path = require('path');
-app.use(cors());
+const { name } = require('ejs');
+const bcrypt = require('bcrypt');
+const bodyParser =  require('body-parser')
+const { response } = require('express');
+
+const saltRounds = 10;
+
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+var nodemailer = require('nodemailer')
+
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT"],
+    credentials: true
+  }));
+
+
+
+
 app.use(express.urlencoded({
     extended: false
 }));
 app.use(express.json());
+app.set("view engine","ejs");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+  key: "id",
+  secret: "subscribe",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    // expires:60*60*24,
+  },
+}));
 
 
 const db = mysql.createConnection({
@@ -17,10 +51,6 @@ const db = mysql.createConnection({
     password: "FYnrHTpx",
     database: "force_webapp",
     port: "17152",
-    // user: "root",
-    // host: "127.0.0.1",
-    // password: "root",
-    // database: "goldtroop",
     multipleStatements: true
 });
 
@@ -36,27 +66,151 @@ db.connect((err) => {
 const publicDirectory = path.join(__dirname, './public')
 console.log(__dirname);
 
-app.get('/login', (req, res) => {
-    const email = req.query.email;
-    const password = req.query.password;
+app.post('/login', (req, res) => {
+  
+  const email = req.body.email
+  const password = req.body.password
+  
+  console.log(email)
+  console.log(password)
+  db.query
+  ("SELECT * FROM usertable WHERE email = ?;", 
+  email, 
+  (err, result)=> {
 
-    console.log(email,password);
+      if(err){
+          res.send({err: err})
+      }
+      if(result){
+          console.log(result);
+          if (result.length > 0) {
+              bcrypt.compare(password, result[0].password, (error, response)=>{
+                  console.log(response);
+                  if(response){        
+                      res.send(result);
+                  }else{
+                      res.send({message:"Invalid Username or Password!"})
+                  }
+              })
+          }else{
+              res.send({message:"User doesn't exist"});
+          }
 
-    db.query("SELECT * FROM usertable WHERE email=? AND password=?",
-        [email, password], (err, result) => {
-            if (result.length > 0) {
-                
-                res.send(result);
-                console.log(result);
-            }
-            else if (result.length == 0)  {
-
-                res.send({ message2: "Invalid email/password combination!" });
-                console.log(result);
-            }
-        });
+          
+      }}
+  );
 });
 
+app.post("/Register", (req, res) => {
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const address = req.body.address;
+  const password = req.body.password;
+  const cpassword = req.body.cpassword;
+  const nic = req.body.nic;
+ 
+
+  var transport = nodemailer.createTransport(
+    {
+      service: 'gmail',
+      auth: {
+        user: 'sukha98gnanam@gmail.com',
+        pass: 'Shuthu@1998'
+      }
+    }
+  )
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  const head = 'otp code';
+  const mess = `Dear ${first_name}, 
+
+                Your otp code is ${otp}
+                Use this code to verify your Account.
+
+            With regrads,
+            Scout Team`;
+
+  var mailOptions = {
+    from: 'sukha98gnanam@gmail.com',
+    to: email,
+    subject: head,
+    text: mess
+  }
+  transport.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error)
+    }
+    else {
+
+      console.log('Email sent' + info.response)
+      
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+          console.log(err);
+        }
+
+        db.query(
+          "INSERT INTO usertable(first_name,last_name,password,email,phone,nic,address,proimg,date,u_otp,user_role) VALUES (?,?,?,?,?,?,?,'user.jpg',NOW(),?,'USER');  ", [first_name,last_name,hash, email, phone, nic, address, otp ],
+          (err, result) => {
+            if (err) {
+              console.log(err)
+            } else {
+              res.send({ message: "values sended" });
+            }
+          });
+      })
+    }
+  })
+});
+
+app.post('/otpCheck', (req, res) => {
+
+  const email = req.body.email
+  const otp = req.body.otp
+
+  console.log(email)
+  console.log(otp)
+  db.query
+  ("SELECT * FROM usertable WHERE email = ? AND u_otp = ?;", 
+  [email,otp], 
+  (err, result)=> {
+
+      if(err){
+          res.send({err: err})
+      }
+      if(result){
+          console.log(result);
+          if (result.length > 0) {
+              
+              db.query("UPDATE usertable SET enabled=? WHERE email = ? AND u_otp = ?", 
+              [1,email,otp], 
+              (err, result) => {
+
+                  if (err) {
+                      console.log(err);
+                  } else {
+                      res.send({message:"OTP code verified Successfully"});
+                  }
+              }
+              );
+              
+          }else{
+              res.send({message:"Wrong otp code"});
+          }
+
+          
+      }}
+  );
+});
+
+app.get('/validuser', (req, res) => {
+  db.query("SELECT * FROM  usertable WHERE email=? OR  nic = ?", [req.query.email,req.query.nic], (err, results, fields) => {
+    if (err) throw err;
+    res.send(results);
+  });
+
+});
 
 
 //Scout Leader Dashboard
