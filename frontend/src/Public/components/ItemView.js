@@ -44,20 +44,11 @@ export default function ItemView() {
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/items");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
-      }
-  };
-
-
-  useEffect(() => {
-      getItemList();
-  }, []);
+  useEffect(()=>{
+    axios.get("http://localhost:17152/items").then((response)=>{
+      setProduct(response.data)
+    })
+  },[])
 
   return (
     <TableContainer component={Paper}>
@@ -86,11 +77,11 @@ export default function ItemView() {
             }}).
             map((item) => {
                 return (
-              <StyledTableRow key={item.itemId}>
-              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemDescription}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
+              <StyledTableRow key={item.item_id}>
+              <StyledTableCell align="left" component="th" scope="row">{item.item_name}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_quantity}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_description}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_status}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
                 href="/edit-item-form"
