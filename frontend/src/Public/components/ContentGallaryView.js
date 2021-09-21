@@ -16,12 +16,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { green } from '@material-ui/core/colors';
+import { green ,red } from '@material-ui/core/colors';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Grid from '@material-ui/core/Grid';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Card from '@material-ui/core/Card';
 
 import CardContent from '@material-ui/core/CardContent';
+import { FormatBold } from '@material-ui/icons';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -50,7 +52,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InventoryStatusTable() {
+export default function ContentGallaryView() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
@@ -87,15 +89,15 @@ export default function InventoryStatusTable() {
     {/* <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
         setSearch(e.target.value);}}/> */}
- <Typography component="h1" variant="h5">
-                    Requested Item Status
-                </Typography>
+ <center><Typography component="h1" variant="h5">
+                    Content Gallary Post
+                </Typography></center>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Requested Item</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
+            <StyledTableCell align="center">Item Gallary ID</StyledTableCell>
+            <StyledTableCell align="center">Item Gallary Name</StyledTableCell>
+            <StyledTableCell  colSpan= '2' align="center">Action</StyledTableCell>
           </TableRow> 
         </TableHead>
         <TableBody>
@@ -111,7 +113,7 @@ export default function InventoryStatusTable() {
               <StyledTableRow key={item.itemId}>
               <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
               
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
+              <StyledTableCell align="left">{item.itemName}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
                 onClick={handleClickOpen}
@@ -122,36 +124,44 @@ export default function InventoryStatusTable() {
                 >
                 View                                              
               </Button>
-              <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+              <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
                 <DialogTitle id="form-dialog-title">Description</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                    <DialogContentText style={{  fontWeight:'bold', fontSize:16 }}>
                         Item Description
                     </DialogContentText>
                     <Grid item>
                     <div>
             
-        <Card className={classes.root}>
-           {product.map((product,itemId) => (
-        <CardContent  key= {product.itemId}>
-            <div>
-            <Typography style={{ color: "#3f51b5",fontSize:16 }}>Title  -  {product.itemName}</Typography>
-            <Typography style={{ fontSize:16 }}>Status  -  {product.itemName}</Typography>
-            <Typography style={{ fontSize:16 }}>Catogory  -  {product.itemName}</Typography>
-            </div>
-            
-        </CardContent>
-           ))}
-    </Card>
-    </div>
-                                
+            <Card className={classes.root}>
+               {product.map((product,itemId) => (
+            <CardContent  key= {product.itemId}>
+                <div>
+                <Typography style={{ color: "#3f51b5" , fontSize:16 }}>Title  -  {product.itemName}</Typography>
+                <Typography style={{   fontSize:16 }}>Status  -  {product.itemName}</Typography>
+                <Typography style={{ fontSize:16 }}>Catogory  -  {product.itemName}</Typography>
+                </div>
+                
+            </CardContent>
+               ))}
+        </Card>
+        </div>
                             </Grid>
                 </DialogContent>
                
             </Dialog>
             </StyledTableCell>
 
-              
+            <StyledTableCell align="center" >
+                <Button m={1}
+                    href="delete-item"
+                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                    variant="contained"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}>
+                    Delete
+                    </Button>
+              </StyledTableCell>
               </StyledTableRow>
                 );
             })
