@@ -615,3 +615,66 @@ app.get('/view-badgelog-id', (_req, res) => {
 app.listen(17152, () => {
     console.log("Your server is running on port 17152");
 });
+
+////////////////////////////////////// Content Management System /////////////////////////////
+
+
+// app.post('/add-content' , (req , res)=>{
+
+//     console.log(req.body);
+//     const formdata = JSON.parse(req.body.data);
+   
+//     const content_title = formdata.content_title;
+//     const content_description = formdata.content_description;
+//     const media = formdata.media;
+//     const posted_date = formdata.posted_date;
+
+
+//   console.log(req.body);
+//   console.log(req.files);
+
+
+// let sampleFile;
+// let uploadPath;
+
+//   if (!req.files || Object.keys(req.files).length === 0) {
+//     return res.status(400).send('No files were uploaded.');
+//   }
+
+//   console.log(__dirname);
+
+//   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+//   const randomfilenum = Math.floor(Math.random()*1000000);
+//   sampleFile = req.files.file;
+//   const newfilename = randomfilenum.toString() +sampleFile.name;
+
+//   uploadPath = __dirname + '/files/contents/' + newfilename
+
+
+//   // Use the mv() method to place the file somewhere on your server
+//   sampleFile.mv(uploadPath, function(err) {
+//    console.log(err);
+//   });
+
+
+//    db.query("INSERT INTO formtemplate (formTopic,file,UploadDate,expDate,description) VALUES (?,?,?,?,?)",
+//    [formTopic,newfilename,UploadDate,expDate,description],(err,result)=>{
+//        if(err){
+//            console.log(err);
+//        }else{
+//            res.send("Data Added");
+//        }
+//    });
+
+// });
+
+// app.get('/formView',(req,res)=>{
+//     db.query("SELECT * FROM formtemplate ORDER BY uploadDate ASC",(err,result,) => {
+//         if(err) {
+// 		console.log(err)
+// 	  } else {
+//         res.send(result)
+// 	  } 
+        
+//     });
+// });

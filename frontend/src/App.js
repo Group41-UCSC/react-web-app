@@ -11,7 +11,6 @@ import ViewUser from './Public/pages/ManageUsers/ViewUser'
 import AddNewUser from './Public/pages/ManageUsers/AddNewUser'
 import AddNewContent from './Public/pages/AddNewContent'
 import AddNewImgGal from './Public/pages/AddNewImgGal'
-import AddMultipleImg from './Public/components/AddMultipleImg';
 import ViewUsers from './Public/pages/ManageUsers/ViewUsers';
 import AvailableBadges from './Public/pages/BadgeWork/AvailableBadges'
 import AvailableBadge from './Public/pages/BadgeWork/AvailableBadge'
@@ -21,7 +20,6 @@ import ProfilePage from './Public/components/ProfilePage';
 import ContentSViewAllPost from './Public/pages/ContentSViewAllPost';
 import AddNewEvent from './Public/pages/AddNewEvent';
 import NewTest from './Public/components/NewTest';
-import ContentDash from './Public/components/ContentDash';
 
 
 import Inventory from './Public/pages/Inventory';
@@ -72,7 +70,6 @@ function App() {
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/newevent' component={AddNewEvent} />
-          <Route path='/contentdash' component={ContentDash} />
 
 
 

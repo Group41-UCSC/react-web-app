@@ -1,5 +1,5 @@
 import React from 'react'
-import NewContent from '../components/NewContent'
+import NewContent from '../components/CMS/NewContent'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../components/css/AddNewContent.css'
+import '../css/AddNewContent.css'
 import AddIcon from '@material-ui/icons/Add';
 
 
