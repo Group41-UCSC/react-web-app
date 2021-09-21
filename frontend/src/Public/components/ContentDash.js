@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
+import ImageIcon from '@material-ui/icons/Image';
+import TocIcon from '@material-ui/icons/Toc';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper1: {
     height: 75,
-    width: 250,
+    width: 400,
     display: 'flex',
+    margin:20,
   },
   control: {
     padding: theme.spacing(5),
@@ -63,40 +66,28 @@ export default function ContentHome() {
             <Grid container className={classes.root} spacing={2}>
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" spacing={6}>
-                        <Grid  xs={4}  key={1} item>
+                        <Grid  xs={6}  key={1} item>
                             <Paper className={classes.paper1}>
                                 <Grid style={{flex:'3'}}> <PostAddIcon className={classes.icon}/></Grid>
                                 <Grid style={{flex:'7', paddingTop:'20px',fontSize:'20px'}}> Add New Post</Grid>
                             </Paper>
                         </Grid>
-                        <Grid xs={4} key={2} item>
+                        <Grid xs={6} key={2} item>
                             <Paper className={classes.paper1}>
-                                <Grid style={{flex:'3'}}> <PermMediaIcon className={classes.icon}/></Grid>
+                                <Grid style={{flex:'3'}}> <ImageIcon className={classes.icon}/></Grid>
                                 <Grid style={{flex:'7', paddingTop:'20px',fontSize:'18px'}}> Add Image Gallery</Grid>
                             </Paper>
                         </Grid>
-                        <Grid xs={4} key={3} item>
+                        <Grid xs={6} key={3} item>
                             <Paper className={classes.paper1}>
-                                <Grid style={{flex:'3'}}> <PostAddIcon className={classes.icon}/></Grid>
+                                <Grid style={{flex:'3'}}> <PermMediaIcon className={classes.icon}/></Grid>
                                 <Grid style={{flex:'7', paddingTop:'20px',fontSize:'18px'}}> View Image Gallery</Grid>
                             </Paper>
                         </Grid>
-                        <Grid xs={4} key={4} item>
+                        <Grid xs={6} key={4} item>
                             <Paper className={classes.paper1}>
-                                <Grid style={{flex:'3'}}> <PostAddIcon className={classes.icon}/></Grid>
+                                <Grid style={{flex:'3'}}> <TocIcon className={classes.icon}/></Grid>
                                 <Grid style={{flex:'7', paddingTop:'20px',fontSize:'20px'}}> View All Posts</Grid>
-                            </Paper>
-                        </Grid>
-                        <Grid xs={4} key={5} item>
-                            <Paper className={classes.paper1}>
-                                <Grid style={{flex:'3'}}> <PostAddIcon className={classes.icon}/></Grid>
-                                <Grid style={{flex:'7', paddingTop:'20px',fontSize:'20px'}}> View Your Posts</Grid>
-                            </Paper>
-                        </Grid>
-                        <Grid xs={4} key={6} item>
-                            <Paper className={classes.paper1}>
-                                <Grid style={{flex:'3'}}> <PostAddIcon className={classes.icon}/></Grid>
-                                <Grid style={{flex:'7', paddingTop:'20px',fontSize:'20px'}}> Compalins</Grid>
                             </Paper>
                         </Grid>
                     </Grid>
