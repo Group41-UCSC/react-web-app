@@ -1,4 +1,5 @@
 const express = require('express');
+const multer= require('multer');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
@@ -88,6 +89,25 @@ app.get('/juniorCount', (req, res) => {
     });
   })
 
+app.get('/view-announcement', (_req, res) => {
+    db.query('SELECT * FROM announcement ', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-badge-request', (_req, res) => {
+    db.query('SELECT * FROM badge ', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 app.post('/createAnnouncement', (req, res) => {
     console.log(req.body)
@@ -105,6 +125,72 @@ app.post('/createAnnouncement', (req, res) => {
             }
     });
 });
+
+ ////////////////////////////////////// FILE UPLOADS ///////////////////////////// 
+//ContentUpload
+const profileImgStorage= multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,"files/user-profiles");
+    },
+    filename:(req,file,cb) =>{
+        //get name from frontend req.body.name
+        cb(null,"test.jpeg");
+    },
+});
+
+const uploadProfileImg= multer({storage:profileImgStorage});
+app.post('/contentUpload',uploadProfileImg.single("file"),(req,res)=>{
+    res.status(200).json("file uploaded succesfully 1")
+});
+
+ //ContentUpload
+const contentStorage= multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,"files/contents");
+    },
+    filename:(req,file,cb) =>{
+        //get name from frontend req.body.name
+        cb(null,"test.jpeg");
+    },
+});
+
+const uploadContent= multer({storage:contentStorage});
+app.post('/contentUpload',uploadContent.single("file"),(req,res)=>{
+    res.status(200).json("file uploaded succesfully 1")
+});
+
+//badgework upload
+const badgeStorage= multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,"files/badgeworks");
+    },
+    filename:(req,file,cb) =>{
+        //get name from frontend req.body.name
+        cb(null,"test.jpeg");
+    },
+});
+
+const uploadBadge= multer({storage:badgeStorage});
+app.post('/BadgeUpload',uploadBadge.single("file"),(req,res)=>{
+    res.status(200).json("Badge uploaded succesfully ")
+});
+
+//Immage Gallery upload
+const galleryStorage= multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,"files/image-gallery");
+    },
+    filename:(req,file,cb) =>{
+        //get name from frontend req.body.name
+        cb(null,file.fieldname + '-' + Date.now() + file.originalname.match(/\..*$/)[0]);
+    },
+});
+
+const uploadGallery= multer({storage:galleryStorage});
+app.post('/GalleryUpload',uploadGallery.array("file",10),(req,res)=>{
+    res.status(200).json("Badge uploaded succesfully ")
+});
+
 
  ////////////////////////////////////// User Management ///////////////////////////// 
  app.get('/view-users', (_req, res) => {
@@ -129,6 +215,27 @@ app.get("/delete-user", (req, res) => {
             }
         }
     );
+});
+
+app.post('/create-user', (req, res) => {
+    console.log(req.body)
+    const userid = req.body.userid;
+    const address = req.body.address;
+    const contact = req.body.contact;
+    const email = req.body.email;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
+    const nic = req.body.nic;
+    const password = req.body.password;
+
+    db.query("INSERT INTO product (address,contact,email,first_name,last_name,nic,password) VALUES (?,?,?,?,?,?)",
+        [address, contact, email, first_name, last_name, nic,password], (err, _results) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("User Created Successfully!");
+            }
+        });
 });
 
 
@@ -229,6 +336,15 @@ app.get('/view-itemlog', (_req, res) => {
 
 
  ////////////////////////////////////// Badgework Management /////////////////////////////
+  app.get('/view-badges', (_req, res) => {
+    db.query('SELECT * FROM badge', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 
 app.listen(17152, () => {

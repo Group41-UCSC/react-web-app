@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-
-import CardContent from '@material-ui/core/CardContent';
-
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -68,16 +65,10 @@ export default function Announcement() {
             
             <Typography >
                     Announcemnt Body
-                    -  {product.announcementBody}
-                    <br /></Typography>
-            </div>
-        </CardContent>
-        
-           ))}
-    </Card>
-    </div>
-            )
-    
-        }
-
+                    <br />
+                </Typography>
+            </CardContent>
+        </Card>
+    );
+}
 
