@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import SignUp from './Public/pages/Authentication/NewSignup';
+import SignUp from './Public/pages/Authentication/NewSignup'
+import Up from './Public/pages/Authentication/Up'
+import In from './Public/pages/Authentication/In'
 import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/Authentication/NewSignin'
 import Dashboard from './Public/pages/Dashboard'
@@ -41,17 +43,23 @@ import BadgeProgressPage from './Public/pages/BadgeProgressPage';
 import BadgeCompleted from './Public/pages/BadgeCompletedPage';
 import BadgePending from './Public/pages/BadgePendingPage';
 import BadgeLog from './Public/pages/BadgeLogPage';
+import Home from './Public/pages/Home';
+import ManageOtp from './Public/pages/Authentication/ManageOtp';
 
 function App() {
   return (
     <div>
       <Router>
         <Switch>
+          <Route path='/manageotp' component={ManageOtp} />
+          <Route path='/signup' component={Up} />
+          <Route path='/login' component={In} />
+          {/* <Route path='/' component={Home} /> */}
           <Route path='/contenthome' component={ContentHome} />
           <Route path='/newcontent' component={AddNewContent} />
           <Route path='/newimggal' component={AddNewImgGal} />
-          <Route path='/login' component={SignInSide} />
-          <Route path='/signup' component={SignUp} />
+          <Route path='/old-login' component={SignInSide} />
+          <Route path='/old-signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/view-users' component={ViewUsers} />
           <Route path='/add-user' component={AddNewUser} />
