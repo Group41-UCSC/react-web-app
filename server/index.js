@@ -465,62 +465,63 @@ app.listen(17152, () => {
 ////////////////////////////////////// Content Management System /////////////////////////////
 
 
-// app.post('/add-content' , (req , res)=>{
+app.post('/add-content' , (req , res)=>{
 
-//     console.log(req.body);
-//     const formdata = JSON.parse(req.body.data);
+    console.log(req.body);
+    const formdata = JSON.parse(req.body.data);
    
-//     const content_title = formdata.content_title;
-//     const content_description = formdata.content_description;
-//     const media = formdata.media;
-//     const posted_date = formdata.posted_date;
+    const content_title = formdata.content_title;
+    const content_description = formdata.content_description;
+    //const file = formdata.file;
+    const posted_date = formdata.posted_date;
 
 
-//   console.log(req.body);
-//   console.log(req.files);
+  console.log(req.body);
+  console.log(req.files);
 
 
-// let sampleFile;
-// let uploadPath;
+let sampleFile;
+let uploadPath;
 
-//   if (!req.files || Object.keys(req.files).length === 0) {
-//     return res.status(400).send('No files were uploaded.');
-//   }
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
 
-//   console.log(__dirname);
+  console.log(__dirname);
 
-//   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-//   const randomfilenum = Math.floor(Math.random()*1000000);
-//   sampleFile = req.files.file;
-//   const newfilename = randomfilenum.toString() +sampleFile.name;
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  const randomfilenum = Math.floor(Math.random()*1000000);
+  sampleFile = req.files.file;
+  const newfilename = randomfilenum.toString() +sampleFile.name;
 
-//   uploadPath = __dirname + '/files/contents/' + newfilename
-
-
-//   // Use the mv() method to place the file somewhere on your server
-//   sampleFile.mv(uploadPath, function(err) {
-//    console.log(err);
-//   });
+  uploadPath = __dirname + '/files/contents/' + newfilename
 
 
-//    db.query("INSERT INTO formtemplate (formTopic,file,UploadDate,expDate,description) VALUES (?,?,?,?,?)",
-//    [formTopic,newfilename,UploadDate,expDate,description],(err,result)=>{
-//        if(err){
-//            console.log(err);
-//        }else{
-//            res.send("Data Added");
-//        }
-//    });
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv(uploadPath, function(err) {
+   console.log(err);
+  });
 
-// });
+
+   db.query("INSERT INTO content (content_description,content_title,file,posted_date) VALUES (?,?,?,?)",
+   [content_description,content_title,newfilename,posted_date],(err,result)=>{
+       if(err){
+           console.log(err);
+       }else{
+           res.send("Data Added");
+       }
+   });
+
+});
 
 // app.get('/formView',(req,res)=>{
-//     db.query("SELECT * FROM formtemplate ORDER BY uploadDate ASC",(err,result,) => {
+//     db.query("SELECT * FROM content ORDER BY posted_date ASC",(err,result,) => {
 //         if(err) {
 // 		console.log(err)
 // 	  } else {
 //         res.send(result)
 // 	  } 
-        
+
 //     });
+
 // });
