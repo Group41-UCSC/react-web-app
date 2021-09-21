@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -38,14 +39,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserTable() {
+export default function BadgeRequestList() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
   const getUsersList = async () => {
       try{
-          const data = await axios.get("http://localhost:17152/view-users");
+          const data = await axios.get("http://localhost:17152/view-badge-request");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -100,7 +101,7 @@ export default function UserTable() {
                 className={classes.button}
                 startIcon={<VisibilityIcon />}
                 >
-                View
+                Accept
               </Button></StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
@@ -109,7 +110,7 @@ export default function UserTable() {
                     variant="contained"
                     className={classes.button}
                     startIcon={<DeleteIcon />}>
-                    Delete
+                    Reject
                     </Button>
               </StyledTableCell>
               </StyledTableRow>

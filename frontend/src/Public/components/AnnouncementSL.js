@@ -43,9 +43,9 @@ export default function UserTable() {
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getUsersList = async () => {
+  const getNoticeList = async () => {
       try{
-          const data = await axios.get("http://localhost:17152/view-users");
+          const data = await axios.get("http://localhost:17152/view-announcement");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -55,7 +55,7 @@ export default function UserTable() {
 
 
   useEffect(() => {
-      getUsersList();
+      getNoticeList();
   }, []);
 
   return (
@@ -63,21 +63,14 @@ export default function UserTable() {
     {/* <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
         setSearch(e.target.value);}}/> */}
+        <TableHead>
+            <StyledTableRow>
+              <StyledTableCell colSpan={3} align="center">Site Announcement</StyledTableCell>
+             </StyledTableRow> 
+        </TableHead>
 
       <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="left">First name</StyledTableCell>
-            <StyledTableCell align="left">Last Name</StyledTableCell>
-            <StyledTableCell align="left">Address</StyledTableCell>
-            <StyledTableCell align="left">Contact Num</StyledTableCell>
-            <StyledTableCell align="left">User Role</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell>
-          </TableRow> 
-        </TableHead>
-        <TableBody>
-              {product.filter((item) => {
+         {product.filter((item) => {
             if(search == ""){
                 return item;
             }
@@ -86,37 +79,30 @@ export default function UserTable() {
             }}).
             map((item) => {
                 return (
-              <StyledTableRow key={item.userid}>
-              <StyledTableCell align="left" component="th" scope="row">{item.first_name}</StyledTableCell>
-              <StyledTableCell align="left">{item.last_name}</StyledTableCell>
-              <StyledTableCell align="left">{item.address}</StyledTableCell>
-              <StyledTableCell align="left">{item.contact}</StyledTableCell>
-              <StyledTableCell align="left">{item.user_role}</StyledTableCell>
-              <StyledTableCell align="center"> 
-              <Button m={1}
-                href="/edit-item-form"
-                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                variant="contained"
-                className={classes.button}
-                startIcon={<VisibilityIcon />}
-                >
-                View
-              </Button></StyledTableCell>
-              <StyledTableCell align="center">
+        <TableBody>     
+              <StyledTableRow key={item.announcement_id}>
+              <StyledTableCell align="left" component="th" scope="row">{item.announcement_title}</StyledTableCell>
+              <StyledTableCell align="left">{item.announcement_date}</StyledTableCell>
+              <StyledTableCell align="left">{item.announcement_author}</StyledTableCell>
+              <StyledTableCell align="right">
                 <Button m={1}
                     href="delete-item"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
                     startIcon={<DeleteIcon />}>
-                    Delete
-                    </Button>
+                    Remove
+                </Button>
               </StyledTableCell>
-              </StyledTableRow>
-                );
+            </StyledTableRow>
+            <StyledTableRow>
+            <StyledTableCell colSpan={3} align="left">{item.announcement_body}</StyledTableCell>
+            </StyledTableRow> 
+               
+        </TableBody>
+         );
             })
         }
-        </TableBody>
       </Table>
     </TableContainer>
  );
