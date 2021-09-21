@@ -18,7 +18,6 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import Deposits from '../components/Deposits';
 import Orders from '../components/Orders';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
@@ -26,6 +25,7 @@ import BadgeRequest from '../components/BadgeRequest';
 import SiteAnnouncementCreator from '../components/SiteAnnouncementCreator';
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import AnnouncemntSL from '../components/AnnouncementSL';
 
 
 function Copyright() {
@@ -263,10 +263,10 @@ export default function Dashboard() {
                                 <h1 align="center">{junior}</h1>
                             </Paper>
                         </Grid>
-                        {/* Chart */}
+
                         <Grid item xs={12}>
-                            <Paper className={fixedHeightPaper}>
-                                <BadgeRequest />
+                            <Paper className={classes.paper}>
+                                <AnnouncemntSL />
                             </Paper>
                         </Grid>
 

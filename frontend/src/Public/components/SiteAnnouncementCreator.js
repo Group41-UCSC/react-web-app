@@ -55,23 +55,12 @@ export default function SiteAnnouncementCreator() {
                                         fullWidth
                                         margin="normal"
                                         id="date-picker-dialog"
-                                        label="Announcement Date"
+                                        label="Date"
                                         format="MM/dd/yyyy"
                                         value={selectedDate}
                                         onChange={handleDateChange}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
-                                        }}
-                                    />
-                                    <KeyboardTimePicker
-                                        fullWidth
-                                        margin="normal"
-                                        id="time-picker"
-                                        label="Announcement Time"
-                                        value={selectedDate}
-                                        onChange={handleDateChange}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change time',
                                         }}
                                     />
                                 </Grid>
@@ -80,7 +69,23 @@ export default function SiteAnnouncementCreator() {
                         <Grid item xs={12}>
                             <TextField
                                 id="outlined-multiline-static"
-                                label="Multiline"
+                                label="Author"
+                                fullWidth
+                                defaultValue="Default Value"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="outlined-multiline-static"
+                                label="Topic"
+                                fullWidth
+                                defaultValue="Default Value"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="outlined-multiline-static"
+                                label="body"
                                 fullWidth
                                 multiline
                                 rows={10}

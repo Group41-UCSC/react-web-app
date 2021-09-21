@@ -88,6 +88,25 @@ app.get('/juniorCount', (req, res) => {
     });
   })
 
+app.get('/view-announcement', (_req, res) => {
+    db.query('SELECT * FROM announcement ', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-badge-request', (_req, res) => {
+    db.query('SELECT * FROM badge ', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 app.post('/createAnnouncement', (req, res) => {
     console.log(req.body)
@@ -129,6 +148,27 @@ app.get("/delete-user", (req, res) => {
             }
         }
     );
+});
+
+app.post('/create-user', (req, res) => {
+    console.log(req.body)
+    const userid = req.body.userid;
+    const address = req.body.address;
+    const contact = req.body.contact;
+    const email = req.body.email;
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
+    const nic = req.body.nic;
+    const password = req.body.password;
+
+    db.query("INSERT INTO product (address,contact,email,first_name,last_name,nic,password) VALUES (?,?,?,?,?,?)",
+        [address, contact, email, first_name, last_name, nic,password], (err, _results) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("User Created Successfully!");
+            }
+        });
 });
 
 
@@ -229,6 +269,15 @@ app.get('/view-itemlog', (_req, res) => {
 
 
  ////////////////////////////////////// Badgework Management /////////////////////////////
+  app.get('/view-badges', (_req, res) => {
+    db.query('SELECT * FROM badge', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 
 app.listen(17152, () => {
