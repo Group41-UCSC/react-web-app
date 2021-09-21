@@ -126,6 +126,20 @@ app.post('/createAnnouncement', (req, res) => {
     });
 });
 
+app.get("/delete-announcement", (req, res) => {
+    const announcement_id = req.query.announcement_id;
+    db.query("DELETE FROM announcement WHERE announcement_id=?",
+        [announcement_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
  ////////////////////////////////////// FILE UPLOADS ///////////////////////////// 
 //ContentUpload
 const profileImgStorage= multer.diskStorage({
@@ -239,7 +253,7 @@ app.post('/create-user', (req, res) => {
 });
 
 
-
+//UPDATE USER DETAILS
 app.put('/update-user', (req, res) => {
     const userid = req.body.userid;
     const first_name = req.body.first_name;
@@ -248,6 +262,8 @@ app.put('/update-user', (req, res) => {
     const contact = req.body.contact;
     const address = req.body.address;
 
+
+    
     db.query("UPDATE usertable SET first_name = ?, last_name = ?, email = ?, contact = ?, address = ? WHERE userid=?",
         [first_name, last_name, email, contact, address, userid],
         (err, result) => {
@@ -259,15 +275,26 @@ app.put('/update-user', (req, res) => {
         }
     );
 });
-
+// VIEW SINGLE USER
 app.get('/view-user', (req, res) => {
     db.query("SELECT first_name, last_name, email, contact, address, FROM usertable WHERE userid = ? ", [req.query.userid], (err, result) => {
         res.send(result);
         console.log(result);
     })
-})
+});
+
+
+
 
  ////////////////////////////////////// Inventory Management /////////////////////////////
+  app.get('/items', (req, res) => {
+  db.query("SELECT * FROM item  ", (err, results, fields) => {
+    if (err) throw err;
+    res.send(results);
+  });
+
+});
+
 app.get('/view-itemlist', (_req, res) => {
     db.query('SELECT * FROM item ', (err, result, _fields) => {
         if (!err) {
@@ -276,6 +303,20 @@ app.get('/view-itemlist', (_req, res) => {
             console.log(err);
         }
     });
+});
+
+app.get("/delete-item", (req, res) => {
+    const item_id = req.query.item_id;
+    db.query("DELETE FROM item WHERE item_id=?",
+        [item_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
 });
 
 
@@ -336,7 +377,7 @@ app.get('/view-itemlog', (_req, res) => {
 
 
  ////////////////////////////////////// Badgework Management /////////////////////////////
-  app.get('/view-badges', (_req, res) => {
+app.get('/view-badges', (_req, res) => {
     db.query('SELECT * FROM badge', (err, result, _fields) => {
         if (!err) {
             res.send(result);
@@ -345,6 +386,76 @@ app.get('/view-itemlog', (_req, res) => {
         }
     });
 });
+
+app.get('/view-pending-badges', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date"
++" FROM ((badgelog"+
+" JOIN badge ON badgelog.badge_id= badge.badge_id)"+
+" JOIN usertable ON badgelog.user_id=usertable.userid)"+
+" WHERE badgelog_status='pending'", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-progressing-badges', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date "+
+    "FROM ((badgelog "+
+    "JOIN badge ON badgelog.badge_id= badge.badge_id) "+
+    "JOIN usertable ON badgelog.user_id=usertable.userid) "+
+    "WHERE badgelog_status='progressing'", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-completed-badges', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date, badgelog.badgelog_completed_date "+
+    "FROM ((badgelog "+
+    "JOIN badge ON badgelog.badge_id= badge.badge_id) "+
+    "JOIN usertable ON badgelog.user_id=usertable.userid) "+
+    "WHERE badgelog_status='completed'", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-badgelog', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date, badgelog.badgelog_completed_date "+
+    "FROM ((badgelog "+
+    "JOIN badge ON badgelog.badge_id= badge.badge_id) "+
+    "JOIN usertable ON badgelog.user_id=usertable.userid)", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get('/view-badgelog-id', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date, badgelog.badgelog_completed_date "+
+    "FROM ((badgelog "+
+    "JOIN badge ON badgelog.badge_id= badge.badge_id) "+
+    "JOIN usertable ON badgelog.user_id=usertable.userid)", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+
 
 
 app.listen(17152, () => {

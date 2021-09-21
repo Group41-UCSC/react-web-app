@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -29,23 +30,53 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserDetails() {
     const classes = useStyles();
+    const [product, setProduct] = useState([]);
+    const [search, setSearch] = useState("");
+
+  const getUserDetails = async () => {
+      try{
+          const data = await axios.get("http://localhost:17152/view-user");
+          console.log(data.data);
+          setProduct(data.data);
+      } catch (e){
+          console.log(e);
+      }
+  };
+
+
+  useEffect(() => {
+      getUserDetails();
+  }, []);
+
 
     return (
 
+         
+
         <Container component="main" maxWidth="xs">
+            
 
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
                     User Details
                 </Typography>
+                {product.filter((item) => {
+                            if(search == ""){
+                                return item;
+                            }
+                            else if (item.itemName.toLowerCase().includes(search.toLowerCase())){
+                                return item;
+                            }}).
+                            map((item) => {
+                                return (
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
+                           
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
                                 name="firstName"
-
                                 required
                                 fullWidth
                                 id="firstName"
@@ -179,6 +210,7 @@ export default function UserDetails() {
                         <Grid item xs={12} sm={6}>
                             <RoleSelector />
                         </Grid>
+                    
                     </Grid>
                     <Button
                         style={{ background: '#2E3B55', color: '#ffffff' }}
@@ -190,8 +222,13 @@ export default function UserDetails() {
                     >
                         update
                     </Button>
+                    
                 </form>
+                 );
+            })
+        }
             </div>
         </Container>
+        
     );
 }
