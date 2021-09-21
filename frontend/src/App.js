@@ -30,7 +30,17 @@ import ItemIssued from './Public/pages/ItemIssued';
 import EditItemPage from './Public/pages/EditItemPage';
 import AddNewItem from './Public/pages/AddNewItem';
 import ItemLog from './Public/pages/ItemLog';
-
+import InventoryRequest from './Public/pages/InventoryUserRequest';
+import ViewInventory from './Public/pages/ViewInventory';
+import Event from './Public/pages/Event';
+import EventUpcoming from './Public/pages/EventUpcoming';
+import ContentViewPage from './Public/pages/ContentViewPage';
+import ContentGallaryPage from './Public/pages/ContentGallaryPage';
+import BadgeRequestPage from './Public/pages/BadgeRequestPage';
+import BadgeProgressPage from './Public/pages/BadgeProgressPage';
+import BadgeCompleted from './Public/pages/BadgeCompletedPage';
+import BadgePending from './Public/pages/BadgePendingPage';
+import BadgeLog from './Public/pages/BadgeLogPage';
 
 function App() {
   return (
@@ -58,6 +68,8 @@ function App() {
 
 
 
+
+
           <Route path='/inventory' component={Inventory} />
           <Route path='/item-list' component={ItemList} />
           <Route path='/item-request' component={ItemRequest} />
@@ -66,6 +78,18 @@ function App() {
           <Route path='/edit-item-form' component={EditItemPage} />
           <Route path='/add-item' component={AddNewItem} />
           <Route path='/item-log' component={ItemLog} />
+          <Route path='/view-inventory' component={ViewInventory} />
+          <Route path='/request-inventory' component={InventoryRequest} />
+          <Route path='/event' component={Event} />
+          <Route path='/event-upcoming' component={EventUpcoming} />
+          <Route path='/content-view' component={ContentViewPage} />
+          <Route path='/content-gallary-view' component={ContentGallaryPage} />
+          <Route path='/badge-view' component={BadgeRequestPage} />
+          <Route path='/badge-request' component={BadgeRequestPage} />
+          <Route path='/badge-progress-list' component={BadgeProgressPage} />
+          <Route path='/badge-completed' component={BadgeCompleted} />
+          <Route path='/badge-pending' component={BadgePending} />
+          <Route path='/badge-log' component={BadgeLog} />
         </Switch>
         {/* <Footer /> */}
       </Router>
