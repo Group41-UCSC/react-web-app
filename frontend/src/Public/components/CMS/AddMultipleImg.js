@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../components/css/AddMultipleImg.css";
+import "../css/AddMultipleImg.css";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 function AddMultipleImg () {

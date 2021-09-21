@@ -1,5 +1,5 @@
 import React from 'react'
-import AddMultipleImg from '../components/AddMultipleImg'
+import AddMultipleImg from '../components/CMS/AddMultipleImg'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';

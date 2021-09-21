@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentDash from '../components/ContentDash';
+import ContentDash from '../components/CMS/ContentDash';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';

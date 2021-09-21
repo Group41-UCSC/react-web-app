@@ -1,5 +1,5 @@
 import React from 'react'
-import CmsViewAllPost from '../components/CmsViewAllPost'
+import CmsViewAllPost from '../components/CMS/CmsViewAllPost'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
