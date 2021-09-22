@@ -861,7 +861,7 @@ const storage1 = multer.diskStorage({
     // const posted_date = req.body.posted_date;
     const posted_date = new Date();
 
-    db.query("INSERT INTO content (content_title,content_description,file,posted_date) VALUES (?,?,?,?)",
+    db.query("INSERT INTO content (content_title,content_description,display_photo,posted_date) VALUES (?,?,?,?)",
         [content_title, content_description, display_photo, posted_date], (err, _results) => {
             if (err) {
                 console.log(err);
@@ -877,6 +877,29 @@ app.post("/imageUpload",upload1.single('file'),(req,res)=> {
 })
 
 
+app.get('/view-all-content', (_req, res) => {
+    db.query("SELECT * FROM content;" , (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get("/delete-content", (req, res) => {
+    const content_id = req.query.content_id;
+    db.query("DELETE FROM content WHERE content_id=?",
+        [content_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
 //     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
 //         [file, content_title, content_description, posted_date], (err, _results) => {
 //             if (err) {
@@ -909,6 +932,7 @@ app.post('/addScheduleEvent', (req, res) => {
         });
 });
 
+
 app.get('/view-all-events', (_req, res) => {
     db.query("SELECT * FROM event;" , (err, result, _fields) => {
         if (!err) {
@@ -917,6 +941,30 @@ app.get('/view-all-events', (_req, res) => {
             console.log(err);
         }
     });
+});
+
+app.get('/view-upcoming-events', (_req, res) => {
+    db.query("SELECT * FROM force_webapp.event WHERE event_status='upcoming';" , (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+app.get("/delete-event", (req, res) => {
+    const event_id = req.query.event_id;
+    db.query("DELETE FROM event WHERE event_id=?",
+        [event_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
 });
 
 

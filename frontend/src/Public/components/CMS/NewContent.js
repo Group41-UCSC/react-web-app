@@ -85,7 +85,7 @@ function NewContent() {
         <div>
             <div className="write">
             <div className="imgContainer">{selectedFile &&  <img className="writeImg" src={preview} alt="Preview"/> }</div>
-            <form className="writeForm">
+            <form className="writeForm" onSubmit={contentadd}  >
                 <div className="writeFormGroup">
                     <label htmlFor="fileInput">
                         <AddIcon className="writeIcon"/>
@@ -100,7 +100,7 @@ function NewContent() {
                     </textarea>
                 </div>
                 <div>
-                    <button  onClick={contentadd}  type="submit" className="writeSubmit">Publish</button>
+                    <button type="submit" className="writeSubmit">Publish</button>
                 </div>
             </form>
         </div>
