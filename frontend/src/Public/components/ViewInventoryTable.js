@@ -8,11 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green, red } from '@material-ui/core/colors';
+
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -47,7 +43,7 @@ export default function ViewInventoryTable() {
 
   const getItemList = async () => {
       try{
-          const data = await axios.get("http://localhost:8080/items");
+          const data = await axios.get("http://localhost:17152//items");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -62,9 +58,9 @@ export default function ViewInventoryTable() {
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+    {/* <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
-        setSearch(e.target.value);}}/>
+        setSearch(e.target.value);}}/> */}
 
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
@@ -87,10 +83,10 @@ export default function ViewInventoryTable() {
             map((item) => {
                 return (
               <StyledTableRow key={item.itemId}>
-              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
-              
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
+              <StyledTableCell align="left" component="th" scope="row">{item.item_name}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_quantity}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_available_quantity}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_Status}</StyledTableCell>
               
               </StyledTableRow>
                 );
