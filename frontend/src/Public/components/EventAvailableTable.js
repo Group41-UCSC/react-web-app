@@ -66,7 +66,7 @@ export default function EventAvailable() {
     onChange={(e)=>{
         setSearch(e.target.value);}}/>
       <center><Typography component="h1" variant="h5">
-                    Available Events
+                    All Events
                 </Typography></center>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>

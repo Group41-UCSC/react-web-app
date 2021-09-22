@@ -28,7 +28,7 @@ export default function FloatingEvent() {
                 aria-label="contained primary button group"
             >
                 <Button href="newevent"><AddIcon />Create Events</Button>
-                <Button href="event">Available Events</Button>
+                <Button href="event">All Events</Button>
                 <Button href="event-upcoming">Upcoming Event</Button>
                 
             </ButtonGroup>
