@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
-import ProfilePage from './ProfilePage';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,7 +75,7 @@ export default function MenuListComposition() {
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                         <MenuItem onClick={handleClose}><Button href="/profile"> Profile</Button></MenuItem>
-                                        <MenuItem onClick={handleClose}><Button href="/logout"> Logout</Button></MenuItem>
+                                        <MenuItem onClick={handleClose}><Button href="/login"> Logout</Button></MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
