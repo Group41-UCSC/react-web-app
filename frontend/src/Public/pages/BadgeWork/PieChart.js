@@ -1,17 +1,62 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Pie } from 'react-chartjs-2';
 import {
   Box,
   Card,
   CardContent,
   CardHeader,
+  colors,
   Divider,
   Typography,
 } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
+import axios from 'axios'
 
 function PieChart() {
+  let user_id = localStorage.getItem('user_id');
+  user_id = JSON.parse(user_id)
+  const [completetask,setCompletetask]=useState([])
+    useEffect(() => {
+      const fetchData = async () => {
+          const response = await axios.get('http://localhost:17152/completeprogress', {
+              params: {
+                  user_id: user_id,
+              }
+          });
+          setCompletetask(response.data)
+          // console.log(response.data[0]);
+      };
+      fetchData();
+    }, []);
+
+    const [totaltask,settotaltask]=useState([])
+    useEffect(() => {
+      const fetchData = async () => {
+          const response = await axios.get('http://localhost:17152/totalbadge', {
+              // params: {
+              //     user_id: user_id,
+              // }
+          });
+          settotaltask(response.data)
+
+      };
+      fetchData();
+    }, []);
+
+    const count1=completetask.map(record=>record.count);
+    const count2=totaltask.map(record=>record.count);
+    const count3=(count2-count1);
+
+    const c = parseInt(count1);
+    const t = parseInt(count2);
+    const p = parseInt(count3);
+
+    const percentageC= parseInt(count1) / t * 100 ;
+    const percentageP= parseInt(count3) / t * 100 ;
+
+    const c1 = parseInt(percentageC);
+    const p1 = parseInt(percentageP);
 
   const data = {
     labels: [
@@ -19,12 +64,15 @@ function PieChart() {
       'Incompleted Badges'
     ],
     datasets: [{
-      data: [150,150],
+      data: [percentageC,percentageP],
       backgroundColor: [
         '#3f51b5',
         '#ff9800'
       ],
-      hoverOffset: 4
+      hoverOffset: 4,
+      borderWidth: 8,
+      borderColor: colors.common.white,
+      hoverBorderColor: colors.common.white
     }]
   };
 
@@ -48,13 +96,13 @@ function PieChart() {
   const pic= [
     {
       title: 'Completed Badges',
-    //   value: percentage1,
+      value: c1,
       icon: EventAvailableIcon,
       color: '#3f51b5'
     },
     {
       title: 'Incomplete Badges',
-    //   value: percentage2,
+      value: p1,
       icon: EventBusyIcon,
       color: '#ff9800'
     }
@@ -86,8 +134,8 @@ function PieChart() {
           {pic.map(({
             color,
             icon: Icon,
-            title
-            // value
+            title,
+            // value: percentageC,
           }) => (
             <Box
               key={title}
