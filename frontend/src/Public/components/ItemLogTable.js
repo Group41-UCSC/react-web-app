@@ -13,6 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+import Typography from '@material-ui/core/Typography';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -39,44 +40,53 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - 0${month} - ${day}`;
+};
+
+
 export default function ItemRequestTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
-      }
-  };
 
-
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-itemlog").then((response)=>{
+      setProduct(response.data)
+    })
+  },[])
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
+
         setSearch(e.target.value);}}/>
+      <center><Typography component="h1" variant="h5">
+                    Log List
+                </Typography></center>
+
+    setSearch(e.target.value);}}/>}
+<br/>
 
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Item Log ID</StyledTableCell>
-            <StyledTableCell align="left">Item Name</StyledTableCell>
-            <StyledTableCell align="left">Given Quantity</StyledTableCell>
-            <StyledTableCell align="left">Responsible Person</StyledTableCell>
-            <StyledTableCell align="left">Issued Date</StyledTableCell>
-            <StyledTableCell align="left">Proposed Return Date</StyledTableCell>
-            <StyledTableCell align="left">Actual Return Date</StyledTableCell>
+            <StyledTableCell align="center">Item Log ID</StyledTableCell>
+            <StyledTableCell align="center">Item Name</StyledTableCell>
+            <StyledTableCell align="center">Given Quantity</StyledTableCell>
+            <StyledTableCell align="center">Responsible Person</StyledTableCell>
+            <StyledTableCell align="center">Issued Date</StyledTableCell>
+            <StyledTableCell align="center">Proposed Return Date</StyledTableCell>
+            <StyledTableCell align="center">Actual Return Date</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right">Rental Remarks</StyledTableCell>
-            
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -89,14 +99,15 @@ export default function ItemRequestTable() {
             map((itemlog) => {
                 return (
               <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">Fake</StyledTableCell>
-              <StyledTableCell align="left" component="th" scope="row">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">Returning Date</StyledTableCell>
-              <StyledTableCell align="left">Remark</StyledTableCell>
+               <StyledTableCell align="center" component="th" scope="row">{itemlog.itemlog_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{itemlog.item_name}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_quantity}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_issuedto}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_issue_date)}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_receive_date)}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_actual_received_date)}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_status}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_remarks}</StyledTableCell>
               </StyledTableRow>
                 );
             })

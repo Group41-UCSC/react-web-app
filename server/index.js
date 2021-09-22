@@ -458,6 +458,17 @@ app.get('/view-user', (req, res) => {
 
 });
 
+app.get("/viewItemListinfo",(req,res)=>{
+  item_id= req.params.item_id
+ 
+  db.query("SELECT * FROM item WHERE item_id=?",[req.query.item_id],(err,result)=>{
+    console.log(req.query.item_id);
+    res.send(result);
+  });
+  
+});
+
+
 app.get('/view-itemlist', (_req, res) => {
     db.query('SELECT * FROM item ', (err, result, _fields) => {
         if (!err) {
@@ -483,57 +494,91 @@ app.get("/delete-item", (req, res) => {
 });
 
 
-app.get('/view-itemrequested', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='pending';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
-});
+app.get('/view-itemrequested',(req, res) =>{
+  db.query("  SELECT item_log.item_id,item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE item_log.itemlog_status='pending'  ", (err, result, fields)=>{
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
 
-app.get('/view-itemreserved', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='reserved';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
-});
+app.get('/view-itemreserved',(req, res) =>{
+  db.query("  SELECT item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE   item_log.itemlog_status='reserved'  ", (err, result, fields)=>{
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
 
-app.get('/view-itemissued', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='issued';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
+
+ app.get('/view-itemissued',(req, res) =>{
+  db.query("  SELECT item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date, item.item_available_quantity FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE item_log.itemlog_status='issued'  ", (err, result, fields)=> {
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
+
+ app.get('/reject_request', (req,res) => {
+  const itemlog_id=req.params.itemlog_id;
+    db.query("UPDATE item_log SET itemlog_status='rejected' WHERE itemlog_id = ?", 
+    [req.query.itemlog_id], 
+    (err, result) => {
+        if (err) {
             console.log(err);
+        } else {
+            res.send(result);
         }
+       }
+    );
+  });
+
+    app.get('/cancel_request', (req,res) => {
+    const itemlog_id=req.params.itemlog_id;
+      db.query("UPDATE item_log SET itemlog_status='cancelled' WHERE itemlog_id = ?", 
+      [req.query.itemlog_id], 
+      (err, result) => {
+          if (err) {
+              console.log(err);
+          } else {
+              res.send(result);
+          }
+         }
+      );
     });
-});
+
+     app.get('/remove_request', (req,res) => {
+    const itemlog_id=req.params.itemlog_id;
+      db.query("UPDATE item_log SET itemlog_status='removed' WHERE itemlog_id = ?", 
+      [req.query.itemlog_id], 
+      (err, result) => {
+          if (err) {
+              console.log(err);
+          } else {
+              res.send(result);
+          }
+         }
+      );
+    });
 
 // TO DO ::: FULL LOG
 app.get('/view-itemlog', (_req, res) => {
-    db.query('SELECT * FROM itemlog ', (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
+  db.query('SELECT * FROM item_log JOIN item ON item_log.item_id=item.item_id ', (err, result, _fields) => {
+      if (!err) {
+          res.send(result);
+      } else {
+          console.log(err);
+      }
+  });
 });
 
 

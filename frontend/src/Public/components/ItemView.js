@@ -14,6 +14,9 @@ import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
 
+import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -45,26 +48,36 @@ export default function ItemView() {
   const [search, setSearch] = useState("");
 
   useEffect(()=>{
-    axios.get("http://localhost:17152/items").then((response)=>{
+    axios.get("http://localhost:17152/view-itemlist").then((response)=>{
       setProduct(response.data)
     })
   },[])
 
+
+
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
+
         setSearch(e.target.value);}}/>
+      <center><Typography component="h1" variant="h5">
+                     Item List
+                </Typography></center>
+
+    setSearch(e.target.value);}}/>}
+<br/>
 
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Item Name</StyledTableCell>
-            <StyledTableCell align="left">Quantity</StyledTableCell>
-            <StyledTableCell align="left">Avail.Qty</StyledTableCell>
+          <StyledTableCell align="center">Item ID</StyledTableCell>
+            <StyledTableCell align="center">Item Name</StyledTableCell>
+            <StyledTableCell align="center">Quantity</StyledTableCell>
+            <StyledTableCell align="center">Description</StyledTableCell>
             <StyledTableCell align="left">Status</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            <StyledTableCell align="center">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -78,13 +91,16 @@ export default function ItemView() {
             map((item) => {
                 return (
               <StyledTableRow key={item.item_id}>
-              <StyledTableCell align="left" component="th" scope="row">{item.item_name}</StyledTableCell>
-              <StyledTableCell align="left">{item.item_quantity}</StyledTableCell>
-              <StyledTableCell align="left">{item.item_description}</StyledTableCell>
-              <StyledTableCell align="left">{item.item_status}</StyledTableCell>
+               <StyledTableCell align="center" component="th" scope="row">{item.item_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{item.item_name}</StyledTableCell>
+              <StyledTableCell align="center">{item.item_quantity}</StyledTableCell>
+              <StyledTableCell align="center">{item.item_description}</StyledTableCell>
+              <StyledTableCell align="center">{item.item_status}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
-                href="/edit-item-form"
+              target="_blank"
+               component ={Link}
+               to={location=> `/ItemInfoRoute/${item.item_id}`} 
                 style={{ backgroundColor: green[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}
@@ -94,7 +110,7 @@ export default function ItemView() {
               </Button></StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
+                   href='delete-item'
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}

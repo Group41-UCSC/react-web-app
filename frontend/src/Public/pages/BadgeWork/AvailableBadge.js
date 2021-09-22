@@ -182,11 +182,6 @@ export default function AvailableBadge() {
                                 <ViewBadge />
                             </Paper>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Paper className={classes.paper}>
-                                <ViewBadge />
-                            </Paper>
-                        </Grid>
                     </Grid>
                     <Box pt={4}>
                         <Copyright />

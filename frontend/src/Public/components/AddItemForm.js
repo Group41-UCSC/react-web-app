@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import StatusSelector from './StatusSelector';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -114,85 +115,139 @@ const validateForm=()=>{
 }
 
 
-    return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                    Add New Item
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        value={inventoryId}
-                        onChange={(e) => { setinventoryId(e.target.value) }}
-                        label="Inventory ID"
-                        name="inventory"
-                        // helperText={errors['inventory']}
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        <Grid item xs={12}>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        value={itemName}
-                        onChange={(e) => { setitemName(e.target.value) }}
-                        label="Item Name"
-                        name="name"
-                        // helperText={errors['name']}
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        
-                        <Grid item xs={12}>
-                            
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        value={itemQuantity}
-                        onChange={(e) => { setitemQuantity(e.target.value) }}
-                        label="Quantity"
-                        name="quantity"
-                        // helperText={errors['quantity']}
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        
-                        <Grid item xs={12}>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        value={itemDescription}
-                        onChange={(e) => { setitemDescription(e.target.value) }}
-                        label="Description"
-                        name="description"
-                        // helperText={errors['description']}
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        
+return (
+    <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+            <Typography component="h1" variant="h5">
+                Add New Item
+            </Typography>
+            <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} >
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={inventoryId}
+                    onChange={(e) => { setinventoryId(e.target.value) }}
+                    label="Inventory ID"
+                    name="inventory"
+                    // helperText={errors['inventory']}
+                    fullWidth
+                    required
+                />
                     </Grid>
-                    <Button
-                        style={{ background: '#2E3B55', color: '#ffffff' }}
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                         onClick={(e) => addItem(e)}
-                        // color="primary"
-                        className={classes.submit}
-                    >
-                        Add Item
-                    </Button>
-                </form>
-            </div>
-        </Container>
-    );
+                    <Grid item xs={12}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemName}
+                    onChange={(e) => { setitemName(e.target.value) }}
+                    label="Item Name"
+                    name="name"
+                    // helperText={errors['name']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    
+                    <Grid item xs={12} sm={6}>
+                        
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemQuantity}
+                    onChange={(e) => { setitemQuantity(e.target.value) }}
+                    label="Quantity"
+                    name="quantity"
+                    // helperText={errors['quantity']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemName}
+                    onChange={(e) => { setitemName(e.target.value) }}
+                    label="Item Price"
+                    name="name"
+                    // helperText={errors['name']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemDescription}
+                    onChange={(e) => { setitemDescription(e.target.value) }}
+                    label="Description"
+                    name="description"
+                    // helperText={errors['description']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemName}
+                    onChange={(e) => { setitemName(e.target.value) }}
+                    label="Item Build"
+                    name="name"
+                    // helperText={errors['name']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemName}
+                    onChange={(e) => { setitemName(e.target.value) }}
+                    label="Item Lifespan"
+                    name="name"
+                    // helperText={errors['name']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    
+                    <Grid item xs={12}>
+                    <TextField
+                    autoFocus
+                    margin="dense"
+                    value={itemName}
+                    onChange={(e) => { setitemName(e.target.value) }}
+                    label="Item Source"
+                    name="name"
+                    // helperText={errors['name']}
+                    fullWidth
+                    required
+                />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <StatusSelector />
+                    </Grid>
+                </Grid>
+                <Button
+                    style={{ background: '#2E3B55', color: '#ffffff' }}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                     onClick={(e) => addItem(e)}
+                    // color="primary"
+                    className={classes.submit}
+                >
+                    Add Item
+                </Button>
+            </form>
+        </div>
+    </Container>
+);
 }

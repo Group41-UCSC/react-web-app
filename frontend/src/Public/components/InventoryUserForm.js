@@ -49,7 +49,7 @@ export default function InventoryUserForm() {
                         <TextField
                         autoFocus
                         margin="dense"
-                        label="Inventory Name"
+                        label="Item Name"
                         name="name"
                         fullWidth
                         required
@@ -60,33 +60,31 @@ export default function InventoryUserForm() {
                         autoFocus
                         margin="dense"
                        
-                        label="Quantity"
+                        label="Requesting Quantity"
                         name="quantity"
                         // helperText={errors['name']}
                         fullWidth
                         required
                     />
                         </Grid>
-                        
+                        <Grid item xs={12}>
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        label="Requester Name"
+                        name="name"
+                        fullWidth
+                        required
+                    />
+                        </Grid>
                         <Grid item xs={12}>
                             
                         <TextField
                         autoFocus
                         margin="dense"
+                        
                         type="date"
                         name="date"                        
-                        fullWidth
-                        required
-                    />
-                        </Grid>
-                        
-                        <Grid item xs={12}>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Description"
-                        name="description"
-                        // helperText={errors['description']}
                         fullWidth
                         required
                     />

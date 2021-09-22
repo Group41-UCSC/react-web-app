@@ -21,7 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../components/listItems';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-
+import FloatingEvent from '../components/FloatingEvent';
 
 function Copyright() {
     return (
@@ -170,7 +170,8 @@ function AddNewEvent() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
+                <FloatingEvent />
+                <Grid container spacing={3}>
                         <Grid item xs={12}>
                             {/* <BackButton /> */}
                             <Paper className={classes.paper}>

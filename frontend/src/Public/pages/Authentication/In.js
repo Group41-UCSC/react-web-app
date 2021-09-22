@@ -125,9 +125,21 @@ export default function In() {
       if (response.data.message) {
         setLoginStatus(response.data.message);
       } 
+      else if(response.data[0].user_role === 'LEADER'){
+            window.location.href='/dashboard'
+     } 
+     else if(response.data[0].user_role === 'CMS'){
+        window.location.href='/cms-dashboard'
+      } 
+      else if(response.data[0].user_role === 'IMS'){
+        window.location.href='/ims-dashboard'
+      } 
+      else if(response.data[0].user_role === 'SENIOR'){
+        window.location.href='/dashboard'
+      }
       else if(response.data[0].user_role === 'USER'){
-          window.location.href='/dashboard'
-        } 
+        window.location.href='/user-dashboard'
+      }
      
     }
     );
