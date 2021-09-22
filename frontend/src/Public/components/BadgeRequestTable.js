@@ -96,7 +96,8 @@ export default function BadgeRequestTable() {
       
     }).then(
       (response) => {
-        alert("Badge Accepted Successfully");
+        window.location.replace('/badge-request');
+        alert("Badge Requested Accepted");
       }
     )
   }
@@ -107,7 +108,9 @@ export default function BadgeRequestTable() {
       
     }).then(
       (response) => {
-        alert("Badge Rejected");
+        window.location.replace('/badge-request');
+        alert("Badge Requested Rejected");
+
       }
     )
   }

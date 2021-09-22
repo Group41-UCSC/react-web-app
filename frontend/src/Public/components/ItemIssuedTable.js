@@ -13,6 +13,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -44,6 +49,15 @@ export default function ItemRequestTable() {
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
+  const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
   const getItemlogPendingList = async () => {
       try{
           const data = await axios.get("http://localhost:8080/itemlogs/pending");
@@ -68,14 +82,14 @@ export default function ItemRequestTable() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Item Log ID</StyledTableCell>
-            <StyledTableCell align="left">Item Name</StyledTableCell>
-            <StyledTableCell align="left">Given Quantity</StyledTableCell>
-            <StyledTableCell align="left">Responsible Person</StyledTableCell>
-            <StyledTableCell align="left">Issued Date</StyledTableCell>
-            <StyledTableCell align="left">Returning Date</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            <StyledTableCell align="center">Item Log ID</StyledTableCell>
+            <StyledTableCell align="center">Item Name</StyledTableCell>
+            <StyledTableCell align="center">Given Quantity</StyledTableCell>
+            <StyledTableCell align="center">Responsible Person</StyledTableCell>
+            <StyledTableCell align="center">Issued Date</StyledTableCell>
+            <StyledTableCell align="center">Returning Date</StyledTableCell>
+            <StyledTableCell colSpan="2" align="center">Action</StyledTableCell>
+            
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -93,26 +107,52 @@ export default function ItemRequestTable() {
               <StyledTableCell align="left">fake</StyledTableCell>
               <StyledTableCell align="left">fake</StyledTableCell>
               <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
+              
               <StyledTableCell align="left">Returning Date</StyledTableCell>
-              <StyledTableCell align="center"> 
-              <Button m={1}
-                // onClick={handleClickOpen}
-                style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                variant="contained"
-                className={classes.button}
-                >
-                Reject
-              </Button></StyledTableCell>
+              
               <StyledTableCell align="center">
-                <Button m={1}
-                    href="delete-item"
-                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={<DeleteIcon />}>
-                    Delete
-                </Button>
+              <Button m={1}
+                   onClick={handleClickOpen}                            
+                   style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                  variant="contained"
+                  className={classes.button}
+                  >
+                                                         
+                 Received
+                 </Button>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Description</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Provide the status of the inventory and it's descriptions as received . If there is any damages or Quantity missing provide it as well.
+                    </DialogContentText>
+                    
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        
+                        type="date"
+                        fullWidth
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Description"
+                        type="email"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
               </StyledTableCell>
               </StyledTableRow>
                 );

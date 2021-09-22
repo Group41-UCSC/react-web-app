@@ -18,11 +18,16 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItemsUser, secondaryListItemsUser } from '../components/listItemsUser';
+
+
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
-import Announcement from '../components/Announcement';
-import UpcomingEvent from '../components/UpcomingEvents';
-
+import Button from '@material-ui/core/Button';
+import InventoryUserForm from '../components/InventoryUserForm';
+import InventoryStatusTable from '../components/InventoryStatusTable';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import AvailableEventUser from '../components/AvailableEventUser';
+import UpcomingEventUser from '../components/UpcmingEventUser';
 
 function Copyright() {
     return (
@@ -118,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserDashboard() {
+export default function EventUserView() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -144,7 +149,7 @@ export default function UserDashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        Events 
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -176,37 +181,16 @@ export default function UserDashboard() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
-                        {/* Heading */}
-                        <Grid item xs={12}>
+                    
+                    <Grid container spacing={2}>
+                        <Grid item xs={7}>
                             <Paper className={classes.paper}>
-                                <Typography >
-                                    <h1 style={{ color: "#3f51b5" }}> 42nd Colombo Royal College Scout Group - Gold Troop </h1>
-                                </Typography>
+                                <AvailableEventUser />
                             </Paper>
                         </Grid>
-
-                        {/* Upcoming Events */}
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={5}>
                             <Paper className={classes.paper}>
-                                <Grid item xs={12}>
-                                    <Typography >
-                                        <h3 style={{ color: "#3f51b5" }}> Upcoming Events </h3>
-                                    </Typography>
-                                    <UpcomingEvent />
-                                </Grid>
-                            </Paper>
-                        </Grid>
-
-                        {/* View Site Announcement */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={classes.paper}>
-                                <Grid item xs={12}>
-                                    <Typography >
-                                        <h3 style={{ color: "#3f51b5" }}> Site Announcement </h3>
-                                    </Typography>
-                                    <Announcement />
-                                </Grid>
+                                <UpcomingEventUser />
                             </Paper>
                         </Grid>
                     </Grid>

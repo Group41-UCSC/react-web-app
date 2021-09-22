@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,13 +18,12 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItemsUser, secondaryListItemsUser } from '../components/listItemsUser';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import Announcement from '../components/Announcement';
-import UpcomingEvent from '../components/UpcomingEvents';
-
-
+import { mainListItems, secondaryListItems } from '../../components/listItems';
+import UserTable from './UserTable';
+import FloatingAddUser from './FloatingAdd';
+import ProfileDropDown from '../../components/ProfileDropDown';
+import NotificationDropDown from '../../components/NotificationDropDown';
+import axios from 'axios';
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -118,9 +118,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function UserDashboard() {
+export default function ViewUserInfo() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
+    const { userid } = useParams();
+    const [Dt, setDt] = useState([])
+
+    useEffect(() => {
+      const fetchData = async () => {
+          const response = await axios.get('http://localhost:17152/viewUserinfo', {
+              params: {
+                 userid: userid,
+                  
+              }
+          });
+    
+          setDt(response.data[0]);
+             console.log(response.data[0]);
+      };
+      fetchData();
+    }, [userid]);
+    
+
+
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -144,7 +165,7 @@ export default function UserDashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        View Users
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -169,44 +190,27 @@ export default function UserDashboard() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItemsUser}</List>
+                <List>{mainListItems}</List>
                 <Divider />
-                <List>{secondaryListItemsUser}</List>
+                <List>{secondaryListItems}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
+                    <FloatingAddUser />
                     <Grid container spacing={3}>
-                        {/* Heading */}
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <Typography >
-                                    <h1 style={{ color: "#3f51b5" }}> 42nd Colombo Royal College Scout Group - Gold Troop </h1>
-                                </Typography>
-                            </Paper>
-                        </Grid>
-
-                        {/* Upcoming Events */}
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={classes.paper}>
-                                <Grid item xs={12}>
-                                    <Typography >
-                                        <h3 style={{ color: "#3f51b5" }}> Upcoming Events </h3>
-                                    </Typography>
-                                    <UpcomingEvent />
-                                </Grid>
-                            </Paper>
-                        </Grid>
-
-                        {/* View Site Announcement */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={classes.paper}>
-                                <Grid item xs={12}>
-                                    <Typography >
-                                        <h3 style={{ color: "#3f51b5" }}> Site Announcement </h3>
-                                    </Typography>
-                                    <Announcement />
-                                </Grid>
+                            <div ><br/>
+                  <div style={{display:'flex'}}><label className={classes.formlabel1}><b style={{marginRight:'65px'}}>User ID :</b>{Dt.userid}</label></div>
+                  <label className={classes.formlabel1}><b style={{marginRight:'30px'}}>First Name :</b > {Dt.first_name}</label><br/>
+				  <label className={classes.formlabel1}><b style={{marginRight:'30px'}}>Last Name :</b > {Dt.last_name}</label><br/> 
+                  <label className={classes.formlabel1}><b style={{marginRight:'100px'}}>Address: </b>{Dt.address}</label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'80px'}}>Phone No :</b> {Dt.phone}</label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'80px'}}>Email :</b> {Dt.email} </label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'50px'}}>NIC No :</b> {Dt.nic}</label><br/>
+				  <label className={classes.formlabel1}><b style={{marginRight:'50px'}}>User Role :</b> {Dt.user_role}</label><br/>
+                  </div>
                             </Paper>
                         </Grid>
                     </Grid>

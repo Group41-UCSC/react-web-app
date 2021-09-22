@@ -3,13 +3,17 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import { Link } from 'react-router-dom';
+import EventIcon from '@material-ui/icons/Event';
 
-export const mainListItems = (
+import AddCommentIcon from '@material-ui/icons/AddComment';
+import FlagIcon from '@material-ui/icons/Flag';
+import { Link } from 'react-router-dom';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+
+import EmojiEventsIcon  from '@material-ui/icons/EmojiEvents';
+
+
+export const mainListItemsUser = (
     <div>
         <ListItem button component={Link} to="/user-dashboard">
             <ListItemIcon>
@@ -25,31 +29,31 @@ export const mainListItems = (
         </ListItem> */}
         <ListItem button component={Link} to="/available-badge">
             <ListItemIcon>
-                <LayersIcon />
+                <EmojiEventsIcon />
             </ListItemIcon>
             <ListItemText primary="BadgeWork" />
         </ListItem>
         <ListItem button component={Link} to="/request-inventory">
             <ListItemIcon>
-                <LayersIcon />
+                <AddCommentIcon />
             </ListItemIcon>
             <ListItemText primary="Inventory" />
         </ListItem>
-        <ListItem button component={Link} to="#">
+        <ListItem button component={Link} to="event-user-view">
             <ListItemIcon>
-                <PeopleIcon />
+                <EventIcon />
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
         <ListItem button component={Link} to="#">
             <ListItemIcon>
-                <BarChartIcon />
+                <FlagIcon />
             </ListItemIcon>
             <ListItemText primary="Tasks" />
         </ListItem>
         <ListItem button component={Link} to="#">
             <ListItemIcon>
-                <BarChartIcon />
+                <AssignmentTurnedInIcon />
             </ListItemIcon>
             <ListItemText primary="Evaluation" />
         </ListItem>
@@ -58,7 +62,7 @@ export const mainListItems = (
     </div>
 );
 
-export const secondaryListItems = (
+export const secondaryListItemsUser = (
     <div>
         {/* <ListSubheader inset>Saved reports</ListSubheader> */}
         {/* <ListItem button>

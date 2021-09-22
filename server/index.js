@@ -361,6 +361,15 @@ app.post('/GalleryUpload',uploadGallery.array("file",10),(req,res)=>{
 
 
  ////////////////////////////////////// User Management ///////////////////////////// 
+ app.get("/viewUserinfo",(req,res)=>{
+  userid=req.params.userid;
+  db.query("SELECT * FROM usertable WHERE userid=?",[req.query.userid],(err,result)=>{
+    console.log(req.query.userid);
+    res.send(result);
+  });
+  
+});
+
  app.get('/view-users', (_req, res) => {
     db.query('SELECT * FROM usertable ', (err, result, _fields) => {
         if (!err) {
@@ -599,7 +608,7 @@ app.get('/view-completed-badges', (_req, res) => {
 });
 
 app.get('/view-badgelog', (_req, res) => {
-    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date, badgelog.badgelog_completed_date "+
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date, badgelog.badgelog_completed_date, badgelog.badgelog_status "+
     "FROM ((badgelog "+
     "JOIN badge ON badgelog.badge_id= badge.badge_id) "+
     "JOIN usertable ON badgelog.user_id=usertable.userid)", (err, result, _fields) => {
@@ -708,6 +717,30 @@ app.put('/PassBadge', (req,res) => {
        }
     );
   });
+
+app.get('/totalbadge', (_req, res) => {
+    db.query('SELECT COUNT(badge_id) AS count FROM badge', (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
+
+  app.get('/completeprogress', (req, res) => {
+    const user_id = req.query.user_id;
+    db.query('SELECT COUNT(badgelog_id) AS count FROM badgelog WHERE badgelog_status="finished" AND user_id=2', [user_id], (err, result) => {
+        if (!err) {
+            res.send(result);
+            console.log('result')
+            console.log(result)
+        } else {
+            console.log(err);
+        }
+    });
+});
+
 
 
 
