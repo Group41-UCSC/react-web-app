@@ -18,7 +18,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItemsIms, secondaryListItemsIms } from '../components/listItemsIms';
 
 //import FloatingAddUser from '../FloatingAdd';
 import ProfileDropDown from '../components/ProfileDropDown';
@@ -190,9 +190,9 @@ export default function ItemInfo() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItemsIms}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>{secondaryListItemsIms}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />

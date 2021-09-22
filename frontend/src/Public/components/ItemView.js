@@ -65,7 +65,6 @@ export default function ItemView() {
                      Item List
                 </Typography></center>
 
-    setSearch(e.target.value);}}/>}
 <br/>
 
       <Table className={classes.table} aria-label="customized table">
