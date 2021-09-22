@@ -22,7 +22,7 @@ import { mainListItemsCms, secondaryListItemsCms } from '../components/listItems
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
 import Button from '@material-ui/core/Button';
-import ContentView from '../components/CMS/ContentView';
+import CmsViewAllPost from '../components/CMS/CmsViewAllPost';
 import ContentGallaryView from '../components/CMS/ContentGallaryView';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -190,7 +190,7 @@ export default function ContentViewPage() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <ContentView />
+                                <CmsViewAllPost />
                             </Paper>
                         </Grid>
                         

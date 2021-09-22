@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../css/AddNewContent.css'
 import AddIcon from '@material-ui/icons/Add';
-
 import axios from "axios";
-
-    
 
 function NewContent() {
     const [selectedFile, setSelectedFile] = useState()
@@ -34,12 +31,16 @@ function NewContent() {
         setSelectedFile(e.target.files[0])
     }
 
-    const [state,setState]=useState({file:'',display_photo:'',message:'',success:false})
-    const [title, setTitle] = useState("");
-    const [contentDescription, setContentDescription] = useState("");
-    const [postDate, setPostDate] = useState(new Date());
+    // const [content_id,getid] = useState("");
+    const [content_description,setDescription] = useState("");
+    const [content_title,setTitle] = useState("");
+    const [state,setState] = useState({file:'',display_photo:'',message:'',success:false});
+    const [posted_date,setPostedDate] = useState("");
+   
+    // var today = new Date();
+    // var date = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+    // const posted_date = date;
 
- 
     const handleInput = (e) => {
         let reader = new FileReader();
         let file = e.target.files[0]
@@ -47,62 +48,59 @@ function NewContent() {
           setState({
             ...state,
             file: file,
-            display_photo: reader.result,
+            displayPhoto: reader.result,
             message: ""
           })
       
         }
         reader.readAsDataURL(file);
-    }
+      }
 
-    const add_content = async () => {
-        console.log("button pressed")
-        if (state && title && contentDescription) {
+    const contentadd = ()=>{
+    //   console.log(content_id);
+    //   console.log(file);
     
-            if (state.file) {
-                let formData = new FormData();
-                formData.append('file', state.file)
-                await axios.post('http://localhost:17152/imageUpload', formData, {
-                    'content-Type': 'multipart/form-data',
-                })
-                await axios.post('http://localhost:17152/addContent', {
-                    display_photo: state.file.name,
-                    title: title,
-                    contentDescription: contentDescription,
-                    postDate: postDate,
+        if (state.file) {
+        let formData = new FormData();
+        formData.append('file', state.file)
+        axios.post('http://localhost:17152/imageUpload', formData, {
+            'content-Type': 'multipart/form-data',
+        })
+    
+        axios.post('http://localhost:17152/addContent', {
+            content_title: content_title,
+            content_description: content_description,
+            display_photo: state.file.name,
+            posted_date: posted_date,
 
-                }).then(() => {
-                    alert("The new event was added successfully.")
-                    window.location.replace("/app/ProductList");
-                });
-                
-            } 
+        }).then(() => {
+            alert("The post was added successfully.")
+            window.location.replace("/contentHome");
             
-        }
-        else {
-            alert("Image, Title, Description are required.")
-        }
+        });
+    };
 };
 
     return (
         <div>
             <div className="write">
             <div className="imgContainer">{selectedFile &&  <img className="writeImg" src={preview} alt="Preview"/> }</div>
-            <form className="writeForm">
+            <form className="writeForm" onSubmit={contentadd}  >
                 <div className="writeFormGroup">
                     <label htmlFor="fileInput">
                         <AddIcon className="writeIcon"/>
                     </label>
-                    <input name="file" type="file" id="fileInput" style={{display:"none"}}  onChange={handleInput} required/>
-
-                    <input name="content_title" type="text" placeholder="Title" className="writeInput" autoFocus={true} onChange={(event) => { setTitle(event.target.value); }} required></input>
+                    <input name="file" type="file"  id="fileInput" style={{display:"none"}} onChange={handleInput}  onInput={onSelectFile}  /><br/>
+                    <input name="content_title" type="text" placeholder="Title" className="writeInput" 
+                    onChange={(event) => { setTitle(event.target.value); }} autoFocus={true}></input>
                     
                 </div>
                 <div className="writeFormGroup">
-                    <textarea name="content_description" placeholder="Add your content here" type="text" className="writeInput writeText" onChange={(event) => { setContentDescription(event.target.value); }}></textarea>
-                    <button className="writeSubmit"                    
-                        onClick={add_content}
-                    >Publish</button>
+                    <textarea name="content_description" placeholder="Add your content here" type="text" className="writeInput writeText" onChange={(event) => { setDescription(event.target.value); }}>
+                    </textarea>
+                </div>
+                <div>
+                    <button type="submit" className="writeSubmit">Publish</button>
                 </div>
             </form>
         </div>
@@ -110,8 +108,4 @@ function NewContent() {
     )
 }
 
-export default NewContent
-
-
-
-
+export default NewContent;

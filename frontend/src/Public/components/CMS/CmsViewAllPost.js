@@ -1,396 +1,136 @@
-import React , { useState,useEffect } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green } from '@material-ui/core/colors';
-import axios from 'axios';
+import { green, red } from '@material-ui/core/colors';
 
-function createData(contentId,contentTitle, contentDescription, scoutId,postedDate, status,media) {
-    return {contentId,contentTitle, contentDescription, scoutId,postedDate, status,media };
-}
+import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
-const rows = [
-    createData(1,'Cupcake', 305, 3.7, 67, 4.3),
-    createData(2,'Donut', 452, 25.0, 51, 4.9),
-    createData(3,'Eclair', 262, 16.0, 24, 6.0),
-    createData(6,'Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData(7,'Gingerbread', 356, 16.0, 49, 3.9),
-    createData(8,'Honeycomb', 408, 3.2, 87, 6.5),
-    createData(9,'Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData(10,'Jelly Bean', 375, 0.0, 94, 0.0),
-    createData(11,'KitKat', 518, 26.0, 65, 7.0),
-    createData(12,'Lollipop', 392, 0.2, 98, 0.0),
-    createData(13,'Marshmallow', 318, 0, 81, 2.0),
-    createData(14,'Nougat', 360, 19.0, 9, 37.0),
-    createData(15,'Oreo', 437, 18.0, 63, 4.0),
-];
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
-
-const headCells = [
-    { id: 'contentId', numeric: true, disablePadding: false, label: 'Post Id' },
-    { id: 'contentTitle', numeric: false, disablePadding: false, label: 'Title' },
-    { id: 'contentDescription', numeric: false, disablePadding: false, label: 'Post Data' },
-    { id: 'postedBy', numeric: true, disablePadding: false, label: 'posted By' },
-    { id: 'postedDate', numeric: false, disablePadding: false, label: 'posted Date' },
-    { id: 'status', numeric: true, disablePadding: false, label: 'Status'},
-    { id: 'media', numeric: true, disablePadding: false, label: 'Media'},
-    { id: 'action', numeric: true, disablePadding: false, label: 'Action'},
-];
-
-function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
-
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
-                </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
-
-EnhancedTableHead.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
     },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
+  },
+}))(TableRow);
 
-const EnhancedTableToolbar = (props) => {
-    const classes = useToolbarStyles();
-    const { numSelected } = props;
 
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Users
-                </Typography>
-            )}
-
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
-        </Toolbar>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-};
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    paper: {
-        width: '100%',
-        marginBottom: theme.spacing(2),
-    },
-    table: {
-        minWidth: 750,
-    },
-    visuallyHidden: {
-        border: 0,
-        clip: 'rect(0 0 0 0)',
-        height: 1,
-        margin: -1,
-        overflow: 'hidden',
-        padding: 0,
-        position: 'absolute',
-        top: 20,
-        width: 1,
-    },
-}));
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
 
 export default function CmsViewAllPost() {
-    const [posts,setPosts]= useState([])
-    useEffect(() =>{
-    axios.get('http://localhost:8080/contents')
-        .then(res =>{
-            console.log(res,'hello')
-        })
-        .catch(err =>{
-            console.log(err,'heelo')
-        })
+  const classes = useStyles();
+  const [content, setcontent] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-all-content").then((response)=>{
+      setcontent(response.data)
     })
+  },[])
+
+  const deleteContent = (content_id) => {
+    axios.get("http://localhost:17152/delete-content", {
+      params: {
+        content_id: content_id,
+      }
+    }).then((response) => {
+      window.location.reload();
+    })
+  };
 
 
-    const classes = useStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('address');
-    const [selected, setSelected] = React.useState([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-    const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-    };
+  return (
+    <TableContainer component={Paper}>
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+    onChange={(e)=>{
 
-    const handleSelectAllClick = (event) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
+        setSearch(e.target.value);}}/>
+      <center><Typography component="h1" variant="h5">
+                     Content List
+                </Typography></center>
+
+<br/>
+
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell align="center">Content ID</StyledTableCell>
+            <StyledTableCell align="center">Content Title</StyledTableCell>
+            <StyledTableCell align="center">Description</StyledTableCell>
+            <StyledTableCell align="center">Posted Date</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
+          </TableRow> 
+        </TableHead> 
+        <TableBody>
+            {content.filter((record) => {
+            if(search == ""){
+                return content;
+            }
+            else if (content.content_title.toLowerCase().includes(search.toLowerCase())){
+                return content;
+            }}).
+            map((content) => {
+                return (
+              <StyledTableRow key={content.content_id}>
+               <StyledTableCell align="center" component="th" scope="row">{content.content_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{content.content_title}</StyledTableCell>
+              <StyledTableCell align="center">{content.content_description}</StyledTableCell>
+              <StyledTableCell align="center">{content.posted_date}</StyledTableCell>
+              {/* <StyledTableCell align="center"> 
+              <Button m={1}
+              target="_blank"
+               component ={Link}
+                to={location=> `/ItemInfoRoute/${content.content_id}`} 
+                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                variant="contained"
+                className={classes.button}
+                startIcon={<VisibilityIcon />}
+                >
+                View
+              </Button></StyledTableCell> */}
+              <StyledTableCell align="center">
+                <Button m={1}
+                    onClick={() => { deleteContent(content.content_id) }}
+                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                    variant="contained"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}>
+                    Delete
+                    </Button>
+              </StyledTableCell>
+              </StyledTableRow>
+                );
+            })
         }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
-
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-    return (
-        <div className={classes.root}>
-            <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
-                <TableContainer>
-                    <Table
-                        className={classes.table}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
-                        aria-label="enhanced table"
-                    >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
-                                            <TableCell align="center" component="th" id={labelId} scope="row" padding="none">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="center">{row.address}</TableCell>
-                                            <TableCell align="center">{row.contact}</TableCell>
-                                            <TableCell align="center">{row.nic}</TableCell>
-                                            <TableCell align="center">{row.role}</TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="update-user/${row.id}"
-                                                    color="primary"
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<EditIcon />}>
-                                                    Edit
-                                                </Button>
-                                            </TableCell>
-                                            <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    href="view-user/${row.id}"
-                                                    style={{ backgroundColor: green[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    startIcon={<VisibilityIcon />}
-                                                >
-                                                    View
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
-        </div>
-    );
+        </TableBody>
+      </Table>
+    </TableContainer>
+ );
 }
-

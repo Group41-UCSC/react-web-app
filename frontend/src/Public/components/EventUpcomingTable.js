@@ -13,7 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -40,66 +42,83 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventUpcomingTable() {
+export default function ItemView() {
   const classes = useStyles();
-  const [product, setProduct] = useState([]);
+  const [event, setEvent] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/items");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-upcoming-events").then((response)=>{
+      setEvent(response.data)
+    })
+  },[])
+
+  const deleteUpcomingEvent = (event_id) => {
+    axios.get("http://localhost:17152/delete-event", {
+      params: {
+        event_id: event_id,
       }
+    }).then((response) => {
+      window.location.reload();
+    })
   };
-
-
-  useEffect(() => {
-      getItemList();
-  }, []);
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
+
         setSearch(e.target.value);}}/>
       <center><Typography component="h1" variant="h5">
-                    Upcoming Events
+                     Upcoming Event List
                 </Typography></center>
+
+<br/>
+
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Event Name</StyledTableCell>
-            <StyledTableCell align="left">Event Date</StyledTableCell>
-            <StyledTableCell align="left">Status</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            <StyledTableCell align="center">Event ID</StyledTableCell>
+            <StyledTableCell align="center">Event Title</StyledTableCell>
+            <StyledTableCell align="center">Start Date</StyledTableCell>
+            <StyledTableCell align="center">End Date</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
-            {product.filter((item) => {
+            {event.filter((record) => {
             if(search == ""){
-                return item;
+                return event;
             }
-            else if (item.itemName.toLowerCase().includes(search.toLowerCase())){
-                return item;
+            else if (event.event_title.toLowerCase().includes(search.toLowerCase())){
+                return event;
             }}).
-            map((item) => {
+            map((event) => {
                 return (
-              <StyledTableRow key={item.itemId}>
-              <StyledTableCell align="left" component="th" scope="row">{item.itemName}</StyledTableCell>
-              <StyledTableCell align="left">{item.itemQuantity}</StyledTableCell>
-
-              <StyledTableCell align="left">{item.itemStatus}</StyledTableCell>
-              
+              <StyledTableRow key={event.event_id}>
+               <StyledTableCell align="center" component="th" scope="row">{event.event_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{event.event_title}</StyledTableCell>
+              <StyledTableCell align="center">{event.start_date}</StyledTableCell>
+              <StyledTableCell align="center">{event.end_date}</StyledTableCell>
+              {/* <StyledTableCell align="center"> 
+              <Button m={1}
+              target="_blank"
+               component ={Link}
+                to={location=> `/ItemInfoRoute/${event.event_id}`} 
+                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                variant="contained"
+                className={classes.button}
+                startIcon={<VisibilityIcon />}
+                >
+                View
+              </Button></StyledTableCell> */}
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-event"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
+                    onClick={() => { deleteUpcomingEvent(event.event_id) }} 
                     startIcon={<DeleteIcon />}>
                     Delete
                     </Button>
