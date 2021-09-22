@@ -832,49 +832,49 @@ const storage1 = multer.diskStorage({
     destination(req,file,cb){
       cb(null,'../server/files')
     },
-    filename(req, file, cb) {
-      console.log(file)
-      cb(null,
-        `${file.originalname.split('.')[0]}.jpg`
+    filename(req,file,cb){
+      cb(
+        null,
+        `${file.originalname}`
       )
     }
   })
-  const upload = multer({
+   
+  const upload1 = multer({
     storage1,
     limits:{
       fileSize: 5000000
     },
-    fileFilter(req, file, cb) {
-      if (!file.originalname.match(/\.(jpeg|jpg|png)$/i)) {
-        return cb(new Error('pleaseupload image with type of jpg ,png or jpeg'))
-      }
-      cb(undefined, true)
+    fileFilter(req,file,cb){
+      if(!file.originalname.match(/\.(jpeg|jpg|png)$/i)){
+        return  cb(new Error('please upload image with type of jpg or jpeg'))
     }
+    cb(null,true)
+  }
   })
 
-  app.post("/imageUpload",upload.single('file'),(req,res)=> {
-    console.log("fuck")
-})
-
-app.post('/addContent', (req, res) => {
+  app.post('/addContent', (req, res) => {
     console.log(req.body)
+    const content_title = req.body.content_title;
+    const content_description = req.body.content_description;
     const display_photo = req.body.display_photo;
-    const title = req.body.title;
-    const contentDescription = req.body.contentDescription;
-    const postDate = req.body.postDate;
-    console.log(display_photo,title,contentDescription,postDate);
+    // const posted_date = req.body.posted_date;
+    const posted_date = new Date();
 
-    db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
-        [display_photo, title, contentDescription, postDate], (err, _results) => {
+    db.query("INSERT INTO content (content_title,content_description,file,posted_date) VALUES (?,?,?,?)",
+        [content_title, content_description, display_photo, posted_date], (err, _results) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send("product created");
+                res.send("post created");
+                // console.log(content_title,content_description,display_photo,posted_date);
             }
-        });
+    });
 });
 
-
+app.post("/imageUpload",upload1.single('file'),(req,res)=> {
+     
+})
 
 
 //     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
