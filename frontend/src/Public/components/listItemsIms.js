@@ -8,15 +8,17 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
+import StoreIcon from '@material-ui/icons/Store';
+
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
     <div>
-        <ListItem button component={Link} to="/dashboard">
+        <ListItem button component={Link} to="/ims-dashboard">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" href="/dashboard"/>
+            <ListItemText primary="Dashboard" href="Dashboard"/>
         </ListItem>
         <ListItem button component={Link} to="/view-users">
             <ListItemIcon>
@@ -63,7 +65,7 @@ export const secondaryListItems = (
         {/* <ListSubheader inset>Saved reports</ListSubheader> */}
         <ListItem button component={Link} to="/inventory">
             <ListItemIcon>
-                <AssignmentIcon />
+            <StoreIcon/>
             </ListItemIcon>
             <ListItemText primary="Inventory Management" />
         </ListItem>

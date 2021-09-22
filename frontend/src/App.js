@@ -7,6 +7,8 @@ import ContentHome from './Public/pages/ContentHome'
 import SignInSide from './Public/pages/Authentication/NewSignin'
 import Dashboard from './Public/pages/Dashboard'
 import UserDashboard from './Public/pages/UserDashboard'
+import IMSDashboard from './Public/pages/IMSDashboard'
+import CMSDashboard from './Public/pages/CMSDashboard'
 import ViewUser from './Public/pages/ManageUsers/ViewUser'
 import AddNewUser from './Public/pages/ManageUsers/AddNewUser'
 import AddNewContent from './Public/pages/AddNewContent'
@@ -44,6 +46,7 @@ import BadgeLog from './Public/pages/BadgeLogPage';
 import Home from './Public/pages/Home';
 import ManageOtp from './Public/pages/Authentication/ManageOtp';
 
+
 function App() {
   return (
     <div>
@@ -53,9 +56,11 @@ function App() {
           <Route path='/signup' component={Up} />
           <Route path='/login' component={In} />
           {/* <Route path='/' component={Home} /> */}
+
           <Route path='/contenthome' component={ContentHome} />
           <Route path='/newcontent' component={AddNewContent} />
           <Route path='/newimggal' component={AddNewImgGal} />
+
           <Route path='/old-login' component={SignInSide} />
           <Route path='/old-signup' component={SignUp} />
           <Route path='/dashboard' component={Dashboard} />
@@ -63,7 +68,16 @@ function App() {
           <Route path='/add-user' component={AddNewUser} />
           <Route path='/test' component={AddNewImgGal} />
           <Route path='/view-user' component={ViewUser} />
+
+
           <Route path='/user-dashboard' component={UserDashboard} />
+          <Route path='/ims-dashboard' component={IMSDashboard} />
+          <Route path='/cms-dashboard' component={CMSDashboard} />
+          <Route path='/content-view' component={ContentViewPage} />
+          <Route path='/content-gallary-view' component={ContentGallaryPage} />
+          {/* <Route path='/senior-dashboard' component={UserDashboard} /> */}
+
+
           <Route path='/available-badge' component={AvailableBadge} />
           <Route path='/available-badges' component={AvailableBadges} />
           <Route path='/earned-badge' component={ViewEarnedBadges} />
@@ -87,8 +101,6 @@ function App() {
           <Route path='/request-inventory' component={InventoryRequest} />
           <Route path='/event' component={Event} />
           <Route path='/event-upcoming' component={EventUpcoming} />
-          <Route path='/content-view' component={ContentViewPage} />
-          <Route path='/content-gallary-view' component={ContentGallaryPage} />
           <Route path='/badge-view' component={BadgeRequestPage} />
           <Route path='/badge-request' component={BadgeRequestPage} />
           <Route path='/badge-progress-list' component={BadgeProgressPage} />

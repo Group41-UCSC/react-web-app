@@ -712,56 +712,128 @@ app.put('/PassBadge', (req,res) => {
 
 
 ///////////////////////////////////// Content Management System /////////////////////////////
-
-
-app.post('/add-content' , (req , res)=>{
-
-    console.log(req.body);
-    const formdata = JSON.parse(req.body.data);
+const storage = multer.diskStorage({
+    destination(req,file,cb){
+      cb(null,'files/contents')
+    },
+    filename(req,file,cb){
+      cb(
+        null,
+        `${file.originalname}`
+      )
+    }
+  })
    
-    const content_title = formdata.content_title;
-    const content_description = formdata.content_description;
-    //const file = formdata.file;
-    const posted_date = formdata.posted_date;
-
-
-  console.log(req.body);
-  console.log(req.files);
-
-
-let sampleFile;
-let uploadPath;
-
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
+  const upload = multer({
+    storage,
+    limits:{
+      fileSize: 5000000
+    },
+    fileFilter(req,file,cb){
+      if(!file.originalname.match(/\.(jpeg|jpg|png)$/i)){
+        return  cb(new Error('please upload image with type of jpg or jpeg'))
+    }
+    cb(null,true)
   }
+  })
 
-  console.log(__dirname);
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  const randomfilenum = Math.floor(Math.random()*1000000);
-  sampleFile = req.files.file;
-  const newfilename = randomfilenum.toString() +sampleFile.name;
-
-  uploadPath = __dirname + '/files/contents/' + newfilename
+  app.post("/imageUpload",upload.single('file'),(req,res)=> {
+     
+})
 
 
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(uploadPath, function(err) {
-   console.log(err);
-  });
+app.post('/add-content', (req, res) => {
+    console.log(req.body)
+    // const product_id = req.body.product_id;
+    // const emp_img = req.body.emp_img;
+    // const display_photo = imageDirectory + req.body.display_photo;
+    const file = req.body.file;
+    const content_title = req.body.content_title;
+    const content_description = req.body.content_description;
+    const posted_date = req.body.posted_date;
 
 
-   db.query("INSERT INTO content (content_description,content_title,file,posted_date) VALUES (?,?,?,?)",
-   [content_description,content_title,newfilename,posted_date],(err,result)=>{
-       if(err){
-           console.log(err);
-       }else{
-           res.send("Data Added");
-       }
-   });
-
+    db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
+        [file, content_title, content_description, posted_date], (err, _results) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("post created");
+            }
+        });
 });
+
+///////////////////////////////////// Event Management /////////////////////////////
+
+
+app.post('/addScheduleEvent', (req, res) => {
+    // console.log(req.body)
+    const title = req.body.title;
+    const discription = req.body.discription;
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+    const taskName = req.body.taskName.toString();
+    const groupName = req.body.groupName.toString();
+
+    db.query("INSERT INTO event (event_title,event_description,group_name,start_date,end_date,task_name) VALUES (?,?,?,?,?,?)",
+        [title, discription,groupName, startDate, endDate, taskName], (err, _results) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Schedule Event Created...!");
+            }
+        });
+});
+
+
+// app.post('/add-content' , (req , res)=>{
+
+//     console.log(req.body);
+//     const formdata = JSON.parse(req.body.data);
+   
+//     const content_title = formdata.content_title;
+//     const content_description = formdata.content_description;
+//     //const file = formdata.file;
+//     const posted_date = formdata.posted_date;
+
+
+//   console.log(req.body);
+//   console.log(req.files);
+
+
+// let sampleFile;
+// let uploadPath;
+
+//   if (!req.files || Object.keys(req.files).length === 0) {
+//     return res.status(400).send('No files were uploaded.');
+//   }
+
+//   console.log(__dirname);
+
+//   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+//   const randomfilenum = Math.floor(Math.random()*1000000);
+//   sampleFile = req.files.file;
+//   const newfilename = randomfilenum.toString() +sampleFile.name;
+
+//   uploadPath = __dirname + '/files/contents/' + newfilename
+
+
+//   // Use the mv() method to place the file somewhere on your server
+//   sampleFile.mv(uploadPath, function(err) {
+//    console.log(err);
+//   });
+
+
+//    db.query("INSERT INTO content (content_description,content_title,file,posted_date) VALUES (?,?,?,?)",
+//    [content_description,content_title,newfilename,posted_date],(err,result)=>{
+//        if(err){
+//            console.log(err);
+//        }else{
+//            res.send("Data Added");
+//        }
+//    });
+
+// });
 
 // app.get('/formView',(req,res)=>{
 //     db.query("SELECT * FROM content ORDER BY posted_date ASC",(err,result,) => {
@@ -775,6 +847,8 @@ let uploadPath;
 
 // });
 
+
+///////////////////////////////////// NO CODES BELOW /////////////////////////////
 
 app.listen(17152, () => {
     console.log("Your server is running on port 17152");
