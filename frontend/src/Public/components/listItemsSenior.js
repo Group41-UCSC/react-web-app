@@ -30,23 +30,30 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
+        <ListItem button component={Link} to="/request-inventory">
+            <ListItemIcon>
+                <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="Inventory" />
+        </ListItem>
+        
+        <ListItem button component={Link} to="/badge-view">
+            <ListItemIcon>
+                <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="BatchWork" />
+        </ListItem>
         <ListItem button component={Link} to="#">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Tasks" />
         </ListItem>
-        <ListItem button component={Link} to="inventory">
+        <ListItem button component={Link} to="#">
             <ListItemIcon>
-                <LayersIcon />
+                <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Inventory" />
-        </ListItem>
-        <ListItem button component={Link} to="/available-badge">
-            <ListItemIcon>
-                <LayersIcon />
-            </ListItemIcon>
-            <ListItemText primary="BatchWork" />
+            <ListItemText primary="Evaluation" />
         </ListItem>
     </div>
 );
