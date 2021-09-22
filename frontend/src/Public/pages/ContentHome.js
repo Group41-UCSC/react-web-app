@@ -18,7 +18,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItemsCms, secondaryListItemsCms} from '../components/listItemsCms';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
@@ -163,9 +163,9 @@ function ContentHome() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItemsCms}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>{secondaryListItemsCms}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
