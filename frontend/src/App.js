@@ -49,6 +49,8 @@ import ManageOtp from './Public/pages/Authentication/ManageOtp';
 import EventUserView from './Public/pages/EventUserView';
 import ViewUserInfo from './Public/pages/ManageUsers/ViewUserInfo';
 import ViewUserInfoRoute from './Public/pages/ManageUsers/ViewUserInfoRoute';
+import ItemInfo from './Public/pages/ItemInfo';
+import ItemInfoRoute from './Public/pages/ItemInfoRoute';
 
 
 
@@ -104,6 +106,8 @@ function App() {
           <Route path='/item-issued' component={ItemIssued} />
           <Route path='/edit-item-form' component={EditItemPage} />
           <Route path='/add-item' component={AddNewItem} />
+          <Route path='/ItemInfo' component={ItemInfo} />
+          <Route path='/ItemInfoRoute' component={ItemInfoRoute} />
           <Route path='/item-log' component={ItemLog} />
           <Route path='/view-inventory' component={ViewInventory} />
           <Route path='/request-inventory' component={InventoryRequest} />
