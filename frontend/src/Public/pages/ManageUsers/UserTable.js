@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
 
@@ -94,7 +95,9 @@ export default function UserTable() {
               <StyledTableCell align="left">{item.user_role}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
-                href="/edit-item-form"
+                target="_blank"
+                component ={Link}
+                to={location=> `/ViewUserInfoRoute/${item.userid}`}
                 style={{ backgroundColor: green[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}

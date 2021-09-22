@@ -10,8 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green, red } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -53,6 +52,26 @@ export default function UserTable() {
       }
   };
 
+  const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
+
+const deleteProduct = (announcement_id) => {
+    axios.get("http://localhost:17152/delete-announcement", {
+      params: {
+        announcement_id: announcement_id,
+      }
+    }).then((response) => {
+      window.location.reload();
+    })
+  };
+
+
+
 
   useEffect(() => {
       getNoticeList();
@@ -82,14 +101,14 @@ export default function UserTable() {
         <TableBody>     
               <StyledTableRow key={item.announcement_id}>
               <StyledTableCell align="left" component="th" scope="row">{item.announcement_title}</StyledTableCell>
-              <StyledTableCell align="left">{item.announcement_date}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(item.announcement_date)}</StyledTableCell>
               <StyledTableCell align="left">{item.announcement_author}</StyledTableCell>
               <StyledTableCell align="right">
                 <Button m={1}
-                    href="delete-item"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
+                    onClick={() => { deleteProduct(item.announcement_id) }}
                     startIcon={<DeleteIcon />}>
                     Remove
                 </Button>

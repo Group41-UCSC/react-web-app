@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from "react";
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,11 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import DateFnsUtils from '@date-io/date-fns';
+import axios from "axios";
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { NoteTwoTone } from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,11 +33,104 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SiteAnnouncementCreator() {
     const classes = useStyles();
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    // const [date, setdate] = useState("");
+    const [author, setauthor] = useState("");
+    const [topic, settopic] = useState("");
+    const [body, setbody] = useState("");
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
+
+
+        const addItem = () => {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+
+
+        const data = {
+            announcement_date: today,
+            announcement_author: author,
+            announcement_title: topic,
+            announcement_body: body
+        };
+   
+        // setdate("");
+        setauthor("");
+        settopic("");
+        setbody("");
+
+        if(validateForm()){
+            const postLog = data => {
+                axios
+                .post("http://localhost:17152/createAnnouncement", data)
+                .then((d) =>{
+                    if(d.data != null){
+                        console.log(d);
+                        alert("Announcement Posted successfully");
+                        window.location.reload();
+                    }
+                })
+            };
+
+            postLog(data);
+        }
+ 
+        else{
+
+    // console.log(errors);
+  }
+}
+
+const validateForm=()=>{
+    let errors=[];
+    let isValid = true;
+
+
+
+   // if (!dateValue) {
+    //    isValid = false;
+     //   errors["date"] = "Please select a date.";
+    //  }
+
+//   if (!date) {
+//     isValid = false;
+//     errors["date"] = "Please enter a date.";
+//   }
+
+
+  if (!topic) {
+    isValid = false;
+    errors["topic"] = "Please enter the title.";
+  }
+
+  if (!author) {
+    isValid = false;
+    errors["author"] = "Please enter the author.";
+  }
+
+  if (!body) {
+    isValid = false;
+    errors["body"] = "Please enter the body";
+  }
+
+
+//  setErros(errors);
+
+  return isValid;
+
+}
+
 
 
     return (
@@ -70,6 +164,8 @@ export default function SiteAnnouncementCreator() {
                             <TextField
                                 id="outlined-multiline-static"
                                 label="Author"
+                                value={author}
+                                onChange={(e) => { setauthor(e.target.value) }}
                                 fullWidth
                                 defaultValue="Default Value"
                             />
@@ -78,6 +174,8 @@ export default function SiteAnnouncementCreator() {
                             <TextField
                                 id="outlined-multiline-static"
                                 label="Topic"
+                                value={topic}
+                                onChange={(e) => { settopic(e.target.value) }}
                                 fullWidth
                                 defaultValue="Default Value"
                             />
@@ -87,6 +185,8 @@ export default function SiteAnnouncementCreator() {
                                 id="outlined-multiline-static"
                                 label="body"
                                 fullWidth
+                                value={body}
+                                onChange={(e) => { setbody(e.target.value) }}
                                 multiline
                                 rows={10}
                                 defaultValue="Default Value"
@@ -99,6 +199,7 @@ export default function SiteAnnouncementCreator() {
                         type="submit"
                         fullWidth
                         variant="contained"
+                        onClick={(e) => addItem(e)}
                         // color="primary"
                         className={classes.submit}
                     >
