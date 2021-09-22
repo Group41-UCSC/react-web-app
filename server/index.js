@@ -458,6 +458,23 @@ app.get('/view-user', (req, res) => {
 
 });
 
+app.post('/create-item-request', (req, res) => {
+    console.log(req.body)
+    const announcement_title = req.body.announcement_title;
+    const announcement_author = req.body.announcement_author;
+    const announcement_date = req.body.announcement_date;
+    const announcement_body = req.body.announcement_body;
+
+    db.query("INSERT INTO announcement (announcement_title,announcement_author,announcement_date,announcement_body) VALUES (?,?,?,?)",
+        [announcement_title,announcement_author,announcement_date,announcement_body], (err, _results) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Announcement Posted Successfully");
+            }
+    });
+});
+
 app.get("/viewItemListinfo",(req,res)=>{
   item_id= req.params.item_id
  
