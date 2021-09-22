@@ -19,8 +19,6 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../../components/listItems';
-import UserTable from './UserTable';
-import FloatingAddUser from './FloatingAdd';
 import ProfileDropDown from '../../components/ProfileDropDown';
 import NotificationDropDown from '../../components/NotificationDropDown';
 import axios from 'axios';
@@ -138,9 +136,6 @@ export default function ViewUserInfo() {
       };
       fetchData();
     }, [userid]);
-    
-
-
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -165,7 +160,7 @@ export default function ViewUserInfo() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        View Users
+                     Users Info
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
@@ -197,18 +192,17 @@ export default function ViewUserInfo() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <FloatingAddUser />
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item item xs={12} md={8} lg={9}>
                             <Paper className={classes.paper}>
                             <div ><br/>
                   <div style={{display:'flex'}}><label className={classes.formlabel1}><b style={{marginRight:'65px'}}>User ID :</b>{Dt.userid}</label></div>
                   <label className={classes.formlabel1}><b style={{marginRight:'30px'}}>First Name :</b > {Dt.first_name}</label><br/>
 				  <label className={classes.formlabel1}><b style={{marginRight:'30px'}}>Last Name :</b > {Dt.last_name}</label><br/> 
-                  <label className={classes.formlabel1}><b style={{marginRight:'100px'}}>Address: </b>{Dt.address}</label><br/>
-                  <label className={classes.formlabel1}><b style={{marginRight:'80px'}}>Phone No :</b> {Dt.phone}</label><br/>
-                  <label className={classes.formlabel1}><b style={{marginRight:'80px'}}>Email :</b> {Dt.email} </label><br/>
-                  <label className={classes.formlabel1}><b style={{marginRight:'50px'}}>NIC No :</b> {Dt.nic}</label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'50px'}}>Address: </b>{Dt.address}</label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'40px'}}>Phone No :</b> {Dt.phone}</label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'65px'}}>Email :</b> {Dt.email} </label><br/>
+                  <label className={classes.formlabel1}><b style={{marginRight:'55px'}}>NIC No :</b> {Dt.nic}</label><br/>
 				  <label className={classes.formlabel1}><b style={{marginRight:'50px'}}>User Role :</b> {Dt.user_role}</label><br/>
                   </div>
                             </Paper>
