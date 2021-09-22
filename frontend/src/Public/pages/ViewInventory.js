@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItemsUser, secondaryListItemsUser } from '../components/listItemsUser';
 import ItemListTable from '../components/ItemListTable';
 import FloatingInventory from '../components/FloatingInventory';
 import ProfileDropDown from '../components/ProfileDropDown';
@@ -173,9 +173,9 @@ export default function ViewInventory() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItemsUser}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>{secondaryListItemsUser}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
