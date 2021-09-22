@@ -76,12 +76,15 @@ export default function BadgeCompletedTable() {
     
   },[])
 
+
   const DeleteBadge = (badgelog_id) =>{
     axios.put('http://localhost:17152/DeleteBadge', {
       badgelog_id:badgelog_id,
       
     }).then(
+
       (response) => {
+        window.location.replace('/badge-completed');
         alert("Badge Deleted Successfully");
       }
     )

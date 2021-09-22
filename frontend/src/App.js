@@ -44,6 +44,9 @@ import BadgeLog from './Public/pages/BadgeLogPage';
 import Home from './Public/pages/Home';
 import ManageOtp from './Public/pages/Authentication/ManageOtp';
 import EventUserView from './Public/pages/EventUserView';
+import ViewUserInfo from './Public/pages/ManageUsers/ViewUserInfo';
+import ViewUserInfoRoute from './Public/pages/ManageUsers/ViewUserInfoRoute';
+
 
 function App() {
   return (
@@ -71,6 +74,8 @@ function App() {
           <Route path='/badge-progress' component={BadgeProgress} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/newevent' component={AddNewEvent} />
+          <Route path='/ViewUserInfo' component={ViewUserInfo} />
+          <Route path='/ViewUserInfoRoute' component={ViewUserInfoRoute} />
 
 
 

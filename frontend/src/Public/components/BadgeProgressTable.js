@@ -81,7 +81,8 @@ export default function BadgeProgressTable() {
       
     }).then(
       (response) => {
-        alert("Badge Passed Successfully");
+        window.location.replace('/badge-progress-list');
+        alert("Marked as Passed");
       }
     )
   }
@@ -92,7 +93,8 @@ export default function BadgeProgressTable() {
       
     }).then(
       (response) => {
-        alert("Badge Failed");
+        window.location.replace('/badge-progress-list');
+        alert("Marked as Failed");
       }
     )
   }
