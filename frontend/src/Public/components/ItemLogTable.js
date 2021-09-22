@@ -76,7 +76,7 @@ export default function ItemRequestTable() {
             <StyledTableCell align="left">Proposed Return Date</StyledTableCell>
             <StyledTableCell align="left">Actual Return Date</StyledTableCell>
             <StyledTableCell align="right">Rental Remarks</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            
           </TableRow> 
         </TableHead> 
         <TableBody>
