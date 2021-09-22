@@ -43,8 +43,10 @@ import BadgePending from './Public/pages/BadgePendingPage';
 import BadgeLog from './Public/pages/BadgeLogPage';
 import Home from './Public/pages/Home';
 import ManageOtp from './Public/pages/Authentication/ManageOtp';
+import EventUserView from './Public/pages/EventUserView';
 import ViewUserInfo from './Public/pages/ManageUsers/ViewUserInfo';
 import ViewUserInfoRoute from './Public/pages/ManageUsers/ViewUserInfoRoute';
+
 
 function App() {
   return (
@@ -99,6 +101,7 @@ function App() {
           <Route path='/badge-completed' component={BadgeCompleted} />
           <Route path='/badge-pending' component={BadgePending} />
           <Route path='/badge-log' component={BadgeLog} />
+          <Route path='/event-user-view' component={EventUserView} />
         </Switch>
         {/* <Footer /> */}
       </Router>

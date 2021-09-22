@@ -4,10 +4,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FlagIcon from '@material-ui/icons/Flag';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import EventIcon from '@material-ui/icons/Event';
+import AddCommentIcon from '@material-ui/icons/AddComment';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -20,31 +21,31 @@ export const mainListItems = (
         </ListItem>
         <ListItem button component={Link} to="/view-users">
             <ListItemIcon>
-                <ShoppingCartIcon />
+                <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Users" />
         </ListItem>
         <ListItem button component={Link} to="/newevent">
             <ListItemIcon>
-                <PeopleIcon />
+                <EventIcon />
             </ListItemIcon>
             <ListItemText primary="Events" />
         </ListItem>
         <ListItem button component={Link} to="#">
             <ListItemIcon>
-                <BarChartIcon />
+                <FlagIcon />
             </ListItemIcon>
             <ListItemText primary="Tasks" />
         </ListItem>
         <ListItem button component={Link} to="inventory">
             <ListItemIcon>
-                <LayersIcon />
+                <AddCommentIcon/>
             </ListItemIcon>
             <ListItemText primary="Inventory" />
         </ListItem>
         <ListItem button component={Link} to="/available-badge">
             <ListItemIcon>
-                <LayersIcon />
+                <EmojiEventsIcon />
             </ListItemIcon>
             <ListItemText primary="BatchWork" />
         </ListItem>
