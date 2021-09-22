@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItemsCms';
+import { mainListItemsCms, secondaryListItemsCms } from '../components/listItemsCms';
 
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
@@ -170,9 +170,9 @@ export default function ContentGallaryPage() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItemsCms}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>{secondaryListItemsCms}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />

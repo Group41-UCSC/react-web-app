@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../components/listItemsIms';
+import { mainListItemsIms, secondaryListItemsIms } from '../components/listItemsIms';
 import Orders from '../components/Orders';
 import ProfileDropDown from '../components/ProfileDropDown';
 import NotificationDropDown from '../components/NotificationDropDown';
@@ -217,9 +217,9 @@ export default function IMSDashboard() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>{mainListItems}</List>
+                <List>{mainListItemsIms}</List>
                 <Divider />
-                <List>{secondaryListItems}</List>
+                <List>{secondaryListItemsIms}</List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
