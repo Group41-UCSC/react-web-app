@@ -14,7 +14,7 @@ import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 export const mainListItemsCms = (
     <div>
-        <ListItem button component={Link} to="/dashboard">
+        <ListItem button component={Link} to="/cms-dashboard">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>

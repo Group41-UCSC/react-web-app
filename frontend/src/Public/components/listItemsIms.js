@@ -15,11 +15,11 @@ import { Link } from 'react-router-dom';
 
 export const mainListItemsIms = (
     <div>
-        <ListItem button component={Link} to="/dashboard">
+        <ListItem button component={Link} to="/ims-dashboard">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" href="/dashboard"/>
+            <ListItemText primary="Dashboard" href="Dashboard"/>
         </ListItem>
         <ListItem button component={Link} to="/view-users">
             <ListItemIcon>
@@ -66,9 +66,8 @@ export const secondaryListItemsIms = (
         {/* <ListSubheader inset>Saved reports</ListSubheader> */}
         <ListItem button component={Link} to="/inventory">
             <ListItemIcon>
-                <DateRangeIcon />
             </ListItemIcon>
-            <ListItemText primary="Inventory Management" />
+            <ListItemText primary="Content Management" />
         </ListItem>
     </div>
 );

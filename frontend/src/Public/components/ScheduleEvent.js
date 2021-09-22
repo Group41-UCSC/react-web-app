@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -85,11 +86,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleEvent() {
     const classes = useStyles();
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+    const [title, setTitle] = React.useState('');
+    const [discription, setDescription] = React.useState('');
+    const [startDate, setStartDate] = React.useState(new Date());
+    const [endDate, setEndDate] = React.useState(new Date());
+
+    // const handleDateChange = (date) => {
+    //     setSelectedDate(date);
+    // };
 
     const [TaskName, setTaskName] = React.useState([]);
 
@@ -102,6 +107,30 @@ export default function ScheduleEvent() {
     function handleChange1(event) {
       setGroupName(event.target.value);
     }
+    
+        const addScheduleEvent = () => {
+            try{
+            if (title && startDate && endDate ) {
+            axios.post('http://localhost:17152/addScheduleEvent', {
+                title: title,
+                discription: discription,
+                startDate: startDate,
+                endDate: endDate,
+                taskName : TaskName,
+                groupName : GroupName
+    
+            }).then(() => {
+                alert("Event Created Succesfully");
+                window.location.replace("/dashboard");//
+               
+            });
+            }
+            else {
+                alert("Title, StartDate and EndDate are required.")
+            }
+        }catch(err){
+        }
+    };
 
 
     return (
@@ -121,6 +150,8 @@ export default function ScheduleEvent() {
                                 required
                                 fullWidth
                                 id="eventTitle"
+                                value={title}
+                                onChange={(event) => {setTitle(event.target.value); }}
                                 label="Event Title"
                                 autoFocus
                             />
@@ -133,6 +164,8 @@ export default function ScheduleEvent() {
                                 variant="outlined"
                                 id="eventDescription"
                                 minRows={3}
+                                value={discription}
+                                onChange={(event) => {setDescription(event.target.value); }}
                                 placeholder="Please add a description regading the event"
                                 style={{ width: "100%" }}
                                 autoFocus
@@ -148,8 +181,8 @@ export default function ScheduleEvent() {
                                         id="date-picker-dialog"
                                         label="Event Start Date"
                                         format="MM/dd/yyyy"
-                                        value={selectedDate}
-                                        onChange={handleDateChange}
+                                        value={startDate}
+                                        onChange={(date) => {setStartDate(date); }}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
@@ -168,8 +201,9 @@ export default function ScheduleEvent() {
                                         id="date-picker-dialog"
                                         label="Event End Date"
                                         format="MM/dd/yyyy"
-                                        value={selectedDate}
-                                        onChange={handleDateChange}
+                                        value={endDate}
+                                        // min={today}
+                                        onChange={(date) => {setEndDate(date); }}
                                         KeyboardButtonProps={{
                                             'aria-label': 'change date',
                                         }}
@@ -233,10 +267,11 @@ export default function ScheduleEvent() {
                     </Grid>
                     <Button
                         style={{ background: '#2E3B55', color: '#ffffff' }}
-                        type="submit"
+                        // type="submit"
                         fullWidth
                         variant="contained"
                         className={classes.submit}
+                        onClick={addScheduleEvent}
                     >
                         Create Event
                     </Button>
