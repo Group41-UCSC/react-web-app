@@ -30,9 +30,9 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="#">
+            {/* <Link color="inherit" href="#">
                 Gold Troop
-            </Link>{' '}
+            </Link>{' '} */}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -148,7 +148,8 @@ export default function In() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} onSubmit={handleSubmit(logininfo)}>
+                    
                         <TextField
                             variant="outlined"
                             margin="normal"

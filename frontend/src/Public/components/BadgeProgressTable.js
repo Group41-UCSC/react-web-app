@@ -39,25 +39,63 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
+
 export default function BadgeProgressTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
+  // const getItemlogPendingList = async () => {
+  //     try{
+  //         const data = await axios.get("http://localhost:8080/itemlogs/pending");
+  //         console.log(data.data);
+  //         setProduct(data.data);
+  //     } catch (e){
+  //         console.log(e);
+  //     }
+  // };
+
+
+  // useEffect(() => {
+  //     getItemlogPendingList();
+  // }, []);
+
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-progressing-badges").then((response)=>{
+      setProduct(response.data)
+      console.log(response.data)
+    })
+    
+  },[])
+
+  const PassBadge = (badgelog_id) =>{
+    axios.put('http://localhost:17152/PassBadge', {
+      badgelog_id:badgelog_id,
+      
+    }).then(
+      (response) => {
+        alert("Badge Passed Successfully");
       }
-  };
+    )
+  }
 
-
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
+  const FailBadge = (badgelog_id) =>{
+    axios.put('http://localhost:17152/FailBadge', {
+      badgelog_id:badgelog_id,
+      
+    }).then(
+      (response) => {
+        alert("Badge Failed");
+      }
+    )
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -71,7 +109,7 @@ export default function BadgeProgressTable() {
             <StyledTableCell align="left">Badge Name</StyledTableCell>
             <StyledTableCell align="left">Requested By</StyledTableCell>
             <StyledTableCell align="left">Requested Date</StyledTableCell>
-            <StyledTableCell align="left">Requester name</StyledTableCell>
+            {/* <StyledTableCell align="left">Requester name</StyledTableCell> */}
             <StyledTableCell align="left">Accepted Date</StyledTableCell>
             <StyledTableCell align="left">Status</StyledTableCell>
             <StyledTableCell colSpan="2" align="center">Action</StyledTableCell>
@@ -85,15 +123,15 @@ export default function BadgeProgressTable() {
             }
             // 
         }).
-            map((itemlog) => {
+            map((record) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">{itemlog.itemlogId}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
+              <StyledTableRow key={record}>
+              <StyledTableCell align="left" component="th" scope="row">{record.badge_name}</StyledTableCell>
+              <StyledTableCell align="left">{record.first_name}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_requested_date)}</StyledTableCell>
+              {/* <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell> */}
+              <StyledTableCell align="left">{dateOnly(record.badgelog_approved_date)}</StyledTableCell>
+              <StyledTableCell align="left">{record.badgelog_status}</StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
@@ -101,6 +139,7 @@ export default function BadgeProgressTable() {
                 style={{ backgroundColor: green[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}
+                onClick={() => {PassBadge(record.badgelog_id)}}
                 >
                 Pass
               </Button></StyledTableCell>
@@ -110,6 +149,7 @@ export default function BadgeProgressTable() {
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
+                    onClick={() => {FailBadge(record.badgelog_id)}}
                     startIcon={<DeleteIcon />}>
                     Fail
                 </Button>
