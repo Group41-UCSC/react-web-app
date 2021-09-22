@@ -39,25 +39,42 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
+
 export default function BadgePendingTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
-      }
-  };
+  // const getItemlogPendingList = async () => {
+  //     try{
+  //         const data = await axios.get("http://localhost:8080/itemlogs/pending");
+  //         console.log(data.data);
+  //         setProduct(data.data);
+  //     } catch (e){
+  //         console.log(e);
+  //     }
+  // };
 
 
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
+  // useEffect(() => {
+  //     getItemlogPendingList();
+  // }, []);
+
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-pending-badges").then((response)=>{
+      setProduct(response.data)
+      console.log(response.data)
+    })
+    
+  },[])
+
 
   return (
     <TableContainer component={Paper}>
@@ -71,7 +88,7 @@ export default function BadgePendingTable() {
             <StyledTableCell align="left">Badge Name</StyledTableCell>
             <StyledTableCell align="left">Requested By</StyledTableCell>
             <StyledTableCell align="left">Requested Date</StyledTableCell>
-            <StyledTableCell align="left">Requester name</StyledTableCell>
+            
             
             
             <StyledTableCell align="left"></StyledTableCell> 
@@ -84,16 +101,14 @@ export default function BadgePendingTable() {
             }
             // 
         }).
-            map((itemlog) => {
+            map((record) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">{itemlog.itemlogId}</StyledTableCell>
+              <StyledTableRow >
+              <StyledTableCell align="left" component="th" scope="row">{record.badge_name}</StyledTableCell>
              
-              <StyledTableCell align="left">{itemlog.itemlogQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
-              
-              
+              <StyledTableCell align="left">{record.first_name}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_requested_date)}</StyledTableCell>
+                            
               </StyledTableRow>
                 );
             })

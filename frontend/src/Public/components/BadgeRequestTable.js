@@ -45,6 +45,13 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
 
 export default function BadgeRequestTable() {
   const classes = useStyles();
@@ -60,21 +67,53 @@ export default function BadgeRequestTable() {
     const handleClose = () => {
         setOpen(false);
     };
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
+  // const getItemlogPendingList = async () => {
+  //     try{
+  //         const data = await axios.get("http://localhost:8080/itemlogs/pending");
+  //         console.log(data.data);
+  //         setProduct(data.data);
+  //     } catch (e){
+  //         console.log(e);
+  //     }
+  // };
+
+
+  // useEffect(() => {
+  //     getItemlogPendingList();
+  // }, []);
+
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-requested-badges").then((response)=>{
+      setProduct(response.data)
+      console.log(response.data)
+    })
+    
+  },[])
+
+  const AcceptBadge = (badgelog_id) =>{
+    axios.put('http://localhost:17152/AcceptBadge', {
+      badgelog_id:badgelog_id,
+      
+    }).then(
+      (response) => {
+        alert("Badge Accepted Successfully");
       }
-  };
+    )
+  }
 
+  const RejectBadge = (badgelog_id) =>{
+    axios.put('http://localhost:17152/RejectBadge', {
+      badgelog_id:badgelog_id,
+      
+    }).then(
+      (response) => {
+        alert("Badge Rejected");
+      }
+    )
+  }
+  // const Accept = () => {
 
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
-
+  // }
   return (
     <TableContainer component={Paper}>
     <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
@@ -99,13 +138,13 @@ export default function BadgeRequestTable() {
             }
             // 
         }).
-            map((itemlog) => {
+            map((record) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">{itemlog.itemlogId}</StyledTableCell>
-          
-              <StyledTableCell align="left">{itemlog.itemlogQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell>
+              <StyledTableRow key={record}>
+              <StyledTableCell align="left" component="th" scope="row">{record.badge_name}</StyledTableCell>
+              <StyledTableCell align="left" component="th" scope="row">{record.first_name}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_requested_date)}</StyledTableCell>
+              
               
               
               <StyledTableCell align="center"> 
@@ -114,6 +153,7 @@ export default function BadgeRequestTable() {
                 style={{ backgroundColor: green[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}
+                onClick={() => {AcceptBadge(record.badgelog_id)}}
                 >
                 Accept
               </Button></StyledTableCell>
@@ -123,6 +163,7 @@ export default function BadgeRequestTable() {
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
+                    onClick={() => {RejectBadge(record.badgelog_id)}}
                     startIcon={<DeleteIcon />}>
                     Reject
                 </Button>

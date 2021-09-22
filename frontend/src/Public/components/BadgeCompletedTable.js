@@ -39,25 +39,55 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - ${month} - ${day}`;
+};
+
+
 export default function BadgeCompletedTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
+  // const getItemlogPendingList = async () => {
+  //     try{
+  //         const data = await axios.get("http://localhost:8080/itemlogs/pending");
+  //         console.log(data.data);
+  //         setProduct(data.data);
+  //     } catch (e){
+  //         console.log(e);
+  //     }
+  // };
+
+
+  // useEffect(() => {
+  //     getItemlogPendingList();
+  // }, []);
+
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-completed-badges").then((response)=>{
+      setProduct(response.data)
+      console.log(response.data)
+    })
+    
+  },[])
+
+  const DeleteBadge = (badgelog_id) =>{
+    axios.put('http://localhost:17152/DeleteBadge', {
+      badgelog_id:badgelog_id,
+      
+    }).then(
+      (response) => {
+        alert("Badge Deleted Successfully");
       }
-  };
+    )
+  }
 
 
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -71,7 +101,7 @@ export default function BadgeCompletedTable() {
             
             <StyledTableCell align="left">Badge Name</StyledTableCell>
             <StyledTableCell align="left">Requested By</StyledTableCell>
-            <StyledTableCell align="left">Requester Date</StyledTableCell>
+            <StyledTableCell align="left">Requested Date</StyledTableCell>
             <StyledTableCell align="left">Approved Date</StyledTableCell>
             <StyledTableCell align="left">Completed Date</StyledTableCell>
             <StyledTableCell align="right">Action</StyledTableCell>
@@ -85,23 +115,24 @@ export default function BadgeCompletedTable() {
             }
             // 
         }).
-            map((itemlog) => {
+            map((record) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">{itemlog.itemlogId}</StyledTableCell>
+              <StyledTableRow >
+              <StyledTableCell align="left" component="th" scope="row">{record.badge_name}</StyledTableCell>
               
-              <StyledTableCell align="left">{itemlog.itemlogQuantity}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
-              <StyledTableCell align="left">{itemlog.itemlogIssueDate}</StyledTableCell>
+              <StyledTableCell align="left">{record.first_name}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_requested_date)}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_approved_date)}</StyledTableCell>
+              <StyledTableCell align="left">{dateOnly(record.badgelog_completed_date)}</StyledTableCell>
            
               
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
+                    // href="delete-item"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
+                    onClick={() => {DeleteBadge(record.badgelog_id)}}
                     startIcon={<DeleteIcon />}>
                     Delete
                 </Button>

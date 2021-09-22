@@ -555,6 +555,21 @@ app.get('/view-pending-badges', (_req, res) => {
     });
 });
 
+app.get('/view-requested-badges', (_req, res) => {
+    db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date"
++" FROM ((badgelog"+
+" JOIN badge ON badgelog.badge_id= badge.badge_id)"+
+" JOIN usertable ON badgelog.user_id=usertable.userid)"+
+" WHERE badgelog_status='requested'", (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+            console.log(result)
+        } else {
+            console.log(err);
+        }
+    });
+});
+
 app.get('/view-progressing-badges', (_req, res) => {
     db.query("SELECT badgelog.badgelog_id, badge.badge_name, badgelog.user_id, usertable.first_name, badgelog.badgelog_requested_date, badgelog.badgelog_approved_date "+
     "FROM ((badgelog "+
@@ -609,14 +624,94 @@ app.get('/view-badgelog-id', (_req, res) => {
     });
 });
 
+app.put('/PassBadge', (req,res) => {
+    const badgelog_id=req.body.badgelog_id;
+  
+    db.query("UPDATE badgelog SET  badgelog_status='completed'  WHERE badgelog_id = ?", 
+    [badgelog_id], 
+    (err, result) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+            
+        }
+       }
+    );
+  });
+
+  app.put('/FailBadge', (req,res) => {
+    const badgelog_id=req.body.badgelog_id;
+  
+    db.query("UPDATE badgelog SET  badgelog_status='failed'  WHERE badgelog_id = ?", 
+    [badgelog_id], 
+    (err, result) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+            
+        }
+       }
+    );
+  });
+
+  app.put('/DeleteBadge', (req,res) => {
+    const badgelog_id=req.body.badgelog_id;
+  
+    db.query("UPDATE badgelog SET  badgelog_status='finished'  WHERE badgelog_id = ?", 
+    [badgelog_id], 
+    (err, result) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+            
+        }
+       }
+    );
+  });
+
+  app.put('/AcceptBadge', (req,res) => {
+    const badgelog_id=req.body.badgelog_id;
+  
+    db.query("UPDATE badgelog SET  badgelog_status='progressing'  WHERE badgelog_id = ?", 
+    [badgelog_id], 
+    (err, result) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+            
+        }
+       }
+    );
+  });
+
+  app.put('/RejectBadge', (req,res) => {
+    const badgelog_id=req.body.badgelog_id;
+  
+    db.query("UPDATE badgelog SET  badgelog_status='rejected'  WHERE badgelog_id = ?", 
+    [badgelog_id], 
+    (err, result) => {
+
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+            
+        }
+       }
+    );
+  });
 
 
 
-app.listen(17152, () => {
-    console.log("Your server is running on port 17152");
-});
-
-////////////////////////////////////// Content Management System /////////////////////////////
+///////////////////////////////////// Content Management System /////////////////////////////
 
 
 app.post('/add-content' , (req , res)=>{
@@ -679,3 +774,8 @@ let uploadPath;
 //     });
 
 // });
+
+
+app.listen(17152, () => {
+    console.log("Your server is running on port 17152");
+});

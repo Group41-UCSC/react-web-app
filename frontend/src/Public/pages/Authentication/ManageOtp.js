@@ -71,7 +71,7 @@ function ManageOtp() {
       if (response.data.message) {
         setotpStatus(response.data.message);
         alert(response.data.message)
-        window.location.href='/'
+        window.location.href='/login'
       } 
     }
     );
