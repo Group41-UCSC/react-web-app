@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { green, red } from '@material-ui/core/colors';
+import { blue, red } from '@material-ui/core/colors';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -68,14 +68,14 @@ export default function ItemRequestTable() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Item Log ID</StyledTableCell>
-            <StyledTableCell align="left">Item Name</StyledTableCell>
-            <StyledTableCell align="left">Requested Quantity</StyledTableCell>
-            <StyledTableCell align="left">Requester name</StyledTableCell>
-            <StyledTableCell align="left">Requesting Date</StyledTableCell>
-            <StyledTableCell align="left">Returning Date</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            <StyledTableCell align="center">Item Log ID</StyledTableCell>
+            <StyledTableCell align="center">Item Name</StyledTableCell>
+            <StyledTableCell align="center">Requested Quantity</StyledTableCell>
+            <StyledTableCell align="center">Requester name</StyledTableCell>
+            <StyledTableCell align="center">Requesting Date</StyledTableCell>
+            <StyledTableCell align="center">Returning Date</StyledTableCell>
+            <StyledTableCell colspan="2" align="center">Action</StyledTableCell>
+           
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -94,15 +94,15 @@ export default function ItemRequestTable() {
               <StyledTableCell align="left">fake</StyledTableCell>
               <StyledTableCell align="left">fake</StyledTableCell>
               <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">Returning Date</StyledTableCell>
+   
               <StyledTableCell align="center"> 
               <Button m={1}
-                // onClick={handleClickOpen}
-                style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+               
+                style={{ backgroundColor: blue[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}
                 >
-                Reject
+                Issue
               </Button></StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
@@ -111,7 +111,7 @@ export default function ItemRequestTable() {
                     variant="contained"
                     className={classes.button}
                     startIcon={<DeleteIcon />}>
-                    Delete
+                    Cancel
                 </Button>
               </StyledTableCell>
               </StyledTableRow>
@@ -124,37 +124,3 @@ export default function ItemRequestTable() {
  );
 }
 
-{/* <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    onClick={handleClickOpen}
-                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    >
-                                                    Reject
-                                                </Button>
-                                                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">        Requested Item Rejected. Provide a valid reason for rejection       </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Reason For rejection
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Reason"
-                        type="email"
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Submit
-                    </Button>
-                </DialogActions>
-            </Dialog>
-                                            </TableCell> */}
