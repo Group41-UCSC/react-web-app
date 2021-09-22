@@ -65,7 +65,8 @@ export const secondaryListItemsIms = (
     <div>
         {/* <ListSubheader inset>Saved reports</ListSubheader> */}
         <ListItem button component={Link} to="/inventory">
-            <ListItemIcon>
+        <ListItemIcon>
+                <DateRangeIcon />
             </ListItemIcon>
             <ListItemText primary="Inventroty Management" />
         </ListItem>

@@ -27,10 +27,8 @@ export default function FloatingBadge() {
                 color="primary"
                 aria-label="contained primary button group"
             >
-                 {/* <Button  href="add-item">
-                <AddIcon />
-                Add Item</Button> */}
-
+                
+                 <Button href="add-badge"><AddIcon />Add Badge</Button>
                 <Button href="badge-request">Requested List</Button>
                 <Button href="badge-progress-list">Progress List Item</Button>
                 <Button href="badge-completed">Completed List List</Button>

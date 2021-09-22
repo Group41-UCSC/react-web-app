@@ -18,6 +18,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -78,7 +79,9 @@ export default function ItemRequestTable() {
     <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
         setSearch(e.target.value);}}/>
-
+      <center><Typography component="h1" variant="h5">
+                    Issued Item List
+                </Typography></center>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
