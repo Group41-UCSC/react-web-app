@@ -46,14 +46,14 @@ function PieChart() {
 
     const count1=completetask.map(record=>record.count);
     const count2=totaltask.map(record=>record.count);
-    const count3=(count2-count1);
+    // const count3= (count2-count1);
 
     const c = parseInt(count1);
     const t = parseInt(count2);
-    const p = parseInt(count3);
+    const p = parseInt(count2)- parseInt(count1);
 
-    const percentageC= parseInt(count1) / t * 100 ;
-    const percentageP= parseInt(count3) / t * 100 ;
+    const percentageC= c / t * 100 ;
+    const percentageP= p / t * 100 ;
 
     const c1 = parseInt(percentageC);
     const p1 = parseInt(percentageP);
@@ -64,7 +64,7 @@ function PieChart() {
       'Incompleted Badges'
     ],
     datasets: [{
-      data: [percentageC,percentageP],
+      data: [c,p],
       backgroundColor: [
         '#3f51b5',
         '#ff9800'
@@ -135,7 +135,7 @@ function PieChart() {
             color,
             icon: Icon,
             title,
-            // value: percentageC,
+            value
           }) => (
             <Box
               key={title}
@@ -157,7 +157,7 @@ function PieChart() {
                 style={{ color }}
                 variant="h2"
               >
-                {/* {value}  */}  %
+                 {value} %
               </Typography>
             </Box> 
            ))}
