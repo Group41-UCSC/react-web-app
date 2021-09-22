@@ -43,7 +43,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Inventory" />
         </ListItem>
-        <ListItem button component={Link} to="/available-badge">
+        <ListItem button component={Link} to="/badge-view">
             <ListItemIcon>
                 <EmojiEventsIcon />
             </ListItemIcon>

@@ -13,7 +13,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -54,10 +57,17 @@ export default function ItemView() {
 
   return (
     <TableContainer component={Paper}>
-   {/*} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
-    setSearch(e.target.value);}}/> */}
+
+        setSearch(e.target.value);}}/>
+      <center><Typography component="h1" variant="h5">
+                     Item List
+                </Typography></center>
+
+    setSearch(e.target.value);}}/>}
 <br/>
+
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
