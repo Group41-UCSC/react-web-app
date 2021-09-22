@@ -13,6 +13,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -43,6 +48,16 @@ export default function ItemRequestTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
   const getItemlogPendingList = async () => {
       try{
@@ -96,22 +111,46 @@ export default function ItemRequestTable() {
               <StyledTableCell align="left">fake</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
-                // onClick={handleClickOpen}
-                style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                
+                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
                 variant="contained"
                 className={classes.button}
                 >
-                Reject
+                Accept
               </Button></StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
+                    onClick={handleClickOpen}
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
-                    startIcon={<DeleteIcon />}>
-                    Delete
+                    >
+                    Reject
                 </Button>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">        Requested Item Rejected. Provide a valid reason for rejection       </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Reason For rejection
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Reason"
+                        type="email"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
               </StyledTableCell>
               </StyledTableRow>
                 );
