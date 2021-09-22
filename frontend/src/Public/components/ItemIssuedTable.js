@@ -13,11 +13,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -43,42 +38,44 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
 });
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - 0${month} - ${day}`;
+};
 
 export default function ItemRequestTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
-      }
-  };
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-itemissued").then((response)=>{
+      setProduct(response.data)
+    })
+  },[])
 
 
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
+  
+  const statusUpdate3 = async (itemlog_id) => {
+    const response = await axios.get('http://localhost:17152/remove_request', {
+        params: {
+          itemlog_id:itemlog_id,  
+        }
+        
+    });
+  }
+
+
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+ {/*}   <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
-        setSearch(e.target.value);}}/>
-
+        setSearch(e.target.value);}}/> */}
+<br/>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -88,8 +85,8 @@ export default function ItemRequestTable() {
             <StyledTableCell align="center">Responsible Person</StyledTableCell>
             <StyledTableCell align="center">Issued Date</StyledTableCell>
             <StyledTableCell align="center">Returning Date</StyledTableCell>
-            <StyledTableCell colSpan="2" align="center">Action</StyledTableCell>
-            
+            <StyledTableCell align="right">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -101,58 +98,23 @@ export default function ItemRequestTable() {
         }).
             map((itemlog) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">Fake</StyledTableCell>
-              <StyledTableCell align="left" component="th" scope="row">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              
-              <StyledTableCell align="left">Returning Date</StyledTableCell>
-              
+              <StyledTableRow key={itemlog.itemlog_id}>
+              <StyledTableCell align="center" component="th" scope="row">{itemlog.itemlog_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{itemlog.item_name}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_quantity}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_issuedto}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_issue_date)}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_receive_date)}</StyledTableCell>
+
               <StyledTableCell align="center">
-              <Button m={1}
-                   onClick={handleClickOpen}                            
-                   style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                  variant="contained"
-                  className={classes.button}
-                  >
-                                                         
-                 Received
-                 </Button>
-                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Description</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Provide the status of the inventory and it's descriptions as received . If there is any damages or Quantity missing provide it as well.
-                    </DialogContentText>
-                    
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        
-                        type="date"
-                        fullWidth
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Description"
-                        type="email"
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Submit
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                <Button m={1}
+                   onClick={()=>{statusUpdate3(itemlog.itemlog_id)}}
+                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                    variant="contained"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}>
+                    Removed
+                </Button>
               </StyledTableCell>
               </StyledTableRow>
                 );
