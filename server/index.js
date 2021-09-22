@@ -765,9 +765,10 @@ app.post('/addBadges',(req,res)=>{
 
 
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, '../frontend/public')
+///////////////////////////////////// Content Management System /////////////////////////////
+const storage1 = multer.diskStorage({
+    destination(req,file,cb){
+      cb(null,'../server/files')
     },
     filename(req, file, cb) {
       console.log(file)
@@ -777,8 +778,8 @@ const storage = multer.diskStorage({
     }
   })
   const upload = multer({
-    storage,
-    limits: {
+    storage1,
+    limits:{
       fileSize: 5000000
     },
     fileFilter(req, file, cb) {
@@ -789,75 +790,40 @@ const storage = multer.diskStorage({
     }
   })
 
-  app.post("/imageUpload", upload.single('file'), (req, res) => {
-
+  app.post("/imageUpload",upload.single('file'),(req,res)=> {
+    console.log("fuck")
 })
 
-app.get("/view-available-badge", (req, res) => {
-    db.query("SELECT * FROM badge;", (err, result, fields) => {
-        if (err) {
-            console.log(err);
-        } else{
-            res.send(result);
-        }
-    });
-});
-
-
-
-
-
-///////////////////////////////////// Content Management System /////////////////////////////
-// const storage = multer.diskStorage({
-//     destination(req,file,cb){
-//       cb(null,'files/contents')
-//     },
-//     filename(req,file,cb){
-//       cb(
-//         null,
-//         `${file.originalname}`
-//       )
-//     }
-//   })
-   
-//   const upload = multer({
-//     storage,
-//     limits:{
-//       fileSize: 5000000
-//     },
-//     fileFilter(req,file,cb){
-//       if(!file.originalname.match(/\.(jpeg|jpg|png)$/i)){
-//         return  cb(new Error('please upload image with type of jpg or jpeg'))
-//     }
-//     cb(null,true)
-//   }
-//   })
-
-//   app.post("/imageUpload",upload.single('file'),(req,res)=> {
-     
-// })
-
-
-app.post('/add-content', (req, res) => {
+app.post('/addContent', (req, res) => {
     console.log(req.body)
-    // const product_id = req.body.product_id;
-    // const emp_img = req.body.emp_img;
-    // const display_photo = imageDirectory + req.body.display_photo;
-    const file = req.body.file;
-    const content_title = req.body.content_title;
-    const content_description = req.body.content_description;
-    const posted_date = req.body.posted_date;
-
+    const display_photo = req.body.display_photo;
+    const title = req.body.title;
+    const contentDescription = req.body.contentDescription;
+    const postDate = req.body.postDate;
+    console.log(display_photo,title,contentDescription,postDate);
 
     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
-        [file, content_title, content_description, posted_date], (err, _results) => {
+        [display_photo, title, contentDescription, postDate], (err, _results) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send("post created");
+                res.send("product created");
             }
         });
 });
+
+
+
+
+//     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
+//         [file, content_title, content_description, posted_date], (err, _results) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 res.send("post created");
+//             }
+//         });
+// });
 
 ///////////////////////////////////// Event Management /////////////////////////////
 
@@ -881,67 +847,19 @@ app.post('/addScheduleEvent', (req, res) => {
         });
 });
 
-
-// app.post('/add-content' , (req , res)=>{
-
-//     console.log(req.body);
-//     const formdata = JSON.parse(req.body.data);
-   
-//     const content_title = formdata.content_title;
-//     const content_description = formdata.content_description;
-//     //const file = formdata.file;
-//     const posted_date = formdata.posted_date;
-
-
-//   console.log(req.body);
-//   console.log(req.files);
+app.get('/view-all-events', (_req, res) => {
+    db.query("SELECT * FROM event;" , (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 
-// let sampleFile;
-// let uploadPath;
-
-//   if (!req.files || Object.keys(req.files).length === 0) {
-//     return res.status(400).send('No files were uploaded.');
-//   }
-
-//   console.log(__dirname);
-
-//   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-//   const randomfilenum = Math.floor(Math.random()*1000000);
-//   sampleFile = req.files.file;
-//   const newfilename = randomfilenum.toString() +sampleFile.name;
-
-//   uploadPath = __dirname + '/files/contents/' + newfilename
 
 
-//   // Use the mv() method to place the file somewhere on your server
-//   sampleFile.mv(uploadPath, function(err) {
-//    console.log(err);
-//   });
-
-
-//    db.query("INSERT INTO content (content_description,content_title,file,posted_date) VALUES (?,?,?,?)",
-//    [content_description,content_title,newfilename,posted_date],(err,result)=>{
-//        if(err){
-//            console.log(err);
-//        }else{
-//            res.send("Data Added");
-//        }
-//    });
-
-// });
-
-// app.get('/formView',(req,res)=>{
-//     db.query("SELECT * FROM content ORDER BY posted_date ASC",(err,result,) => {
-//         if(err) {
-// 		console.log(err)
-// 	  } else {
-//         res.send(result)
-// 	  } 
-
-//     });
-
-// });
 
 
 ///////////////////////////////////// NO CODES BELOW /////////////////////////////
