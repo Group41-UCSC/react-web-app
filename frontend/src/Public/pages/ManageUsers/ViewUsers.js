@@ -175,7 +175,7 @@ export default function ViewUser() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <FloatingAddUser />
+                    {/* <FloatingAddUser /> */}
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
