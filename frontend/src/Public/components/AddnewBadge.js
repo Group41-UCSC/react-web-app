@@ -18,14 +18,10 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import PersonIcon from '@material-ui/icons/Person';
 import { mainListItems, secondaryListItems } from '../components/listItems';
-import ItemReservedTable from '../components/ItemReservedTable';
-import FloatingInventory from '../components/FloatingInventory';
-import ProfileDropDown from '../components/ProfileDropDown';
-import NotificationDropDown from '../components/NotificationDropDown';
-import ItemView from '../components/ItemView';
-
+import BackButton from '../components/BackButton';
+import AddUser from './AddBadgeForm';
+import AddBadgeForm from './AddBadgeForm';
 
 function Copyright() {
     return (
@@ -121,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ViewUser() {
+export default function AddnewBadge() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -147,15 +143,12 @@ export default function ViewUser() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Inventory Management
+                        Add New Badge
                     </Typography>
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="secondary">
-                            <NotificationDropDown />
+                            <NotificationsIcon />
                         </Badge>
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <ProfileDropDown />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -179,12 +172,11 @@ export default function ViewUser() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <FloatingInventory />
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                      
+                            <BackButton />
                             <Paper className={classes.paper}>
-                               <ItemView/>
+                                <AddBadgeForm />
                             </Paper>
                         </Grid>
                     </Grid>

@@ -54,6 +54,16 @@ export default function UserTable() {
       }
   };
 
+  const deleteUser = (userid) => {
+    axios.get("http://localhost:17152/delete-user", {
+      params: {
+        userid: userid,
+      }
+    }).then((response) => {
+      window.location.reload();
+    })
+  };
+
 
   useEffect(() => {
       getUsersList();
@@ -91,7 +101,7 @@ export default function UserTable() {
               <StyledTableCell align="left" component="th" scope="row">{item.first_name}</StyledTableCell>
               <StyledTableCell align="left">{item.last_name}</StyledTableCell>
               <StyledTableCell align="left">{item.address}</StyledTableCell>
-              <StyledTableCell align="left">{item.contact}</StyledTableCell>
+              <StyledTableCell align="left">{item.phone}</StyledTableCell>
               <StyledTableCell align="left">{item.user_role}</StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
@@ -107,9 +117,9 @@ export default function UserTable() {
               </Button></StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
+                    onClick={() => { deleteUser(item.userid) }}
                     className={classes.button}
                     startIcon={<DeleteIcon />}>
                     Delete

@@ -288,11 +288,11 @@ export default function Dashboard() {
 
 
                         {/* Recent Orders */}
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <Paper className={classes.paper}>
                                 <Orders />
                             </Paper>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Box pt={4}>
                         <Copyright />

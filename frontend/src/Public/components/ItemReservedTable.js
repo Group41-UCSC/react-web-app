@@ -14,6 +14,8 @@ import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { blue, red } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
+import { green, red } from '@material-ui/core/colors';
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -40,34 +42,47 @@ const useStyles = makeStyles({
   },
 });
 
+const dateOnly = (d) => {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year} - 0${month} - ${day}`;
+};
+
 export default function ItemRequestTable() {
   const classes = useStyles();
   const [product, setProduct] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getItemlogPendingList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/itemlogs/pending");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
-      }
-  };
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-itemreserved").then((response)=>{
+      setProduct(response.data)
+    })
+  },[])
 
-
-  useEffect(() => {
-      getItemlogPendingList();
-  }, []);
+  const statusUpdate2 = async (itemlog_id) => {
+    const response = await axios.get('http://localhost:17152/cancel_request', {
+        params: {
+          itemlog_id:itemlog_id,  
+        }
+        
+    });
+  }
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+  {/*}  <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
+
         setSearch(e.target.value);}}/>
       <center><Typography component="h1" variant="h5">
                     Reserved Item List
                 </Typography></center>
+
+    setSearch(e.target.value);}}/> */}
+ <br/>
+
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -77,8 +92,8 @@ export default function ItemRequestTable() {
             <StyledTableCell align="center">Requester name</StyledTableCell>
             <StyledTableCell align="center">Requesting Date</StyledTableCell>
             <StyledTableCell align="center">Returning Date</StyledTableCell>
-            <StyledTableCell colspan="2" align="center">Action</StyledTableCell>
-           
+            <StyledTableCell align="center">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
@@ -90,31 +105,21 @@ export default function ItemRequestTable() {
         }).
             map((itemlog) => {
                 return (
-              <StyledTableRow key={itemlog.itemlogId}>
-              <StyledTableCell align="left" component="th" scope="row">Fake</StyledTableCell>
-              <StyledTableCell align="left" component="th" scope="row">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-              <StyledTableCell align="left">fake</StyledTableCell>
-   
-              <StyledTableCell align="center"> 
-              <Button m={1}
-               
-                style={{ backgroundColor: blue[500], color: '#FFFFFF' }}
-                variant="contained"
-                className={classes.button}
-                >
-                Issue
-              </Button></StyledTableCell>
+              <StyledTableRow key={itemlog.itemlog_id}>
+              <StyledTableCell align="center" component="th" scope="row">{itemlog.itemlog_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{itemlog.item_name}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_quantity}</StyledTableCell>
+              <StyledTableCell align="center">{itemlog.itemlog_issuedto}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_issue_date)}</StyledTableCell>
+              <StyledTableCell align="center">{dateOnly(itemlog.itemlog_receive_date)}</StyledTableCell>
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-item"
+                onClick={()=>{statusUpdate2(itemlog.itemlog_id)}}
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
                     startIcon={<DeleteIcon />}>
-                    Cancel
+                   Cancel
                 </Button>
               </StyledTableCell>
               </StyledTableRow>
@@ -127,3 +132,37 @@ export default function ItemRequestTable() {
  );
 }
 
+{/* <TableCell align="center">{row.id}
+                                                <Button m={1}
+                                                    onClick={handleClickOpen}
+                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
+                                                    variant="contained"
+                                                    className={classes.button}
+                                                    >
+                                                    Reject
+                                                </Button>
+                                                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">        Requested Item Rejected. Provide a valid reason for rejection       </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Reason For rejection
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Reason"
+                        type="email"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Submit
+                    </Button>
+                </DialogActions>
+            </Dialog>
+                                            </TableCell> */}

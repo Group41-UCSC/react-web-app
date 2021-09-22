@@ -458,6 +458,17 @@ app.get('/view-user', (req, res) => {
 
 });
 
+app.get("/viewItemListinfo",(req,res)=>{
+  item_id= req.params.item_id
+ 
+  db.query("SELECT * FROM item WHERE item_id=?",[req.query.item_id],(err,result)=>{
+    console.log(req.query.item_id);
+    res.send(result);
+  });
+  
+});
+
+
 app.get('/view-itemlist', (_req, res) => {
     db.query('SELECT * FROM item ', (err, result, _fields) => {
         if (!err) {
@@ -483,57 +494,91 @@ app.get("/delete-item", (req, res) => {
 });
 
 
-app.get('/view-itemrequested', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='pending';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
-});
+app.get('/view-itemrequested',(req, res) =>{
+  db.query("  SELECT item_log.item_id,item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE item_log.itemlog_status='pending'  ", (err, result, fields)=>{
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
 
-app.get('/view-itemreserved', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='reserved';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
-});
+app.get('/view-itemreserved',(req, res) =>{
+  db.query("  SELECT item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE   item_log.itemlog_status='reserved'  ", (err, result, fields)=>{
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
 
-app.get('/view-itemissued', (_req, res) => {
-    db.query("SELECT item_log.item_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date, item.item_available_quantity"+
-            " FROM item_log"+
-            " JOIN item"+
-            " ON item_log.item_id = item.item_id"+
-            " WHERE item_log.itemlog_status='issued';", (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
+
+ app.get('/view-itemissued',(req, res) =>{
+  db.query("  SELECT item_log.itemlog_id, item.item_name, item_log.itemlog_quantity, item_log.itemlog_issuedto, item_log.itemlog_issue_date, item_log.itemlog_receive_date, item.item_available_quantity FROM item_log JOIN item ON item_log.item_id = item.item_id  WHERE item_log.itemlog_status='issued'  ", (err, result, fields)=> {
+  if (!err) {
+             res.send(result);
+         } else {
+             console.log(err);
+         }
+     });          
+            
+ })
+
+ app.get('/reject_request', (req,res) => {
+  const itemlog_id=req.params.itemlog_id;
+    db.query("UPDATE item_log SET itemlog_status='rejected' WHERE itemlog_id = ?", 
+    [req.query.itemlog_id], 
+    (err, result) => {
+        if (err) {
             console.log(err);
+        } else {
+            res.send(result);
         }
+       }
+    );
+  });
+
+    app.get('/cancel_request', (req,res) => {
+    const itemlog_id=req.params.itemlog_id;
+      db.query("UPDATE item_log SET itemlog_status='cancelled' WHERE itemlog_id = ?", 
+      [req.query.itemlog_id], 
+      (err, result) => {
+          if (err) {
+              console.log(err);
+          } else {
+              res.send(result);
+          }
+         }
+      );
     });
-});
+
+     app.get('/remove_request', (req,res) => {
+    const itemlog_id=req.params.itemlog_id;
+      db.query("UPDATE item_log SET itemlog_status='removed' WHERE itemlog_id = ?", 
+      [req.query.itemlog_id], 
+      (err, result) => {
+          if (err) {
+              console.log(err);
+          } else {
+              res.send(result);
+          }
+         }
+      );
+    });
 
 // TO DO ::: FULL LOG
 app.get('/view-itemlog', (_req, res) => {
-    db.query('SELECT * FROM itemlog ', (err, result, _fields) => {
-        if (!err) {
-            res.send(result);
-        } else {
-            console.log(err);
-        }
-    });
+  db.query('SELECT * FROM item_log JOIN item ON item_log.item_id=item.item_id ', (err, result, _fields) => {
+      if (!err) {
+          res.send(result);
+      } else {
+          console.log(err);
+      }
+  });
 });
 
 
@@ -741,60 +786,89 @@ app.get('/totalbadge', (_req, res) => {
     });
 });
 
+app.post('/addBadges',(req,res)=>{
+  const badge_media =req.body.image;
+  const badge_name = req.body.badge_name;
+  const description=req.body.description;
+  
+  db.query(
+    "INSERT INTO badge(badge_name,badge_description,badge_media) VALUES (?,?,?)",[badge_name,description,badge_media],
+    (err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.send(result)
+        console.log(req.body.badge_name)
+        console.log(req.body.description)
+        console.log(req.body.image)
+
+      }
+      
+    }
+  );
+  })
 
 
 
 ///////////////////////////////////// Content Management System /////////////////////////////
-const storage = multer.diskStorage({
+const storage1 = multer.diskStorage({
     destination(req,file,cb){
-      cb(null,'files/contents')
+      cb(null,'../server/files')
     },
-    filename(req,file,cb){
-      cb(
-        null,
-        `${file.originalname}`
+    filename(req, file, cb) {
+      console.log(file)
+      cb(null,
+        `${file.originalname.split('.')[0]}.jpg`
       )
     }
   })
-   
   const upload = multer({
-    storage,
+    storage1,
     limits:{
       fileSize: 5000000
     },
-    fileFilter(req,file,cb){
-      if(!file.originalname.match(/\.(jpeg|jpg|png)$/i)){
-        return  cb(new Error('please upload image with type of jpg or jpeg'))
+    fileFilter(req, file, cb) {
+      if (!file.originalname.match(/\.(jpeg|jpg|png)$/i)) {
+        return cb(new Error('pleaseupload image with type of jpg ,png or jpeg'))
+      }
+      cb(undefined, true)
     }
-    cb(null,true)
-  }
   })
 
   app.post("/imageUpload",upload.single('file'),(req,res)=> {
-     
+    console.log("fuck")
 })
 
-
-app.post('/add-content', (req, res) => {
+app.post('/addContent', (req, res) => {
     console.log(req.body)
-    // const product_id = req.body.product_id;
-    // const emp_img = req.body.emp_img;
-    // const display_photo = imageDirectory + req.body.display_photo;
-    const file = req.body.file;
-    const content_title = req.body.content_title;
-    const content_description = req.body.content_description;
-    const posted_date = req.body.posted_date;
-
+    const display_photo = req.body.display_photo;
+    const title = req.body.title;
+    const contentDescription = req.body.contentDescription;
+    const postDate = req.body.postDate;
+    console.log(display_photo,title,contentDescription,postDate);
 
     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
-        [file, content_title, content_description, posted_date], (err, _results) => {
+        [display_photo, title, contentDescription, postDate], (err, _results) => {
             if (err) {
                 console.log(err);
             } else {
-                res.send("post created");
+                res.send("product created");
             }
         });
 });
+
+
+
+
+//     db.query("INSERT INTO content (file,content_title,content_description,posted_date) VALUES (?,?,?,?)",
+//         [file, content_title, content_description, posted_date], (err, _results) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 res.send("post created");
+//             }
+//         });
+// });
 
 ///////////////////////////////////// Event Management /////////////////////////////
 
@@ -818,67 +892,19 @@ app.post('/addScheduleEvent', (req, res) => {
         });
 });
 
-
-// app.post('/add-content' , (req , res)=>{
-
-//     console.log(req.body);
-//     const formdata = JSON.parse(req.body.data);
-   
-//     const content_title = formdata.content_title;
-//     const content_description = formdata.content_description;
-//     //const file = formdata.file;
-//     const posted_date = formdata.posted_date;
-
-
-//   console.log(req.body);
-//   console.log(req.files);
+app.get('/view-all-events', (_req, res) => {
+    db.query("SELECT * FROM event;" , (err, result, _fields) => {
+        if (!err) {
+            res.send(result);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
 
-// let sampleFile;
-// let uploadPath;
-
-//   if (!req.files || Object.keys(req.files).length === 0) {
-//     return res.status(400).send('No files were uploaded.');
-//   }
-
-//   console.log(__dirname);
-
-//   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-//   const randomfilenum = Math.floor(Math.random()*1000000);
-//   sampleFile = req.files.file;
-//   const newfilename = randomfilenum.toString() +sampleFile.name;
-
-//   uploadPath = __dirname + '/files/contents/' + newfilename
 
 
-//   // Use the mv() method to place the file somewhere on your server
-//   sampleFile.mv(uploadPath, function(err) {
-//    console.log(err);
-//   });
-
-
-//    db.query("INSERT INTO content (content_description,content_title,file,posted_date) VALUES (?,?,?,?)",
-//    [content_description,content_title,newfilename,posted_date],(err,result)=>{
-//        if(err){
-//            console.log(err);
-//        }else{
-//            res.send("Data Added");
-//        }
-//    });
-
-// });
-
-// app.get('/formView',(req,res)=>{
-//     db.query("SELECT * FROM content ORDER BY posted_date ASC",(err,result,) => {
-//         if(err) {
-// 		console.log(err)
-// 	  } else {
-//         res.send(result)
-// 	  } 
-
-//     });
-
-// });
 
 
 ///////////////////////////////////// NO CODES BELOW /////////////////////////////
