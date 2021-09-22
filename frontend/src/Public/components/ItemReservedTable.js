@@ -12,7 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { blue, red } from '@material-ui/core/colors';
 import Typography from '@material-ui/core/Typography';
 import { green, red } from '@material-ui/core/colors';
 
@@ -131,38 +130,3 @@ export default function ItemRequestTable() {
     </TableContainer>
  );
 }
-
-{/* <TableCell align="center">{row.id}
-                                                <Button m={1}
-                                                    onClick={handleClickOpen}
-                                                    style={{ backgroundColor: red[500], color: '#FFFFFF' }}
-                                                    variant="contained"
-                                                    className={classes.button}
-                                                    >
-                                                    Reject
-                                                </Button>
-                                                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">        Requested Item Rejected. Provide a valid reason for rejection       </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Reason For rejection
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Reason"
-                        type="email"
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Submit
-                    </Button>
-                </DialogActions>
-            </Dialog>
-                                            </TableCell> */}
