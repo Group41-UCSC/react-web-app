@@ -741,6 +741,27 @@ app.get('/totalbadge', (_req, res) => {
     });
 });
 
+app.post('/addBadges',(req,res)=>{
+  const badge_media =req.body.image;
+  const badge_name = req.body.badge_name;
+  const description=req.body.description;
+  
+  db.query(
+    "INSERT INTO badge(badge_name,badge_description,badge_media) VALUES (?,?,?)",[badge_name,description,badge_media],
+    (err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        res.send(result)
+        console.log(req.body.badge_name)
+        console.log(req.body.description)
+        console.log(req.body.image)
+
+      }
+      
+    }
+  );
+  })
 
 
 
@@ -749,25 +770,24 @@ const storage1 = multer.diskStorage({
     destination(req,file,cb){
       cb(null,'../server/files')
     },
-    filename(req,file,cb){
-      cb(
-        null,
-        `${file.originalname}`
+    filename(req, file, cb) {
+      console.log(file)
+      cb(null,
+        `${file.originalname.split('.')[0]}.jpg`
       )
     }
   })
-   
   const upload = multer({
     storage1,
     limits:{
       fileSize: 5000000
     },
-    fileFilter(req,file,cb){
-      if(!file.originalname.match(/\.(jpeg|jpg|png)$/i)){
-        return  cb(new Error('please upload image with type of jpg or jpeg'))
+    fileFilter(req, file, cb) {
+      if (!file.originalname.match(/\.(jpeg|jpg|png)$/i)) {
+        return cb(new Error('pleaseupload image with type of jpg ,png or jpeg'))
+      }
+      cb(undefined, true)
     }
-    cb(null,true)
-  }
   })
 
   app.post("/imageUpload",upload.single('file'),(req,res)=> {

@@ -43,6 +43,7 @@ import BadgeProgressPage from './Public/pages/BadgeProgressPage';
 import BadgeCompleted from './Public/pages/BadgeCompletedPage';
 import BadgePending from './Public/pages/BadgePendingPage';
 import BadgeLog from './Public/pages/BadgeLogPage';
+import AddnewBadge from './Public/components/AddnewBadge';
 import Home from './Public/pages/Home';
 import ManageOtp from './Public/pages/Authentication/ManageOtp';
 import EventUserView from './Public/pages/EventUserView';
@@ -90,6 +91,7 @@ function App() {
           <Route path='/newevent' component={AddNewEvent} />
           <Route path='/ViewUserInfo' component={ViewUserInfo} />
           <Route path='/ViewUserInfoRoute' component={ViewUserInfoRoute} />
+          <Route path='/add-badge' component={AddnewBadge}/>
 
 
 
