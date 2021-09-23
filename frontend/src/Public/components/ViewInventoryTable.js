@@ -43,7 +43,7 @@ export default function ViewInventoryTable() {
 
   const getItemList = async () => {
       try{
-          const data = await axios.get("http://localhost:17152//items");
+          const data = await axios.get("http://localhost:17152/view-itemlist");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){

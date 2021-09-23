@@ -29,7 +29,7 @@ export default function Announcement() {
 
     const getAnnouncement = async () => {
         try{
-            const data = await axios.get("http://localhost:8080/view-announcement");
+            const data = await axios.get("http://localhost:17152/view-announcement");
             console.log(data.data);
             setProduct(data.data);
         } catch (e){
@@ -49,24 +49,24 @@ export default function Announcement() {
             <CardContent  key= {product.announcement_Id}>
             <div>
             <Typography style={{ color: "#3f51b5" }}>
-                    Announcement Topic  -  {product.announcementTitle}</Typography>
+                    Announcement Topic  -  {product.announcement_title}</Typography>
            
             </div>
             <div >
             <Typography style={{ fontSize: "12px" }}  gutterBottom>
-                     Date  -  {product.announcementDate}</Typography>
+                     Date  -  {product.announcement_date}</Typography>
             
             </div>
             <div  >
             
             <Typography style={{ fontSize: "12px" }}  gutterBottom>
-                Author  -  {product.announcementAuthor}</Typography>
+                Author  -  {product.announcement_author}</Typography>
             </div>
             <div  >
             
             <Typography >
                     Announcemnt Body
-                    -  {product.announcementBody}
+                    -  {product.announcement_body}
                     <br /></Typography>
             </div>
         </CardContent>
