@@ -13,7 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { green, red } from '@material-ui/core/colors';
+
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -40,66 +42,84 @@ const useStyles = makeStyles({
   },
 });
 
-export default function EventAvailable() {
+export default function EventAvailableTable() {
   const classes = useStyles();
-  const [product, setProduct] = useState([]);
+  const [event, setEvent] = useState([]);
   const [search, setSearch] = useState("");
 
-  const getEventList = async () => {
-      try{
-          const data = await axios.get("http://localhost:8080/events");
-          console.log(data.data);
-          setProduct(data.data);
-      } catch (e){
-          console.log(e);
+  useEffect(()=>{
+    axios.get("http://localhost:17152/view-all-events").then((response)=>{
+      setEvent(response.data)
+    })
+  },[])
+
+  const deleteEvent = (event_id) => {
+    axios.get("http://localhost:17152/delete-event", {
+      params: {
+        event_id: event_id,
       }
+    }).then((response) => {
+      window.location.reload();
+    })
   };
 
 
-  useEffect(() => {
-      getEventList();
-  }, []);
 
   return (
     <TableContainer component={Paper}>
-    <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
+   {} <TextField fullLength placeholder="Search Here" id="outlined-basic" variant="outlined" type="text" 
     onChange={(e)=>{
+
         setSearch(e.target.value);}}/>
       <center><Typography component="h1" variant="h5">
-                    All Events
+                     Event List
                 </Typography></center>
+
+<br/>
+
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">Event Title</StyledTableCell>
-            <StyledTableCell align="left">Event Description</StyledTableCell>
-            <StyledTableCell align="left">Event Category</StyledTableCell>
-           
-            <StyledTableCell align="left">Event Status</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
-            <StyledTableCell align="left"></StyledTableCell> 
+            <StyledTableCell align="center">Event ID</StyledTableCell>
+            <StyledTableCell align="center">Event Title</StyledTableCell>
+            <StyledTableCell align="center">Event Status</StyledTableCell>
+            <StyledTableCell align="center">Group Name</StyledTableCell>
+            <StyledTableCell align="left">Task Name</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
+            <StyledTableCell align="center"></StyledTableCell> 
           </TableRow> 
         </TableHead> 
         <TableBody>
-            {product.filter((event) => {
+            {event.filter((record) => {
             if(search == ""){
                 return event;
             }
-            else if (event.eventTitle.toLowerCase().includes(search.toLowerCase())){
+            else if (event.event_title.toLowerCase().includes(search.toLowerCase())){
                 return event;
             }}).
             map((event) => {
                 return (
-              <StyledTableRow key={event.eventId}>
-              <StyledTableCell align="left" component="th" scope="row">{event.eventTitle}</StyledTableCell>
-
-              <StyledTableCell align="left">{event.eventDescription}</StyledTableCell>
-              <StyledTableCell align="left">{event.eventCategory}</StyledTableCell>
-              <StyledTableCell align="left">{event.eventStatus}</StyledTableCell>
-              
+              <StyledTableRow key={event.event_id}>
+               <StyledTableCell align="center" component="th" scope="row">{event.event_id}</StyledTableCell>
+              <StyledTableCell align="center" component="th" scope="row">{event.event_title}</StyledTableCell>
+              <StyledTableCell align="center">{event.event_description}</StyledTableCell>
+              <StyledTableCell align="center">{event.group_name}</StyledTableCell>
+              <StyledTableCell align="center">{event.task_name}</StyledTableCell>
+              {/* <StyledTableCell align="center"> 
+              <Button m={1}
+              target="_blank"
+               component ={Link}
+                to={location=> `/ItemInfoRoute/${event.event_id}`} 
+                style={{ backgroundColor: green[500], color: '#FFFFFF' }}
+                variant="contained"
+                className={classes.button}
+                startIcon={<VisibilityIcon />}
+                >
+                View
+              </Button></StyledTableCell> */}
               <StyledTableCell align="center">
                 <Button m={1}
-                    href="delete-event"
+                    onClick={() => { deleteEvent(event.event_id) }}
                     style={{ backgroundColor: red[500], color: '#FFFFFF' }}
                     variant="contained"
                     className={classes.button}
