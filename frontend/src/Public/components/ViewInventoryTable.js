@@ -43,7 +43,7 @@ export default function ViewInventoryTable() {
 
   const getItemList = async () => {
       try{
-          const data = await axios.get("http://localhost:17152//items");
+          const data = await axios.get("http://localhost:17152/view-itemlist");
           console.log(data.data);
           setProduct(data.data);
       } catch (e){
@@ -86,7 +86,7 @@ export default function ViewInventoryTable() {
               <StyledTableCell align="left" component="th" scope="row">{item.item_name}</StyledTableCell>
               <StyledTableCell align="left">{item.item_quantity}</StyledTableCell>
               <StyledTableCell align="left">{item.item_available_quantity}</StyledTableCell>
-              <StyledTableCell align="left">{item.item_Status}</StyledTableCell>
+              <StyledTableCell align="left">{item.item_status}</StyledTableCell>
               
               </StyledTableRow>
                 );

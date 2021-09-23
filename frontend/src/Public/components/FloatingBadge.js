@@ -32,7 +32,7 @@ export default function FloatingBadge() {
                 <Button href="badge-request">Requested List</Button>
                 <Button href="badge-progress-list">Progress List Item</Button>
                 <Button href="badge-completed">Completed List List</Button>
-                <Button href="item-pending">Pending List</Button>
+                {/* <Button href="badge-pending">Pending List</Button> */}
                 <Button style={{ backgroundColor: red[500], color: '#FFFFFF' }} href="badge-log">Badge Log</Button>
             </ButtonGroup>
         </div>

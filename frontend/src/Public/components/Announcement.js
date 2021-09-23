@@ -27,9 +27,17 @@ export default function Announcement() {
     const classes = useStyles();
     const [product, setProduct] = useState([]);
 
+    const dateOnly = (d) => {
+    const date = new Date(d);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year} - ${month} - ${day}`;
+    };
+
     const getAnnouncement = async () => {
         try{
-            const data = await axios.get("http://localhost:8080/view-announcement");
+            const data = await axios.get("http://localhost:17152/view-announcement");
             console.log(data.data);
             setProduct(data.data);
         } catch (e){
@@ -45,28 +53,28 @@ export default function Announcement() {
     return (
         <div>
         <Card className={classes.root}>
-            {product.map((product,announcement_Id) => (
-            <CardContent  key= {product.announcement_Id}>
+            {product.map((product,announcement_id) => (
+            <CardContent  key= {product.announcement_id}>
             <div>
             <Typography style={{ color: "#3f51b5" }}>
-                    Announcement Topic  -  {product.announcementTitle}</Typography>
+                    Announcement Topic  -  {product.announcement_title}</Typography>
            
             </div>
             <div >
             <Typography style={{ fontSize: "12px" }}  gutterBottom>
-                     Date  -  {product.announcementDate}</Typography>
+                     Date  -  {dateOnly(product.announcement_date)}</Typography>
             
             </div>
             <div  >
             
             <Typography style={{ fontSize: "12px" }}  gutterBottom>
-                Author  -  {product.announcementAuthor}</Typography>
+                Author  -  {product.announcement_author}</Typography>
             </div>
             <div  >
             
             <Typography >
                     Announcemnt Body
-                    -  {product.announcementBody}
+                    -  {product.announcement_body}
                     <br /></Typography>
             </div>
         </CardContent>
