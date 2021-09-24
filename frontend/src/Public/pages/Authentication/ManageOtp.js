@@ -97,13 +97,13 @@ function ManageOtp() {
      
          <div className="right-container-flex1">
         
-             <label className="top2">
+             <h1 className="top2" style={{ position:'relative', left:'550px'}}>
                 OTP Verification
-             </label>
+             </h1>
 
              <form className={classes.form} onSubmit={handleSubmit(otpinfo)} >
                <Grid>
-          <TextField style={{width:'380px',marginLeft:'40px',marginRight:'20px'}}
+          <TextField style={{width:'380px',marginLeft:'40px',marginRight:'20px', position:'relative', left:'450px'}}
             variant="outlined"
             margin="normal"
             required
@@ -118,7 +118,7 @@ function ManageOtp() {
            {errors.email?.message && <p className=" errormessage" style={{color:'red',marginLeft:'20px'}}>{errors.email?.message}</p>}                        
             </Grid>
             <Grid>
-          <TextField style={{width:'380px',marginLeft:'40px',marginRight:'20px'}}
+          <TextField style={{width:'380px',marginLeft:'40px',marginRight:'20px' , position:'relative', left:'450px'}}
             variant="outlined"
             margin="normal"
             required

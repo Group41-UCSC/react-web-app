@@ -30,9 +30,17 @@ export default function UpcomingEvent() {
     const [product, setProduct] = useState([]);
     const bull = <span className={classes.bullet}>•</span>;
 
+    const dateOnly = (d) => {
+    const date = new Date(d);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year} - ${month} - ${day}`;
+    };
+
     const getEvent = async () => {
         try{
-            const data = await axios.get("http://localhost:8080/events");
+            const data = await axios.get("http://localhost:17152/view-upcoming-events");
             console.log(data.data);
             setProduct(data.data);
         } catch (e){
@@ -49,22 +57,36 @@ export default function UpcomingEvent() {
     return (
     //map((product) => (
         <div>
-            
-        <Card className={classes.root}>
-           {product.map((product,event_Id) => (
-        <CardContent  key= {product.event_Id}>
+             <Card className={classes.root}>
+             {product.map((product,event_Id) => (
+            <CardContent   key= {product.event_Id}>
             <div>
-            {product.eventTitle}
+            <Typography style={{ color: "#3f51b5" }}>
+                    Title  -   {product.event_title}</Typography>
+           
             </div>
-            <div  variant="h6" component="h4">
-            {product.eventStatus}
+            <div >
+            <Typography style={{ fontSize: "12px" }}  gutterBottom>
+                    Description  -  {product.event_description}</Typography>
+            
             </div>
-            <div  variant="h6" component="h4">
-            {product.eventCatagory}
+            <div  >
+            
+            <Typography style={{ fontSize: "12px" }}  gutterBottom>
+                Start Date  -  {dateOnly(product.start_date)}</Typography>
+            </div>
+            <div  >
+            
+            <Typography style={{ fontSize: "12px" }}  gutterBottom>
+                    End Date
+                    -  {dateOnly(product.end_date)}
+                    <br /></Typography>
             </div>
         </CardContent>
+        
            ))}
     </Card>
+        
     </div>
             )
     

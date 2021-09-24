@@ -116,7 +116,7 @@ export default function BadgeProgressTable() {
             <StyledTableCell align="left">Requested Date</StyledTableCell>
             {/* <StyledTableCell align="left">Requester name</StyledTableCell> */}
             <StyledTableCell align="left">Accepted Date</StyledTableCell>
-            <StyledTableCell align="left">Status</StyledTableCell>
+            {/* <StyledTableCell align="left">Status</StyledTableCell> */}
             <StyledTableCell colSpan="2" align="center">Action</StyledTableCell>
             <StyledTableCell align="left"></StyledTableCell> 
           </TableRow> 
@@ -136,7 +136,7 @@ export default function BadgeProgressTable() {
               <StyledTableCell align="left">{dateOnly(record.badgelog_requested_date)}</StyledTableCell>
               {/* <StyledTableCell align="left">{itemlog.itemlogIssuedto}</StyledTableCell> */}
               <StyledTableCell align="left">{dateOnly(record.badgelog_approved_date)}</StyledTableCell>
-              <StyledTableCell align="left">{record.badgelog_status}</StyledTableCell>
+              {/* <StyledTableCell align="left">{record.badgelog_status}</StyledTableCell> */}
               <StyledTableCell align="center"></StyledTableCell>
               <StyledTableCell align="center"> 
               <Button m={1}
@@ -155,7 +155,7 @@ export default function BadgeProgressTable() {
                     variant="contained"
                     className={classes.button}
                     onClick={() => {FailBadge(record.badgelog_id)}}
-                    startIcon={<DeleteIcon />}>
+                    >
                     Fail
                 </Button>
               </StyledTableCell>

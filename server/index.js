@@ -792,7 +792,7 @@ app.get('/totalbadge', (_req, res) => {
 
   app.get('/completeprogress', (req, res) => {
     const user_id = req.query.user_id;
-    db.query('SELECT COUNT(badgelog_id) AS count FROM badgelog WHERE badgelog_status="finished" AND user_id=2', [user_id], (err, result) => {
+    db.query('SELECT COUNT(badgelog_id) AS count FROM badgelog WHERE badgelog_status="finished" OR "completed" AND user_id=2', [user_id], (err, result) => {
         if (!err) {
             res.send(result);
             console.log('result')

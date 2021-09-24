@@ -34,7 +34,7 @@ export default function ViewBadge() {
 
     const [BadgeList,setBadgeList]=useState([])
   useEffect(()=>{
-    axios.get("http://localhost:17152/view-available-badge").then((response)=>{
+    axios.get("http://localhost:17152/view-badges").then((response)=>{
       setBadgeList(response.data)
     })
   },[])
@@ -57,7 +57,7 @@ export default function ViewBadge() {
                                     Description : {val.badge_description}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    Badge Image :  <img style={{height:'100px' , width:'100px'}} src={`../../${val.badge_media}`} />
+                                    Badge Image :  <img style={{height:'100px' , width:'100px'}} src={`../../../${val.badge_media}`} />
                                 </Typography>
                                
                                <div align='right'>
