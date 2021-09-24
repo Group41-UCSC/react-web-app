@@ -62,6 +62,7 @@ export default function Announcement() {
             </div>
             <div >
             <Typography style={{ fontSize: "12px" }}  gutterBottom>
+
                      Date  -  {dateOnly(product.announcement_date)}</Typography>
             
             </div>
